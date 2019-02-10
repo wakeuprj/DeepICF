@@ -160,7 +160,7 @@ class DeepICF:
         self._create_inference()
         self._create_loss()
         self._create_optimizer()
-        logging.info("already build the computing graph...")
+        print("already build the computing graph...")
 
 
 def training(flag, model, dataset, epochs, num_negatives):
@@ -179,11 +179,11 @@ def training(flag, model, dataset, epochs, num_negatives):
             model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
             model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
 
-            logging.info("using pretrained variables")
+            print("using pretrained variables")
             print("using pretrained variables")
         else:
             sess.run(tf.global_variables_initializer())
-            logging.info("initialized")
+            print("initialized")
             print("initialized")
 
         # initialize for training batches
@@ -224,7 +224,7 @@ def training(flag, model, dataset, epochs, num_negatives):
                     best_hr = hr
                     best_ndcg = ndcg
 
-                logging.info(
+                print(
                     "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
                         epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
                 print(
@@ -264,9 +264,9 @@ if __name__ == '__main__':
     args = parse_args()
     regs = eval(args.regs)
 
-    logging.info("begin training FISM model ......")
-    logging.info("dataset:%s  pretrain:%d  embedding_size:%d" % (args.dataset, args.pretrain, args.embed_size))
-    logging.info("regs:%.8f, %.8f  learning_rate:%.4f  train_loss:%d" % (regs[0], regs[1], args.lr, args.train_loss))
+    print("begin training FISM model ......")
+    print("dataset:%s  pretrain:%d  embedding_size:%d" % (args.dataset, args.pretrain, args.embed_size))
+    print("regs:%.8f, %.8f  learning_rate:%.4f  train_loss:%d" % (regs[0], regs[1], args.lr, args.train_loss))
 
     dataset = Dataset(args.path + args.dataset)
     model = DeepICF(dataset.num_items, args)

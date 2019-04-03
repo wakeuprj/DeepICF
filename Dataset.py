@@ -21,12 +21,13 @@ class Dataset(object):
         '''
         Constructor
         '''
-        self.trainMatrix = self.load_training_file_as_matrix(path + ".train.rating")
+        # self.trainMatrix = self.load_training_file_as_matrix(path + ".train.rating")
         self.trainList = self.load_training_file_as_list(path + ".train.rating")
         self.testRatings = self.load_rating_file_as_list(path + ".test.rating")
         self.testNegatives = self.load_negative_file(path + ".test.negative")
         assert len(self.testRatings) == len(self.testNegatives)
-        self.num_users, self.num_items = self.trainMatrix.shape
+        # self.num_users, self.num_items = self.trainMatrix.shape
+        self.num_users, self.num_items = 6040, 3706
 
     def load_rating_file_as_list(self, filename):
         ratingList = []
@@ -82,22 +83,22 @@ class Dataset(object):
 
     def load_training_file_as_list(self, filename):
         # Get number of users and items
-        u_ = 0
+        prev_user = 0
         lists, items = [], []
         with open(filename, "r") as f:
             line = f.readline()
             index = 0
             while line != None and line != "":
                 arr = line.split("\t")
-                u, i = int(arr[0]), int(arr[1])
-                if u_ < u:
+                current_user, item = int(arr[0]), int(arr[1])
+                if prev_user < current_user:
                     index = 0
                     lists.append(items)
                     items = []
-                    u_ += 1
+                    prev_user += 1
                 index += 1
                 if index < 300:
-                    items.append(i)
+                    items.append(item)
                 line = f.readline()
         lists.append(items)
         print("already load the trainList...")

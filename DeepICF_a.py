@@ -3,6 +3,8 @@ from __future__ import division
 
 import os
 
+from util import perfTSNE, plotPoints
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import tensorflow as tf
@@ -12,6 +14,7 @@ from time import time
 from Dataset import Dataset
 import Batch_gen as data
 import Evaluate as evaluate
+import matplotlib.pyplot as plt
 
 import argparse
 from tensorflow.contrib.layers.python.layers import batch_norm as batch_norm
@@ -137,7 +140,8 @@ class DeepICF_a:
             b = tf.shape(q_)[0]
             n = tf.shape(q_)[1]
             r = (self.algorithm + 1) * self.embedding_size
-
+            # W shape (e, e)
+            # self.b shape (1,e)
             MLP_output = tf.matmul(tf.reshape(q_, [-1, r]), self.W) + self.b  # (b*n, e or 2*e) * (e or 2*e, w) + (1, w)
             if self.activation == 0:
                 MLP_output = tf.nn.relu(MLP_output)
@@ -146,7 +150,7 @@ class DeepICF_a:
             elif self.activation == 2:
                 MLP_output = tf.nn.tanh(MLP_output)
 
-            A_ = tf.reshape(tf.matmul(MLP_output, self.h), [b, n])  # (b*n, w) * (w, 1) => (None, 1) => (b, n)
+            A_ = tf.reshape(tf.matmul(MLP_output, self.h), [b, n])  # (b*n, w) * (w, 1) => (b*n, 1) => (b, n)
 
             # softmax for not mask features
             exp_A_ = tf.exp(A_)
@@ -162,22 +166,28 @@ class DeepICF_a:
 
     def _create_inference(self):
         with tf.name_scope("inference"):
+            # user_input: (b, n)
+            # item_input: (b, 1)
+            # A: (b, n, 1)
             self.embedding_q_ = tf.nn.embedding_lookup(self.embedding_Q_, self.user_input)  # (b, n, e)
             self.embedding_q = tf.nn.embedding_lookup(self.embedding_Q, self.item_input)  # (b, 1, e)
 
             if self.algorithm == 0:  # prod
-                self.A, self.embedding_p = self._attention_MLP(self.embedding_q_ * self.embedding_q)  # (?, k)
+                # self.A has dimension (b, n, 1) and is the attention score for each historical item
+                self.A, self.embedding_p = self._attention_MLP(
+                    self.embedding_q_ * self.embedding_q  # this is doing Hadamard probably creating (b, n, e)
+                )  # (?, k)
             else:  # concat
                 n = tf.shape(self.user_input)[1]
                 self.A, self.embedding_p = self._attention_MLP(tf.concat([self.embedding_q_, tf.tile(self.embedding_q, tf.stack([1, n, 1]))], 2))  # (?, k)
 
-            self.embedding_q = tf.reduce_sum(self.embedding_q, 1)  # (?, k)
-            self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)
+            self.embedding_q = tf.reduce_sum(self.embedding_q, 1)  # (b, e)
+            self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)  # (b, 1)
             self.coeff = tf.pow(self.num_idx, tf.constant(self.alpha, tf.float32, [1]))
-            self.embedding_p = self.coeff * self.embedding_p  # (?, k)
+            self.embedding_p = self.coeff * self.embedding_p  # (b, e)
 
             # DeepICF+a
-            layer1 = tf.multiply(self.embedding_p, self.embedding_q)  # (?, k)
+            layer1 = tf.multiply(self.embedding_p, self.embedding_q)  # (b, e)
             for i in range(len(self.n_hidden)):
                 layer1 = tf.add(tf.matmul(layer1, self.weights['h%d' % i]), self.biases['b%d' % i])
                 if self.use_batch_norm:
@@ -185,7 +195,7 @@ class DeepICF_a:
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
 
-            self.output = tf.sigmoid(tf.add_n([out_layer, self.bias_i]))  # (?, 1)
+            self.output = tf.sigmoid(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
@@ -216,18 +226,43 @@ def training(flag, model, dataset, epochs, num_negatives):
 
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
+    model_saver = tf.train.Saver()
+    load_weights = True
 
     with tf.Session() as sess:
+        if load_weights:
+            weight_path = './1epoch.ckpt'
+            saver = tf.train.Saver()
+            saver.restore(sess, weight_path)
+
+            # initialize the evaluation feed_dicts
+            testDict = evaluate.init_evaluate_model(model, sess,
+                                                    dataset.testRatings,
+                                                    dataset.testNegatives,
+                                                    dataset.trainList)
+
+            (hits, ndcgs, losses) = evaluate.eval(model, sess,
+                                                  dataset.testRatings,
+                                                  dataset.testNegatives,
+                                                  testDict)
+            hr, ndcg, test_loss = np.array(hits).mean(), np.array(
+                ndcgs).mean(), np.array(losses).mean()
+            print("Stats", hr, ndcg, test_loss)
+            item_embs = evaluate.get_item_embeddings()
+            X_embedded = perfTSNE(item_embs)
+            plotPoints(X_embedded, 'g.', "all")
+            plt.show()
+            exit(0)
         # pretrain nor not
         if flag != 0:
             sess.run(tf.global_variables_initializer())
             saver.restore(sess, weight_path)
             p_c1, p_e_Q, p_b = sess.run([model.c1, model.embedding_Q, model.bias])
 
-            model.c1 = tf.Variable(p_c1, dtype=tf.float32, trainable=True, name='c1')
-            model.embedding_Q_ = tf.concat([model.c1, model.c2], 0, name='embedding_Q_')
-            model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
-            model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
+            # model.c1 = tf.Variable(p_c1, dtype=tf.float32, trainable=True, name='c1')
+            # model.embedding_Q_ = tf.concat([model.c1, model.c2], 0, name='embedding_Q_')
+            # model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
+            # model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
 
             logging.info("using pretrained variables")
             print("using pretrained variables")
@@ -242,7 +277,7 @@ def training(flag, model, dataset, epochs, num_negatives):
         batch_time = time() - batch_begin
 
         num_batch = len(batches[1])
-        batch_index = range(num_batch)
+        batch_index = list(range(num_batch))
 
         # initialize the evaluation feed_dicts
         testDict = evaluate.init_evaluate_model(model, sess, dataset.testRatings, dataset.testNegatives, dataset.trainList)
@@ -283,6 +318,7 @@ def training(flag, model, dataset, epochs, num_negatives):
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
 
+        model_saver.save(sess, './1epoch.ckpt')
         return best_hr, best_ndcg
 
 

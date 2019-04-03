@@ -116,6 +116,26 @@ def _eval_one_rating(idx):
     ndcg = _getNDCG(ranklist, gtItem)
     return (hr, ndcg, loss)
 
+def get_item_embeddings():
+    user = _trainList[0]
+    items = range(0, 3706)
+
+    user_input = []
+    for i in range(len(items)):
+        user_input.append(user)
+
+    num_idx = np.full(len(items), len(user), dtype=np.int32)[:, None]
+
+    user_input = np.array(user_input)
+    item_input = np.array(items)[:, None]
+
+    feed_dict = {_model.user_input: user_input, _model.num_idx: num_idx,
+                 _model.item_input: item_input, _model.is_train_phase: False}
+
+    item_embeddings = _sess.run([_model.embedding_q], feed_dict=feed_dict)
+
+    return item_embeddings
+
 def _getHitRatio(ranklist, gtItem):
     for item in ranklist:
         if item == gtItem:

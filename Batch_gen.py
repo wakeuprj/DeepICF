@@ -72,8 +72,10 @@ def _get_train_data_user():
     user_input, item_input, labels, batch_length = [],[],[],[]
     train = _Dataset.trainMatrix
     trainList = _Dataset.trainList
-    num_items = train.shape[1]
-    num_users = train.shape[0]
+    # num_items = train.shape[1]
+    num_items = _Dataset.num_items
+    # num_users = train.shape[0]
+    num_users = _Dataset.num_users
     for u in range(num_users):
        if u == 0:
            batch_length.append((1+_num_negatives) * len(trainList[u]))

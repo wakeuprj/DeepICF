@@ -94,9 +94,9 @@ class DeepICF:
         with tf.name_scope("embedding"):  # The embedding initialization is unknown now
             self.c1 = tf.Variable(
                 tf.truncated_normal(shape=[self.num_items, self.embedding_size], mean=0.0, stddev=0.01),
-                # why [0, 3707)?
+                # why [0, 3707)?, embedding_size = 16
                 name='c1', dtype=tf.float32)
-            self.c2 = tf.constant(0.0, tf.float32, [1, self.embedding_size], name='c2')
+            self.c2 = tf.constant(0.0, dtype=tf.float32, shape=[1, self.embedding_size], name='c2')
             self.embedding_Q_ = tf.concat([self.c1, self.c2], 0, name='embedding_Q_')
             self.embedding_Q = tf.Variable(
                 tf.truncated_normal(shape=[self.num_items, self.embedding_size], mean=0.0, stddev=0.01),
@@ -123,8 +123,10 @@ class DeepICF:
 
     def _create_inference(self):
         with tf.name_scope("inference"):
-            self.embedding_p = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q_, self.user_input), 1)  # (?, k)
-            self.embedding_q = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q, self.item_input), 1)  # (?, k)
+            # user_input is a list of item ids that the user has interacted with
+            # item_input is just the target item's id
+            self.embedding_p = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q_, self.user_input), 1)  # (?, k=16)
+            self.embedding_q = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q, self.item_input), 1)  # (?, k=16)
             self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)  # (?, 1)
             self.coeff = tf.pow(self.num_idx, -tf.constant(self.alpha, tf.float32, [1]))  # (1)
             self.embedding_p = self.coeff * self.embedding_p  # (?, k)
@@ -178,6 +180,7 @@ def training(flag, model, dataset, epochs, num_negatives):
             model.embedding_Q_ = tf.concat([model.c1, model.c2], 0, name='embedding_Q_')
             model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
             model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
+            # Why not load/save the weights and biases as well?
 
             print("using pretrained variables")
             print("using pretrained variables")

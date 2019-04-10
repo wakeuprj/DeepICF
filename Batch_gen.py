@@ -48,6 +48,7 @@ def batch_gen(batches, i):
     return [(batches[r])[i] for r in range(4)]
 
 def _preprocess(get_train_batch):    #generate the masked batch list
+    print("start preprocess " + str(int(_num_batch)))
     user_input_list, num_idx_list, item_input_list, labels_list = [], [], [], []
     cpu_count = 1#multiprocessing.cpu_count()
     if cpu_count == 1:
@@ -69,6 +70,10 @@ def _preprocess(get_train_batch):    #generate the masked batch list
     return (user_input_list, num_idx_list, item_input_list, labels_list)
 
 def _get_train_data_user():
+    import pickle
+    num_items, user_input, item_input, labels, batch_length = pickle.load(open("train_data_user.pkl", 'rb'))
+    return num_items, user_input, item_input, labels, batch_length
+
     user_input, item_input, labels, batch_length = [],[],[],[]
     train = _Dataset.trainMatrix
     trainList = _Dataset.trainList
@@ -85,7 +90,8 @@ def _get_train_data_user():
             # positive instance
             user_input.append(u)
             item_input.append(i)
-            labels.append(1)
+            # labels.append(1)
+            labels.append([1, 0])
             # negative instances
             for t in range(_num_negatives):
                 j = np.random.randint(num_items)
@@ -93,7 +99,8 @@ def _get_train_data_user():
                     j = np.random.randint(num_items)
                 user_input.append(u)
                 item_input.append(j)
-                labels.append(0)
+                # labels.append(0)
+                labels.append([0, 1])
     return num_items, user_input, item_input, labels, batch_length
 
 

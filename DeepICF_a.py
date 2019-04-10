@@ -93,13 +93,14 @@ class DeepICF_a:
         self.reg_W = eval(args.reg_W)
         self.train_loss = args.train_loss
         self.use_batch_norm = args.batch_norm
+        self.num_outputs = 2
 
     def _create_placeholders(self):
         with tf.name_scope("input_data"):
             self.user_input = tf.placeholder(tf.int32, shape=[None, None])  # the index of users
             self.num_idx = tf.placeholder(tf.float32, shape=[None, 1])  # the number of items rated by users
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
-            self.labels = tf.placeholder(tf.float32, shape=[None, 1])  # the ground truth
+            self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
 
     def _create_variables(self):
@@ -109,7 +110,7 @@ class DeepICF_a:
             self.c2 = tf.constant(0.0, tf.float32, [1, self.embedding_size], name='c2')
             self.embedding_Q_ = tf.concat([self.c1, self.c2], 0, name='embedding_Q_')
             self.embedding_Q = tf.Variable(tf.truncated_normal(shape=[self.num_items, self.embedding_size], mean=0.0, stddev=0.01), name='embedding_Q', dtype=tf.float32, trainable=trainable_flag)
-            self.bias = tf.Variable(tf.zeros(self.num_items), name='bias', trainable=trainable_flag)
+            self.bias = tf.Variable(tf.zeros([self.num_items, self.num_outputs]), name='bias', trainable=trainable_flag)
 
             # Variables for attention
             if self.algorithm == 0:
@@ -121,10 +122,10 @@ class DeepICF_a:
 
             # Variables for DeepICF+a
             self.weights = {
-                'out': tf.Variable(tf.random_normal([self.n_hidden[-1], 1], mean=0, stddev=np.sqrt(2.0 / (self.n_hidden[-1] + 1))), name='weights_out')
+                'out': tf.Variable(tf.random_normal([self.n_hidden[-1], self.num_outputs], mean=0, stddev=np.sqrt(2.0 / (self.n_hidden[-1] + 1))), name='weights_out')
             }
             self.biases = {
-                'out': tf.Variable(tf.random_normal([1]), name='biases_out')
+                'out': tf.Variable(tf.random_normal([self.num_outputs]), name='biases_out')
             }
             n_hidden_0 = self.embedding_size
             for i in range(len(self.n_hidden)):
@@ -182,7 +183,7 @@ class DeepICF_a:
                 self.A, self.embedding_p = self._attention_MLP(tf.concat([self.embedding_q_, tf.tile(self.embedding_q, tf.stack([1, n, 1]))], 2))  # (?, k)
 
             self.embedding_q = tf.reduce_sum(self.embedding_q, 1)  # (b, e)
-            self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)  # (b, 1)
+            self.bias_i = tf.squeeze(tf.nn.embedding_lookup(self.bias, self.item_input))  # (b, 1)
             self.coeff = tf.pow(self.num_idx, tf.constant(self.alpha, tf.float32, [1]))
             self.embedding_p = self.coeff * self.embedding_p  # (b, e)
 
@@ -195,14 +196,14 @@ class DeepICF_a:
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
 
-            self.output = tf.sigmoid(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
+            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output) + \
-                        self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
-                        self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
+            self.loss = tf.losses.log_loss(self.labels, self.output, reduction=tf.losses.Reduction.MEAN)
+                        # self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+                        # self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
+                        # self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:
@@ -225,13 +226,14 @@ class DeepICF_a:
 def training(flag, model, dataset, epochs, num_negatives):
 
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
-    saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
+    # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
     load_weights = True
 
     with tf.Session() as sess:
         if load_weights:
-            weight_path = './1epoch.ckpt'
+            # weight_path = './1epoch.ckpt'
+            weight_path = './1epoch1554808267.ckpt'  # Softmax with two output neurons
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 
@@ -248,10 +250,10 @@ def training(flag, model, dataset, epochs, num_negatives):
             hr, ndcg, test_loss = np.array(hits).mean(), np.array(
                 ndcgs).mean(), np.array(losses).mean()
             print("Stats", hr, ndcg, test_loss)
-            item_embs = evaluate.get_item_embeddings()
-            X_embedded = perfTSNE(item_embs)
-            plotPoints(X_embedded, 'g.', "all")
-            plt.show()
+            # item_embs = evaluate.get_item_embeddings()
+            # X_embedded = perfTSNE(item_embs)
+            # plotPoints(X_embedded, 'g.', "all")
+            # plt.show()
             exit(0)
         # pretrain nor not
         if flag != 0:
@@ -317,8 +319,7 @@ def training(flag, model, dataset, epochs, num_negatives):
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-
-        model_saver.save(sess, './1epoch.ckpt')
+        model_saver.save(sess, './1epoch%d.ckpt' % (time()))
         return best_hr, best_ndcg
 
 
@@ -326,8 +327,9 @@ def training(flag, model, dataset, epochs, num_negatives):
 def training_batch(batch_index, model, sess, batches):
     for index in batch_index:
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
+        labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels[:, None], model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True}
         sess.run([model.loss, model.optimizer], feed_dict)
 
 
@@ -336,8 +338,9 @@ def training_loss(model, sess, batches):
     num_batch = len(batches[1])
     for index in range(num_batch):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
+        labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels[:, None], model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True}
         train_loss += sess.run(model.loss, feed_dict)
     return train_loss / num_batch
 
@@ -352,10 +355,20 @@ if __name__ == '__main__':
     logging.info("regs:%.8f, %.8f, %.8f  beta:%.1f  learning_rate:%.4f  train_loss:%d  activation:%d"
                  % (regs[0], regs[1], regs[2], args.beta, args.lr, args.train_loss, args.activation))
 
-    dataset = Dataset(args.path + args.dataset)
+
+    import pickle
+    pkl_dataset_filename = 'dataset.pkl'
+
+    # dataset = Dataset(args.path + args.dataset)
+
+    # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
+    # pickle.dump(dataset, pkl_dataset_file)
+    # pkl_dataset_file.close()
+    # exit(0)
+    dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
-    best_hr, best_ndcg = training(args.pretrain, model, dataset, args.epochs, args.num_neg)
+    best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)
 
     print("End. best HR = %.4f, best NDCG = %.4f" % (best_hr, best_ndcg))
 

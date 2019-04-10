@@ -20,6 +20,7 @@ _testNegatives = None
 _K = None
 _DictList = None
 _sess = None
+conf_vs_acc_map = None
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -47,12 +48,14 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _K
     global _DictList
     global _sess
+    global conf_vs_acc_map
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
     _DictList = DictList
     _sess = sess
     _K = 10
+    conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
 
     num_thread = 1#multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
@@ -70,11 +73,29 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             (hr, ndcg, loss) = _eval_one_rating(idx)
             hits.append(hr)
             ndcgs.append(ndcg)  
-            losses.append(loss)    
+            losses.append(loss)
+
+    # conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+    #             for k, v in conf_vs_acc_map.items()}
+    #
+    # import matplotlib.pyplot as plt
+    # # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
+    # plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
+    #         tick_label=list(conf_map.keys()))
+    # plt.bar(range(len(conf_map.keys())),
+    #         list(map(lambda x: x + 0.05, list(conf_map.keys()))),
+    #         tick_label=list(conf_map.keys()), color=(0, 0, 0, 0), edgecolor='g')
+    # # # plt.hist(scores, bins=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+    # plt.xlabel('Confidence')
+    # plt.ylabel('Accuracy')
+    # plt.show()
+    # exit(0)
+
     return (hits, ndcgs, losses)
 
 def load_test_as_list():
     DictList = []
+    print("started loading tests as list")
     for idx in range(len(_testRatings)):
         rating = _testRatings[idx]
         items = _testNegatives[idx]
@@ -101,19 +122,33 @@ def _eval_one_rating(idx):
     rating = _testRatings[idx]
     items = _testNegatives[idx]
     gtItem = rating[1]
-    labels = np.zeros(len(items))[:, None]
-    labels[-1] = 1
+    # labels = np.zeros(len(items))[:, None]
+    labels = np.matrix([[0, 1]] * 100)
+    # labels[-1] = 1
+    labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
     predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
 
     for i in range(len(items)):
         item = items[i]
-        map_item_score[item] = predictions[i]
+        map_item_score[item] = predictions[i][0]
 
     ranklist = heapq.nlargest(_K, map_item_score, key=map_item_score.get)
     hr = _getHitRatio(ranklist, gtItem)
     ndcg = _getNDCG(ranklist, gtItem)
+
+    # expected_argmax = [1] * len(items)
+    # expected_argmax[-1] = 0
+    # for i in range(0, len(predictions)):
+    #     if expected_argmax[i] == 0:
+    #         continue
+    #     confidence = np.max(predictions[i])
+    #     if np.argmax(predictions[i]) == expected_argmax[i]:
+    #         conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
+    #     else:
+    #         conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
+
     return (hr, ndcg, loss)
 
 def get_item_embeddings():

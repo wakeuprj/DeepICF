@@ -123,9 +123,16 @@ def _eval_one_rating(idx):
     items = _testNegatives[idx]
     gtItem = rating[1]
     # labels = np.zeros(len(items))[:, None]
-    labels = np.matrix([[0, 1]] * 100)
+    # labels = np.matrix([[0, 1]] * 100)
+    labels = np.matrix([[0, 1, 0]] * 100)
     # labels[-1] = 1
-    labels[-1] = [1, 0]
+    # labels[-1] = [1, 0]
+
+    gtItemRating = int(rating[2])
+    if gtItemRating > 2:
+        labels[-1] = [1, 0, 0]
+    else:
+        labels[-1] = [0, 0, 1]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
     predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)

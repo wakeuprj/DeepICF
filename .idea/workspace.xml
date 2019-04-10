@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a03ac6cd-d94a-4916-983f-81de0833c41c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/NAIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NAIS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Batch_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Batch_gen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DeepICF_a.py" beforeDir="false" afterPath="$PROJECT_DIR$/DeepICF_a.py" afterDir="false" />
@@ -73,12 +70,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="4997" />
+          <entry key="py" value="5238" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="4997" />
+          <entry key="Python" value="5238" />
         </counts>
       </usages-collector>
     </session>
@@ -88,11 +85,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2077">
-              <caret line="145" column="28" lean-forward="true" selection-start-line="145" selection-start-column="28" selection-end-line="145" selection-end-column="28" />
+            <state relative-caret-position="137">
+              <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -123,17 +120,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DeepICF.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="221" column="49" selection-start-line="221" selection-start-column="49" selection-end-line="221" selection-end-column="49" />
+            <state relative-caret-position="230">
+              <caret line="273" column="16" lean-forward="true" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DeepICF_a.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="363" column="13" lean-forward="true" selection-start-line="363" selection-start-column="13" selection-end-line="363" selection-end-column="13" />
+            <state relative-caret-position="265">
+              <caret line="201" column="32" selection-start-line="201" selection-start-column="32" selection-end-line="201" selection-end-column="32" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -144,8 +141,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1412">
-              <caret line="103" column="35" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
+            <state relative-caret-position="630">
+              <caret line="44" column="36" lean-forward="true" selection-start-line="44" selection-start-column="36" selection-end-line="44" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -162,8 +159,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Batch_gen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-672">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="735">
+              <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -188,7 +185,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sess</find>
       <find>already load</find>
       <find>_trainList</find>
       <find>embedding_Q_1</find>
@@ -202,7 +198,6 @@
       <find>softma</find>
       <find>sigmoid</find>
       <find>tput = tf.sigmoid(tf.add_n([out_layer, self.b</find>
-      <find>loss</find>
       <find>_labels</find>
       <find>_sess</find>
       <find>self.loss</find>
@@ -218,6 +213,8 @@
       <find>already load the</find>
       <find>already</find>
       <find>rand</find>
+      <find>rating</find>
+      <find>loss</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -243,10 +240,10 @@
         <option value="$PROJECT_DIR$/DeepICF.py" />
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/embeddings.py" />
-        <option value="$PROJECT_DIR$/Dataset.py" />
-        <option value="$PROJECT_DIR$/DeepICF_a.py" />
         <option value="$PROJECT_DIR$/Batch_gen.py" />
         <option value="$PROJECT_DIR$/Evaluate.py" />
+        <option value="$PROJECT_DIR$/Dataset.py" />
+        <option value="$PROJECT_DIR$/DeepICF_a.py" />
       </list>
     </option>
   </component>
@@ -440,7 +437,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="DeepICF_a.py" />
-      <option name="PARAMETERS" value="--path Data/ --dataset ml-1m --epochs 15 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 --verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr 0.01 --batch_norm 1 --pretrain 1" />
+      <option name="PARAMETERS" value="--path Data/ --dataset ml-1m --epochs 5 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 --verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr 0.01 --batch_norm 1 --pretrain 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -718,12 +715,12 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23272438" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23272438" />
       <window_info id="Structure" order="1" weight="0.24958494" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3739726" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969563" visible="true" weight="0.29041097" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969563" visible="true" weight="0.28767124" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.43150684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -762,7 +759,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Evaluate.py</url>
-          <line>138</line>
+          <line>145</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1133,22 +1130,8 @@ with tf.Session() as n_sess:
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DeepICF.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="221" column="49" selection-start-line="221" selection-start-column="49" selection-end-line="221" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Data/ml-1m.test.negative">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Data/ml-1m.test.rating">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4020">
-          <caret line="268" column="3" selection-start-line="268" selection-end-line="268" selection-end-column="3" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/embeddings.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1157,34 +1140,48 @@ with tf.Session() as n_sess:
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DeepICF_a.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="363" column="13" lean-forward="true" selection-start-line="363" selection-start-column="13" selection-end-line="363" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Batch_gen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-672">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="735">
+          <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dataset.py">
+    <entry file="file://$PROJECT_DIR$/Data/ml-1m.test.rating">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1412">
-          <caret line="103" column="35" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
+        <state relative-caret-position="4020">
+          <caret line="268" column="3" selection-start-line="268" selection-end-line="268" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2077">
-          <caret line="145" column="28" lean-forward="true" selection-start-line="145" selection-start-column="28" selection-end-line="145" selection-end-column="28" />
+        <state relative-caret-position="137">
+          <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DeepICF.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="273" column="16" lean-forward="true" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="44" column="36" lean-forward="true" selection-start-line="44" selection-start-column="36" selection-end-line="44" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DeepICF_a.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="201" column="32" selection-start-line="201" selection-start-column="32" selection-end-line="201" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

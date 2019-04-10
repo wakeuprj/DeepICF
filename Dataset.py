@@ -35,8 +35,8 @@ class Dataset(object):
             line = f.readline()
             while line != None and line != "":
                 arr = line.split("\t")
-                user, item = int(arr[0]), int(arr[1])
-                ratingList.append([user, item])
+                user, item, rating = int(arr[0]), int(arr[1]), int(arr[2])
+                ratingList.append([user, item, rating])
                 line = f.readline()
         return ratingList
 
@@ -75,8 +75,10 @@ class Dataset(object):
             while line != None and line != "":
                 arr = line.split("\t")
                 user, item, rating = int(arr[0]), int(arr[1]), float(arr[2])
-                if (rating > 0):
+                if (rating > 2):
                     mat[user, item] = 1.0
+                else:
+                    mat[user, item] = -1.0
                 line = f.readline()
         print("already load the trainMatrix...")
         return mat

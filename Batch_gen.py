@@ -71,8 +71,8 @@ def _preprocess(get_train_batch):    #generate the masked batch list
 
 def _get_train_data_user():
     import pickle
-    num_items, user_input, item_input, labels, batch_length = pickle.load(open("train_data_user.pkl", 'rb'))
-    return num_items, user_input, item_input, labels, batch_length
+    # num_items, user_input, item_input, labels, batch_length = pickle.load(open("train_data_user.pkl", 'rb'))
+    # return num_items, user_input, item_input, labels, batch_length
 
     user_input, item_input, labels, batch_length = [],[],[],[]
     train = _Dataset.trainMatrix
@@ -91,7 +91,11 @@ def _get_train_data_user():
             user_input.append(u)
             item_input.append(i)
             # labels.append(1)
-            labels.append([1, 0])
+            # labels.append([1, 0])
+            if train[u, i] == -1:
+                labels.append([0, 0, 1])
+            elif train[u, i] == 1:
+                labels.append([1, 0, 0])
             # negative instances
             for t in range(_num_negatives):
                 j = np.random.randint(num_items)
@@ -100,7 +104,8 @@ def _get_train_data_user():
                 user_input.append(u)
                 item_input.append(j)
                 # labels.append(0)
-                labels.append([0, 1])
+                # labels.append([0, 1])
+                labels.append([0, 1, 0])
     return num_items, user_input, item_input, labels, batch_length
 
 

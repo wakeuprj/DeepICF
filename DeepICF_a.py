@@ -228,12 +228,13 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = False
+    load_weights = True
 
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
-            weight_path = './1epoch1554808267.ckpt'  # Softmax with two output neurons
+            # weight_path = './1epoch1554808267.ckpt'  # Softmax with two output neurons
+            weight_path = './1epoch1554886874.ckpt'  # Softmax with three output neurons
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 
@@ -356,16 +357,16 @@ if __name__ == '__main__':
                  % (regs[0], regs[1], regs[2], args.beta, args.lr, args.train_loss, args.activation))
 
 
-    # # import pickle
-    # # pkl_dataset_filename = 'dataset-3-output.pkl'
+    import pickle
+    pkl_dataset_filename = 'dataset-3-output.pkl'
     # #
-    dataset = Dataset(args.path + args.dataset)
+    # dataset = Dataset(args.path + args.dataset)
     # #
-    # # # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
-    # # # pickle.dump(dataset, pkl_dataset_file)
-    # # # pkl_dataset_file.close()
-    # # # exit(0)
-    # dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
+    # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
+    # pickle.dump(dataset, pkl_dataset_file)
+    # pkl_dataset_file.close()
+    # exit(0)
+    dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
     best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)

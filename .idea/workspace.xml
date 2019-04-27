@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a03ac6cd-d94a-4916-983f-81de0833c41c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Batch_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Batch_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DeepICF_a.py" beforeDir="false" afterPath="$PROJECT_DIR$/DeepICF_a.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluate.py" afterDir="false" />
     </list>
@@ -70,12 +68,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="5238" />
+          <entry key="py" value="5415" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5238" />
+          <entry key="Python" value="5415" />
         </counts>
       </usages-collector>
     </session>
@@ -85,11 +83,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+            <state relative-caret-position="1137">
+              <caret line="151" column="31" selection-start-line="151" selection-start-column="31" selection-end-line="151" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -120,17 +118,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DeepICF.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="273" column="16" lean-forward="true" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
+            <state relative-caret-position="2267">
+              <caret line="273" column="16" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DeepICF_a.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="201" column="32" selection-start-line="201" selection-start-column="32" selection-end-line="201" selection-end-column="32" />
+            <state relative-caret-position="-1746">
+              <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -139,19 +137,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dataset.py">
+        <entry file="file://$PROJECT_DIR$/deepICF_a_3output_train_logs.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="44" column="36" lean-forward="true" selection-start-line="44" selection-start-column="36" selection-end-line="44" selection-end-column="36" />
+            <state relative-caret-position="330">
+              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/pickle.py">
+        <entry file="file://$PROJECT_DIR$/Dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1541" column="4" selection-start-line="1541" selection-start-column="4" selection-end-line="1541" selection-end-column="4" />
+            <state relative-caret-position="164">
+              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -160,7 +158,7 @@
         <entry file="file://$PROJECT_DIR$/Batch_gen.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="735">
-              <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+              <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -185,7 +183,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>already load</find>
       <find>_trainList</find>
       <find>embedding_Q_1</find>
       <find>shaw</find>
@@ -212,13 +209,19 @@
       <find>batches</find>
       <find>already load the</find>
       <find>already</find>
-      <find>rand</find>
       <find>rating</find>
       <find>loss</find>
+      <find>False</find>
+      <find>rand</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="softmax-2-output" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -241,9 +244,9 @@
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/embeddings.py" />
         <option value="$PROJECT_DIR$/Batch_gen.py" />
-        <option value="$PROJECT_DIR$/Evaluate.py" />
         <option value="$PROJECT_DIR$/Dataset.py" />
         <option value="$PROJECT_DIR$/DeepICF_a.py" />
+        <option value="$PROJECT_DIR$/Evaluate.py" />
       </list>
     </option>
   </component>
@@ -715,12 +718,12 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23272438" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23272438" />
       <window_info id="Structure" order="1" weight="0.24958494" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3739726" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969563" visible="true" weight="0.28767124" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969563" visible="true" weight="0.14246576" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.43150684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -754,17 +757,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DeepICF_a.py</url>
-          <line>322</line>
+          <line>323</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Evaluate.py</url>
-          <line>145</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DeepICF_a.py</url>
-          <line>331</line>
+          <line>332</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -912,7 +910,6 @@ with tf.Session() as n_sess:
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/script_fism.py" />
     <entry file="file://$PROJECT_DIR$/DeepFISM.py" />
     <entry file="file://$PROJECT_DIR$/DeepICF+a.py" />
     <entry file="file://$PROJECT_DIR$/script_nais.py" />
@@ -1143,7 +1140,7 @@ with tf.Session() as n_sess:
     <entry file="file://$PROJECT_DIR$/Batch_gen.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="735">
-          <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1154,34 +1151,41 @@ with tf.Session() as n_sess:
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Evaluate.py">
+    <entry file="file://$PROJECT_DIR$/DeepICF.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+        <state relative-caret-position="2267">
+          <caret line="273" column="16" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DeepICF.py">
+    <entry file="file://$PROJECT_DIR$/deepICF_a_3output_train_logs.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="273" column="16" lean-forward="true" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="16" />
+        <state relative-caret-position="330">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="44" column="36" lean-forward="true" selection-start-line="44" selection-start-column="36" selection-end-line="44" selection-end-column="36" />
+        <state relative-caret-position="164">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DeepICF_a.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="201" column="32" selection-start-line="201" selection-start-column="32" selection-end-line="201" selection-end-column="32" />
+        <state relative-caret-position="-1746">
+          <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1137">
+          <caret line="151" column="31" selection-start-line="151" selection-start-column="31" selection-end-line="151" selection-end-column="31" />
         </state>
       </provider>
     </entry>

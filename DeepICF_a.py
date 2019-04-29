@@ -143,6 +143,7 @@ class DeepICF_a:
             r = (self.algorithm + 1) * self.embedding_size
             # W shape (e, e)
             # self.b shape (1,e)
+            # MLP_output shape (b*n, e) * (e, e) + (1, e)
             MLP_output = tf.matmul(tf.reshape(q_, [-1, r]), self.W) + self.b  # (b*n, e or 2*e) * (e or 2*e, w) + (1, w)
             if self.activation == 0:
                 MLP_output = tf.nn.relu(MLP_output)
@@ -163,6 +164,11 @@ class DeepICF_a:
 
             A = tf.expand_dims(tf.div(exp_A_, exp_sum), 2)  # (b, n, 1)
 
+            self.random_perm = tf.range(tf.shape(A)[1])
+            self.random_perm = tf.random_shuffle(self.random_perm)
+            self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
+
+            # return A, tf.reduce_sum(self.shuffled_A * self.embedding_q_, 1)
             return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):

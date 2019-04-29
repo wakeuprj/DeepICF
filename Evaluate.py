@@ -128,15 +128,24 @@ def _eval_one_rating(idx):
     labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
-    predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+    hrs = []
+    ndcgs = []
+    losses = []
+    for i in range(1):
+        predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+        # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
+        # print(np.max(attention_map))
 
-    for i in range(len(items)):
-        item = items[i]
-        map_item_score[item] = predictions[i][0]
+        for i in range(len(items)):
+            item = items[i]
+            map_item_score[item] = predictions[i][0]
 
-    ranklist = heapq.nlargest(_K, map_item_score, key=map_item_score.get)
-    hr = _getHitRatio(ranklist, gtItem)
-    ndcg = _getNDCG(ranklist, gtItem)
+        ranklist = heapq.nlargest(_K, map_item_score, key=map_item_score.get)
+        hr = _getHitRatio(ranklist, gtItem)
+        ndcg = _getNDCG(ranklist, gtItem)
+        hrs.append(hr)
+        ndcgs.append(ndcg)
+        losses.append(loss)
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0
@@ -149,7 +158,7 @@ def _eval_one_rating(idx):
     #     else:
     #         conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
 
-    return (hr, ndcg, loss)
+    return (np.mean(hrs), np.mean(ndcgs), np.mean(losses))
 
 def get_item_embeddings():
     user = _trainList[0]

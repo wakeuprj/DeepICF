@@ -49,6 +49,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _DictList
     global _sess
     global conf_vs_acc_map
+    global bucket_sizes
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
@@ -56,6 +57,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     _sess = sess
     _K = 10
     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+    bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
 
     num_thread = 1#multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
@@ -74,10 +76,18 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             hits.append(hr)
             ndcgs.append(ndcg)  
             losses.append(loss)
-
+    #
     # conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
     #             for k, v in conf_vs_acc_map.items()}
-    #
+    # ece = 0.0
+    # for key in bucket_sizes.keys():
+    #     confidence = key + 0.05
+    #     accuracy = conf_map[key]
+    #     diff = np.abs(confidence - accuracy)
+    #     ece += bucket_sizes[key] * diff
+    # ece = ece / np.sum(list(bucket_sizes.values()))
+    # print("ECE:")
+    # print(ece)
     # import matplotlib.pyplot as plt
     # # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
     # plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
@@ -131,6 +141,7 @@ def _eval_one_rating(idx):
     hrs = []
     ndcgs = []
     losses = []
+    predictions = []
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
@@ -157,6 +168,7 @@ def _eval_one_rating(idx):
     #         conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
     #     else:
     #         conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
+        # bucket_sizes[confidence // 0.1 / 10] += 1
 
     return (np.mean(hrs), np.mean(ndcgs), np.mean(losses))
 

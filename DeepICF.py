@@ -81,13 +81,14 @@ class DeepICF:
         self.batch_choice = args.batch_choice
         self.train_loss = args.train_loss
         self.use_batch_norm = args.batch_norm
+        self.num_outputs = 2
 
     def _create_placeholders(self):
         with tf.name_scope("input_data"):
             self.user_input = tf.placeholder(tf.int32, shape=[None, None])  # the index of users
             self.num_idx = tf.placeholder(tf.float32, shape=[None, 1])  # the number of items rated by users
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
-            self.labels = tf.placeholder(tf.float32, shape=[None, 1])  # the ground truth
+            self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
 
     def _create_variables(self):
@@ -101,15 +102,15 @@ class DeepICF:
             self.embedding_Q = tf.Variable(
                 tf.truncated_normal(shape=[self.num_items, self.embedding_size], mean=0.0, stddev=0.01),
                 name='embedding_Q', dtype=tf.float32)
-            self.bias = tf.Variable(tf.zeros(self.num_items), name='bias')
+            self.bias = tf.Variable(tf.zeros([self.num_items, self.num_outputs]), name='bias')
 
             self.weights = {
                 'out': tf.Variable(
-                    tf.random_normal([self.n_hidden[-1], 1], mean=0, stddev=np.sqrt(2.0 / (self.n_hidden[-1] + 1))),
+                    tf.random_normal([self.n_hidden[-1], self.num_outputs], mean=0, stddev=np.sqrt(2.0 / (self.n_hidden[-1] + 1))),
                     name='weights_out')
             }
             self.biases = {
-                'out': tf.Variable(tf.random_normal([1]), name='biases_out')
+                'out': tf.Variable(tf.random_normal([self.num_outputs]), name='biases_out')
             }
             n_hidden_0 = self.embedding_size
             for i in range(len(self.n_hidden)):
@@ -127,7 +128,7 @@ class DeepICF:
             # item_input is just the target item's id
             self.embedding_p = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q_, self.user_input), 1)  # (?, k=16)
             self.embedding_q = tf.reduce_sum(tf.nn.embedding_lookup(self.embedding_Q, self.item_input), 1)  # (?, k=16)
-            self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)  # (?, 1)
+            self.bias_i = tf.squeeze(tf.nn.embedding_lookup(self.bias, self.item_input))  # (?, 1)
             self.coeff = tf.pow(self.num_idx, -tf.constant(self.alpha, tf.float32, [1]))  # (1)
             self.embedding_p = self.coeff * self.embedding_p  # (?, k)
 
@@ -139,13 +140,13 @@ class DeepICF:
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
 
-            self.output = tf.sigmoid(tf.add_n([out_layer, self.bias_i]))  # (?, 1)
+            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (?, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output) + \
-                        self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_))
+            self.loss = tf.losses.log_loss(self.labels, self.output, reduction=tf.losses.Reduction.MEAN)
+                        # self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+                        # self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:
@@ -167,19 +168,40 @@ class DeepICF:
 
 def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
-    saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
+    # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
+    model_saver = tf.train.Saver()
+    load_weights = True
 
     with tf.Session() as sess:
         # pretrain nor not
+        if load_weights:
+            weight_path = './deepICF_1epoch1556612631.ckpt'  # Softmax with two output neurons
+            saver = tf.train.Saver()
+            saver.restore(sess, weight_path)
+
+            # initialize the evaluation feed_dicts
+            testDict = evaluate.init_evaluate_model(model, sess,
+                                                    dataset.testRatings,
+                                                    dataset.testNegatives,
+                                                    dataset.trainList)
+
+            (hits, ndcgs, losses) = evaluate.eval(model, sess,
+                                                  dataset.testRatings,
+                                                  dataset.testNegatives,
+                                                  testDict)
+            hr, ndcg, test_loss = np.array(hits).mean(), np.array(
+                ndcgs).mean(), np.array(losses).mean()
+            print("Stats", hr, ndcg, test_loss)
+            exit(0)
         if flag != 0:
             sess.run(tf.global_variables_initializer())
             saver.restore(sess, weight_path)
             p_c1, p_e_Q, p_b = sess.run([model.c1, model.embedding_Q, model.bias])
 
-            model.c1 = tf.Variable(p_c1, dtype=tf.float32, trainable=True, name='c1')
-            model.embedding_Q_ = tf.concat([model.c1, model.c2], 0, name='embedding_Q_')
-            model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
-            model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
+            # model.c1 = tf.Variable(p_c1, dtype=tf.float32, trainable=True, name='c1')
+            # model.embedding_Q_ = tf.concat([model.c1, model.c2], 0, name='embedding_Q_')
+            # model.embedding_Q = tf.Variable(p_e_Q, dtype=tf.float32, trainable=True, name='embedding_Q')
+            # model.bias = tf.Variable(p_b, dtype=tf.float32, trainable=True, name='embedding_Q')
             # Why not load/save the weights and biases as well?
 
             print("using pretrained variables")
@@ -238,16 +260,17 @@ def training(flag, model, dataset, epochs, num_negatives):
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-
+        model_saver.save(sess, './deepICF_1epoch%d.ckpt' % (time()))
         return best_hr, best_ndcg
 
 
 def training_batch(batch_index, model, sess, batches):
     for index in batch_index:
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
+        labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None],
                      model.item_input: item_input[:, None],
-                     model.labels: labels[:, None], model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True}
         sess.run(model.optimizer, feed_dict)
 
 
@@ -256,9 +279,10 @@ def training_loss(model, sess, batches):
     num_batch = len(batches[1])
     for index in range(num_batch):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
+        labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None],
                      model.item_input: item_input[:, None],
-                     model.labels: labels[:, None], model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True}
         train_loss += sess.run(model.loss, feed_dict)
     return train_loss / num_batch
 

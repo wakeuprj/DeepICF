@@ -24,6 +24,7 @@ conf_vs_acc_map = None
 variation_all = []
 variation_positive = []
 variation_negative = []
+accuracy_stats = {}
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -36,9 +37,6 @@ def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     global _trainList
     global _DictList
     global _sess
-    global variation_all
-    global variation_positive
-    global variation_negative
     _sess = sess
     _model = model
     _testRatings = testRatings
@@ -56,6 +54,10 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _sess
     global conf_vs_acc_map
     global bucket_sizes
+    global variation_all
+    global variation_positive
+    global variation_negative
+    global accuracy_stats
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
@@ -64,6 +66,8 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     _K = 10
     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
     bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
+    accuracy_stats['normal'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
+    accuracy_stats['random'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
 
     num_thread = 1#multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
@@ -113,6 +117,8 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     print(np.mean(variation_negative))
     print(np.median(variation_negative))
 
+    print("Accuracy stats")
+    print(accuracy_stats)
 
     return (hits, ndcgs, losses)
 
@@ -184,6 +190,26 @@ def _eval_one_rating(idx):
     diff_predictions = np.abs(random_prediction - predictions)[:, 0]
     variation_positive.append(diff_predictions[-1])
     variation_negative.extend(diff_predictions[:99])
+
+    expected_argmax = [1] * len(items)
+    expected_argmax[-1] = 0
+    for i in range(0, len(predictions)):
+        if np.argmax(predictions[i]) == expected_argmax[i]:
+            normal_test_result = 'correct'
+        else:
+            normal_test_result = 'incorrect'
+
+        if np.argmax(random_prediction[i]) == expected_argmax[i]:
+            random_test_result = 'correct'
+        else:
+            random_test_result = 'incorrect'
+        if expected_argmax[i] == 0:
+            accuracy_stats['normal']['positive'][normal_test_result] += 1
+            accuracy_stats['random']['positive'][random_test_result] += 1
+        elif expected_argmax[i] == 1:
+            accuracy_stats['normal']['neutral'][normal_test_result] += 1
+            accuracy_stats['random']['neutral'][random_test_result] += 1
+
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

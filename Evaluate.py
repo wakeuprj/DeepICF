@@ -21,6 +21,9 @@ _K = None
 _DictList = None
 _sess = None
 conf_vs_acc_map = None
+variation_all = []
+variation_positive = []
+variation_negative = []
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -33,6 +36,9 @@ def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     global _trainList
     global _DictList
     global _sess
+    global variation_all
+    global variation_positive
+    global variation_negative
     _sess = sess
     _model = model
     _testRatings = testRatings
@@ -100,6 +106,13 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # plt.ylabel('Accuracy')
     # plt.show()
     # exit(0)
+    print("Positive")
+    print(np.mean(variation_positive))
+    print(np.median(variation_positive))
+    print("Negative")
+    print(np.mean(variation_negative))
+    print(np.median(variation_negative))
+
 
     return (hits, ndcgs, losses)
 
@@ -138,11 +151,12 @@ def _eval_one_rating(idx):
     labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
+    feed_dict[_model.random_attention] = False
     hrs = []
     ndcgs = []
     losses = []
     predictions = []
-    for i in range(10):
+    for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
         # print(np.max(attention_map))
@@ -157,6 +171,19 @@ def _eval_one_rating(idx):
         hrs.append(hr)
         ndcgs.append(ndcg)
         losses.append(loss)
+
+    feed_dict[_model.random_attention] = True
+    random_prediction = np.array([[0, 0]]*100)
+    num_samples = 10
+    for i in range(num_samples):
+        random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+        random_prediction = np.add(random_prediction_i, random_prediction)
+        # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
+        # print(np.max(attention_map))
+    random_prediction = np.divide(random_prediction, num_samples)
+    diff_predictions = np.abs(random_prediction - predictions)[:, 0]
+    variation_positive.append(diff_predictions[-1])
+    variation_negative.extend(diff_predictions[:99])
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

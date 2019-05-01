@@ -168,8 +168,8 @@ class DeepICF_a:
             self.random_perm = tf.random_shuffle(self.random_perm)
             self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
 
-            # return A, tf.reduce_sum(self.shuffled_A * self.embedding_q_, 1)
-            return A, tf.reduce_sum(A * self.embedding_q_, 1)
+            return A, tf.reduce_sum(self.shuffled_A * self.embedding_q_, 1)
+            # return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):
         with tf.name_scope("inference"):

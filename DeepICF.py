@@ -175,7 +175,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     with tf.Session() as sess:
         # pretrain nor not
         if load_weights:
-            weight_path = './deepICF_1epoch1556612631.ckpt'  # Softmax with two output neurons
+            weight_path = './deepICF_1epoch1556632571.ckpt'  # Softmax with two output neurons
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 

@@ -239,7 +239,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
-            weight_path = './1epoch1554808267.ckpt'  # Softmax with two output neurons
+            weight_path = './1epoch1556643194.ckpt'  # Softmax with two output neurons
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 

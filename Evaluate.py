@@ -110,13 +110,12 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # plt.ylabel('Accuracy')
     # plt.show()
     # exit(0)
-    import matplotlib.pyplot as plt
     print("\n\n+ve var hist\n")
-    postive_var_hist = plt.hist(variation_positive, bins=20)
+    postive_var_hist = np.histogram(variation_positive, bins=20)
     print(postive_var_hist)
 
     print("\n\n-ve var hist\n")
-    negative_var_hist = plt.hist(variation_negative, bins=20)
+    negative_var_hist = np.histogram(variation_negative, bins=20)
     print(negative_var_hist)
     print("Positive")
     print(np.mean(variation_positive))

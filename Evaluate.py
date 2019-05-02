@@ -199,8 +199,13 @@ def _eval_one_rating(idx):
         # print(np.max(attention_map))
     random_prediction = np.divide(random_prediction, num_samples)
     diff_predictions = (predictions - random_prediction)[:, 0]
-    variation_positive.append(diff_predictions[-1])
-    variation_negative.extend(diff_predictions[:99])
+    # variation_positive.append(diff_predictions[-1])
+    # variation_negative.extend(diff_predictions[:99])
+    for i in range(0, len(predictions)):
+        if np.argmax(predictions[i]) == 0:
+            variation_positive.append(diff_predictions[i])
+        else:
+            variation_negative.append(diff_predictions[i])
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

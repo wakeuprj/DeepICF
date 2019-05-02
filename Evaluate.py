@@ -187,7 +187,7 @@ def _eval_one_rating(idx):
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
         # print(np.max(attention_map))
     random_prediction = np.divide(random_prediction, num_samples)
-    diff_predictions = predictions - random_prediction[:, 0]
+    diff_predictions = (predictions - random_prediction)[:, 0]
     variation_positive.append(diff_predictions[-1])
     variation_negative.extend(diff_predictions[:99])
 

@@ -177,10 +177,17 @@ def _eval_one_rating(idx):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
         # print(np.max(attention_map))
+        attention_weights = \
+        np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])[99]
+        max_weights_indicies = np.argpartition(attention_weights, -1)[-1:]
+        new_user_input = np.delete(feed_dict[_model.user_input],
+                                   max_weights_indicies, 1)
+        feed_dict[_model.user_input] = new_user_input
+        new_predictions = _sess.run([_model.output], feed_dict=feed_dict)[0]
 
         for i in range(len(items)):
             item = items[i]
-            map_item_score[item] = predictions[i][0]
+            map_item_score[item] = new_predictions[i][0]
 
         ranklist = heapq.nlargest(_K, map_item_score, key=map_item_score.get)
         hr = _getHitRatio(ranklist, gtItem)
@@ -188,12 +195,6 @@ def _eval_one_rating(idx):
         hrs.append(hr)
         ndcgs.append(ndcg)
         losses.append(loss)
-
-        attention_weights = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])[99]
-        max_weights_indicies = np.argpartition(attention_weights, -1)[-1:]
-        new_user_input = np.delete(feed_dict[_model.user_input], max_weights_indicies, 1)
-        feed_dict[_model.user_input] = new_user_input
-        new_predictions = _sess.run([_model.output], feed_dict=feed_dict)[0]
 
     # feed_dict[_model.random_attention] = True
     # random_prediction = np.array([[0, 0]]*100)

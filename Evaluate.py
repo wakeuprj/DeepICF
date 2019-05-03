@@ -172,7 +172,8 @@ def _eval_one_rating(idx):
     hrs = []
     ndcgs = []
     losses = []
-    predictions = [], new_predictions = []
+    predictions = []
+    new_predictions = []
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)

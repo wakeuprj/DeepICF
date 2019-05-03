@@ -184,6 +184,7 @@ def _eval_one_rating(idx):
         new_user_input = np.delete(feed_dict[_model.user_input],
                                    max_weights_indicies, 1)
         feed_dict[_model.user_input] = new_user_input
+        feed_dict[_model.num_idx] -= 2
         new_predictions = _sess.run([_model.output], feed_dict=feed_dict)[0]
 
         for i in range(len(items)):

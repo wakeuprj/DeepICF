@@ -199,7 +199,7 @@ def _eval_one_rating(idx):
     random_prediction = np.array([[0, 0]]*100)
     num_samples = 10
     for i in range(num_samples):
-        random_indicies = np.random.randint(0, feed_dict[_model.num_idx], 2)
+        random_indicies = np.random.randint(0, feed_dict[_model.num_idx][0], 2)
         feed_dict[_model.user_input] = np.delete(feed_dict[_model.user_input],
                                    random_indicies, 1)
 

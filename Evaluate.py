@@ -180,7 +180,7 @@ def _eval_one_rating(idx):
         # print(np.max(attention_map))
         attention_weights = \
         np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])[99]
-        max_weights_indicies = np.argpartition(attention_weights, -1)[-1:]
+        max_weights_indicies = np.argpartition(attention_weights, -2)[-2:]
         new_user_input = np.delete(feed_dict[_model.user_input],
                                    max_weights_indicies, 1)
         feed_dict[_model.user_input] = new_user_input

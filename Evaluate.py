@@ -172,7 +172,7 @@ def _eval_one_rating(idx):
     hrs = []
     ndcgs = []
     losses = []
-    predictions = []
+    predictions = [], new_predictions = []
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
@@ -189,18 +189,24 @@ def _eval_one_rating(idx):
         ndcgs.append(ndcg)
         losses.append(loss)
 
-    feed_dict[_model.random_attention] = True
-    random_prediction = np.array([[0, 0]]*100)
-    num_samples = 10
-    for i in range(num_samples):
-        random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
-        random_prediction = np.add(random_prediction_i, random_prediction)
-        # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
-        # print(np.max(attention_map))
-    random_prediction = np.divide(random_prediction, num_samples)
-    diff_predictions = (predictions - random_prediction)[:, 0]
-    # variation_positive.append(diff_predictions[-1])
-    # variation_negative.extend(diff_predictions[:99])
+        attention_weights = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])[99]
+        max_weights_indicies = np.argpartition(attention_weights, -1)[-1:]
+        new_user_input = np.delete(feed_dict[_model.user_input], max_weights_indicies, 1)
+        feed_dict[_model.user_input] = new_user_input
+        new_predictions = _sess.run([_model.output], feed_dict=feed_dict)[0]
+
+    # feed_dict[_model.random_attention] = True
+    # random_prediction = np.array([[0, 0]]*100)
+    # num_samples = 10
+    # for i in range(num_samples):
+    #     random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+    #     random_prediction = np.add(random_prediction_i, random_prediction)
+    #     # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
+    #     # print(np.max(attention_map))
+    # random_prediction = np.divide(random_prediction, num_samples)
+    diff_predictions = (predictions - new_predictions)[:, 0]
+    # # variation_positive.append(diff_predictions[-1])
+    # # variation_negative.extend(diff_predictions[:99])
     for i in range(0, len(predictions)):
         if np.argmax(predictions[i]) == 0:
             variation_positive.append(diff_predictions[i])

@@ -212,14 +212,16 @@ def _eval_one_rating(idx):
     #     # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
     #     # print(np.max(attention_map))
 
+    expected_argmax = [1] * len(items)
+    expected_argmax[-1] = 0
     # new_predictions = np.divide(random_prediction, num_samples)
     diff_predictions = (predictions - new_predictions)[:, 0]
     # # variation_positive.append(diff_predictions[-1])
     # # variation_negative.extend(diff_predictions[:99])
     for i in range(0, len(predictions)):
-        if np.argmax(predictions[i]) == 0:
+        if np.argmax(predictions[i]) == 0 and expected_argmax[i] == 0:
             variation_positive.append(diff_predictions[i])
-        else:
+        elif np.argmax(predictions[i]) == 0 and expected_argmax[i] == 1:
             variation_negative.append(diff_predictions[i])
 
     # for i in range(len(items)):

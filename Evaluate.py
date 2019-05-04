@@ -219,10 +219,8 @@ def _eval_one_rating(idx):
     # # variation_positive.append(diff_predictions[-1])
     # # variation_negative.extend(diff_predictions[:99])
     for i in range(0, len(predictions)):
-        if np.argmax(predictions[i]) == 0 and expected_argmax[i] == 0:
-            variation_positive.append(diff_predictions[i])
-        elif np.argmax(predictions[i]) == 0 and expected_argmax[i] == 1:
-            variation_negative.append(diff_predictions[i])
+        variation_positive.append(predictions[i][0])
+        variation_negative.append(new_predictions[i][0])
 
     # for i in range(len(items)):
     #     item = items[i]

@@ -176,7 +176,7 @@ def _eval_one_rating(idx):
     attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])
     top_n_attention_weights = 2
     max_indices = list(map(
-        lambda attention_row: np.argpartition(row, -top_n_attention_weights)[
+        lambda attention_row: np.argpartition(attention_row, -top_n_attention_weights)[
                               -top_n_attention_weights:], attention_map))
     new_user_input = []
     i = 0

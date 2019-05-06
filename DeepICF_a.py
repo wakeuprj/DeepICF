@@ -200,10 +200,10 @@ class DeepICF_a:
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output, reduction=tf.losses.Reduction.MEAN)
-                        # self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        # self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
-                        # self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
+            self.loss = tf.losses.log_loss(self.labels, self.output) + \
+                        self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+                        self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
+                        self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:

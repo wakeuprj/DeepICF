@@ -158,6 +158,11 @@ def _eval_one_rating(idx):
         ndcgs.append(ndcg)
         losses.append(loss)
 
+    y_true = [0] * len(items)
+    y_true[-1] = 1
+    import sklearn
+    brier_score = sklearn.metrics.brier_score_loss(y_true, predictions[:,0])
+    losses = [brier_score]
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0
     # for i in range(0, len(predictions)):

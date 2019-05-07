@@ -102,6 +102,7 @@ class DeepICF_a:
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
             self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
+            self.random_attention = tf.placeholder(tf.bool)
 
     def _create_variables(self):
         with tf.name_scope("embedding"):  # The embedding initialization is unknown now
@@ -167,9 +168,9 @@ class DeepICF_a:
             self.random_perm = tf.range(tf.shape(A)[1])
             self.random_perm = tf.random_shuffle(self.random_perm)
             self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
-
-            # return A, tf.reduce_sum(self.shuffled_A * self.embedding_q_, 1)
-            return A, tf.reduce_sum(A * self.embedding_q_, 1)
+            cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
+            return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
+            # return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):
         with tf.name_scope("inference"):

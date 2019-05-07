@@ -75,21 +75,21 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             ndcgs.append(ndcg)  
             losses.append(loss)
 
-    conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-                for k, v in conf_vs_acc_map.items()}
-
-    import matplotlib.pyplot as plt
-    # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
-    plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
-            tick_label=list(conf_map.keys()))
-    plt.bar(range(len(conf_map.keys())),
-            list(map(lambda x: x + 0.05, list(conf_map.keys()))),
-            tick_label=list(conf_map.keys()), color=(0, 0, 0, 0), edgecolor='g')
-    # # plt.hist(scores, bins=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-    plt.xlabel('Confidence')
-    plt.ylabel('Accuracy')
-    plt.show()
-    exit(0)
+    # conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+    #             for k, v in conf_vs_acc_map.items()}
+    #
+    # import matplotlib.pyplot as plt
+    # # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
+    # plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
+    #         tick_label=list(conf_map.keys()))
+    # plt.bar(range(len(conf_map.keys())),
+    #         list(map(lambda x: x + 0.05, list(conf_map.keys()))),
+    #         tick_label=list(conf_map.keys()), color=(0, 0, 0, 0), edgecolor='g')
+    # # # plt.hist(scores, bins=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+    # plt.xlabel('Confidence')
+    # plt.ylabel('Accuracy')
+    # plt.show()
+    # exit(0)
 
     return (hits, ndcgs, losses)
 
@@ -145,21 +145,21 @@ def _eval_one_rating(idx):
     hr = _getHitRatio(ranklist, gtItem)
     ndcg = _getNDCG(ranklist, gtItem)
 
-    expected_argmax = [1] * len(items)
-    if gtItemRating > 2:
-        expected_argmax[-1] = 0
-    else:
-        expected_argmax[-1] = 2
-
-    for i in range(0, len(predictions)):
-        if expected_argmax[i] == 1 or expected_argmax[i] == 2:
-            continue
-        confidence = np.max(predictions[i])
-        if np.argmax(predictions[i]) == expected_argmax[i]:
-            conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
-        else:
-            conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
-
+    # expected_argmax = [1] * len(items)
+    # if gtItemRating > 2:
+    #     expected_argmax[-1] = 0
+    # else:
+    #     expected_argmax[-1] = 2
+    #
+    # for i in range(0, len(predictions)):
+    #     if expected_argmax[i] == 1 or expected_argmax[i] == 2:
+    #         continue
+    #     confidence = np.max(predictions[i])
+    #     if np.argmax(predictions[i]) == expected_argmax[i]:
+    #         conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
+    #     else:
+    #         conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
+    #
     return (hr, ndcg, loss)
 
 def get_item_embeddings():

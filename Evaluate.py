@@ -21,6 +21,7 @@ _K = None
 _DictList = None
 _sess = None
 conf_vs_acc_map = None
+perm_conf_vs_acc_map = None
 variation_all = []
 variation_positive = []
 variation_negative = []
@@ -58,6 +59,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global variation_positive
     global variation_negative
     global accuracy_stats
+    global perm_conf_vs_acc_map
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
@@ -65,6 +67,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     _sess = sess
     _K = 10
     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+    perm_conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
     bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
     accuracy_stats['normal'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
     accuracy_stats['random'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
@@ -86,9 +89,12 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             hits.append(hr)
             ndcgs.append(ndcg)  
             losses.append(loss)
-    #
-    # conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-    #             for k, v in conf_vs_acc_map.items()}
+
+    conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+                for k, v in conf_vs_acc_map.items()}
+
+    perm_conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+                for k, v in perm_conf_vs_acc_map.items()}
     # ece = 0.0
     # for key in bucket_sizes.keys():
     #     confidence = key + 0.05
@@ -102,6 +108,8 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
     # plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
     #         tick_label=list(conf_map.keys()))
+    # plt.bar(range(len(perm_conf_map.keys())), list(perm_conf_map.values()),
+    #         tick_label=list(perm_conf_map.keys()), color=(0, 0, 0, 0), edgecolor='r')
     # plt.bar(range(len(conf_map.keys())),
     #         list(map(lambda x: x + 0.05, list(conf_map.keys()))),
     #         tick_label=list(conf_map.keys()), color=(0, 0, 0, 0), edgecolor='g')
@@ -110,26 +118,33 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # plt.ylabel('Accuracy')
     # plt.show()
     # exit(0)
-    print("\n\n+ve var hist\n")
-    postive_var_hist = np.histogram(variation_positive, bins=20)
-    print(postive_var_hist)
-
-    print("\n\n-ve var hist\n")
-    negative_var_hist = np.histogram(variation_negative, bins=20)
-    print(negative_var_hist)
-    print("Positive")
-    print(np.mean(variation_positive))
-    print(np.median(variation_positive))
-    print(np.max(variation_positive))
-    print(np.min(variation_positive))
-    print("Negative")
-    print(np.mean(variation_negative))
-    print(np.median(variation_negative))
-    print(np.max(variation_negative))
-    print(np.min(variation_negative))
+    # print("\n\n+ve var hist\n")
+    # postive_var_hist = np.histogram(variation_positive, bins=20)
+    # print(postive_var_hist)
+    #
+    # print("\n\n-ve var hist\n")
+    # negative_var_hist = np.histogram(variation_negative, bins=20)
+    # print(negative_var_hist)
+    # print("Positive")
+    # print(np.mean(variation_positive))
+    # print(np.median(variation_positive))
+    # print(np.max(variation_positive))
+    # print(np.min(variation_positive))
+    # print("Negative")
+    # print(np.mean(variation_negative))
+    # print(np.median(variation_negative))
+    # print(np.max(variation_negative))
+    # print(np.min(variation_negative))
 
     # print("Accuracy stats")
     # print(accuracy_stats)
+    maps = (conf_map, perm_conf_map)
+
+    import pickle
+    file_name = "calib-v-attetn-perm.pkl"
+    pkl_file = open(file_name, 'wb')
+    pickle.dump(maps, pkl_file)
+    pkl_file.close()
 
     return (hits, ndcgs, losses)
 
@@ -189,23 +204,37 @@ def _eval_one_rating(idx):
         ndcgs.append(ndcg)
         losses.append(loss)
 
+    confidence = np.max(predictions[-1])
+    if np.argmax(predictions[-1]) == 0:
+        conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
+    else:
+        conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
+    bucket_sizes[confidence // 0.1 / 10] += 1
+
     feed_dict[_model.random_attention] = True
-    random_prediction = np.array([[0, 0]]*100)
+    # random_prediction = np.array([[0, 0]]*100)
     num_samples = 10
     for i in range(num_samples):
         random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
-        random_prediction = np.add(random_prediction_i, random_prediction)
-        # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
-        # print(np.max(attention_map))
-    random_prediction = np.divide(random_prediction, num_samples)
-    diff_predictions = (predictions - random_prediction)[:, 0]
-    # variation_positive.append(diff_predictions[-1])
-    # variation_negative.extend(diff_predictions[:99])
-    for i in range(0, len(predictions)):
-        if np.argmax(predictions[i]) == 0:
-            variation_positive.append(diff_predictions[i])
+        random_pred_confidence = np.max(random_prediction_i[-1])
+        if np.argmax(random_prediction_i[-1]) == 0:
+            perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
         else:
-            variation_negative.append(diff_predictions[i])
+            perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][0] += 1
+
+
+    #     random_prediction = np.add(random_prediction_i, random_prediction)
+    #     # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
+    #     # print(np.max(attention_map))
+    # random_prediction = np.divide(random_prediction, num_samples)
+    # diff_predictions = (predictions - random_prediction)[:, 0]
+    # # variation_positive.append(diff_predictions[-1])
+    # # variation_negative.extend(diff_predictions[:99])
+    # for i in range(0, len(predictions)):
+    #     if np.argmax(predictions[i]) == 0:
+    #         variation_positive.append(diff_predictions[i])
+    #     else:
+    #         variation_negative.append(diff_predictions[i])
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

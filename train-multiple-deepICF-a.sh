@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sh train-multiple-deepICF-a.sh 5
+# sh train-multiple-deepICF-a.sh 5 |& tee Stability-Models-DeepICF-a/logs-ray04
 if [ ! -d "Stability-Models-DeepICF-a" ]; then
   mkdir Stability-Models-DeepICF-a
 fi

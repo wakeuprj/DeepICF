@@ -59,7 +59,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
     bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
 
-    num_thread = multiprocessing.cpu_count()
+    num_thread = 1 #multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
     if(num_thread > 1): # Multi-thread
         pool = multiprocessing.Pool(num_thread)

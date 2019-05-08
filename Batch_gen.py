@@ -50,7 +50,7 @@ def batch_gen(batches, i):
 def _preprocess(get_train_batch):    #generate the masked batch list
     print("start preprocess " + str(int(_num_batch)))
     user_input_list, num_idx_list, item_input_list, labels_list = [], [], [], []
-    cpu_count = multiprocessing.cpu_count()
+    cpu_count = 1 #multiprocessing.cpu_count()
     if cpu_count == 1:
         for i in range(int(_num_batch)):
             ui, ni, ii, l = get_train_batch(i)

@@ -58,7 +58,7 @@ class Dataset(object):
         Read .rating file and Return dok matrix.
         The first line of .rating file is: num_users\t num_items
         '''
-        print("start load_training_file_as_matrix %d", str(int(time())))
+        print("start load_training_file_as_matrix", str(int(time())))
         # Get number of users and items
         num_users, num_items = 0, 0
         with open(filename, "r") as f:
@@ -69,6 +69,7 @@ class Dataset(object):
                 num_users = max(num_users, u)
                 num_items = max(num_items, i)
                 line = f.readline()
+        print("got number of users and items load_training_file_as_matrix", str(int(time())))
         # Construct matrix
         mat = sp.dok_matrix((num_users+1, num_items+1), dtype=np.float32)
         with open(filename, "r") as f:

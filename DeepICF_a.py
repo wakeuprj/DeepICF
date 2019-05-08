@@ -320,7 +320,10 @@ def training(flag, model, dataset, epochs, num_negatives):
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-        model_saver.save(sess, './DeepICF_a-3opt-%d.ckpt' % (time()))
+        model_file_name = './Stability-Models-DeepICF-a/DeepICF_a-3opt-' + str(
+            int(time())) + '.ckpt'
+        model_saver.save(sess, model_file_name)
+        print('Model saved as:', model_file_name)
         return best_hr, best_ndcg
 
 

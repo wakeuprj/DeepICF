@@ -3,7 +3,6 @@ from __future__ import division
 
 import os
 
-from util import perfTSNE, plotPoints
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 

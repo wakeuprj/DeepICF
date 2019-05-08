@@ -20,12 +20,13 @@ _testNegatives = None
 _K = None
 _DictList = None
 _sess = None
-conf_vs_acc_map = None
+positive_tests_conf_vs_acc_map = None
 perm_conf_vs_acc_map = None
 variation_all = []
 variation_positive = []
 variation_negative = []
 accuracy_stats = {}
+perm_conf_vs_variation = None
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -53,24 +54,31 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _K
     global _DictList
     global _sess
-    global conf_vs_acc_map
+    global positive_tests_conf_vs_acc_map
     global bucket_sizes
     global variation_all
     global variation_positive
     global variation_negative
     global accuracy_stats
     global perm_conf_vs_acc_map
+    global perm_conf_vs_variation
+    global positive_tests_permutation_scores
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
     _DictList = DictList
     _sess = sess
     _K = 10
-    conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+    positive_tests_conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
     perm_conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
-    bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
-    accuracy_stats['normal'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
-    accuracy_stats['random'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
+
+    # store all target item scores before and after permutation
+    positive_tests_permutation_scores = []
+
+
+    # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
+    # accuracy_stats['normal'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
+    # accuracy_stats['random'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
 
     num_thread = 1#multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
@@ -91,10 +99,10 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             losses.append(loss)
 
     conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-                for k, v in conf_vs_acc_map.items()}
+                for k, v in positive_tests_conf_vs_acc_map.items()}
 
-    perm_conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-                for k, v in perm_conf_vs_acc_map.items()}
+    # perm_conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+    #             for k, v in perm_conf_vs_acc_map.items()}
     # ece = 0.0
     # for key in bucket_sizes.keys():
     #     confidence = key + 0.05
@@ -138,10 +146,10 @@ def eval(model, sess, testRatings, testNegatives, DictList):
 
     # print("Accuracy stats")
     # print(accuracy_stats)
-    maps = (conf_map, perm_conf_map)
+    maps = (positive_tests_conf_vs_acc_map, positive_tests_permutation_scores)
 
     import pickle
-    file_name = "calib-v-attetn-perm.pkl"
+    file_name = "positive-tests-conf-map-and-permutation-scores.pkl"
     pkl_file = open(file_name, 'wb')
     pickle.dump(maps, pkl_file)
     pkl_file.close()
@@ -188,6 +196,7 @@ def _eval_one_rating(idx):
     ndcgs = []
     losses = []
     predictions = []
+    positive_tests_scores_dict = {'og': [], 'perm': []}
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
@@ -204,23 +213,25 @@ def _eval_one_rating(idx):
         ndcgs.append(ndcg)
         losses.append(loss)
 
+    positive_tests_scores_dict['og'].append(predictions[-1])
     confidence = np.max(predictions[-1])
-    if np.argmax(predictions[-1]) == 0:
-        conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
+    if np.argmax(predictions[-1]) == 0:  # correctly predicted
+        positive_tests_conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
     else:
-        conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
-    bucket_sizes[confidence // 0.1 / 10] += 1
+        positive_tests_conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
+    # bucket_sizes[confidence // 0.1 / 10] += 1
 
     feed_dict[_model.random_attention] = True
     # random_prediction = np.array([[0, 0]]*100)
-    num_samples = 10
+    num_samples = 100
     for i in range(num_samples):
         random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
-        random_pred_confidence = np.max(random_prediction_i[-1])
-        if np.argmax(random_prediction_i[-1]) == 0:
-            perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
-        else:
-            perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][0] += 1
+        positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
+    positive_tests_permutation_scores.append(positive_tests_scores_dict)
+        # if np.argmax(random_prediction_i[-1]) == 0:
+        #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
+        # else:
+        #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][0] += 1
 
 
     #     random_prediction = np.add(random_prediction_i, random_prediction)

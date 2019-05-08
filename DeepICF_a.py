@@ -234,7 +234,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = True
+    load_weights = False
 
     with tf.Session() as sess:
         if load_weights:
@@ -300,12 +300,12 @@ def training(flag, model, dataset, epochs, num_negatives):
 
             if epoch_count % model.verbose == 0:
 
-                if model.train_loss:
-                    loss_begin = time()
-                    train_loss = training_loss(model, sess, batches)
-                    loss_time = time() - loss_begin
-                else:
-                    loss_time, train_loss = 0, 0
+                # if model.train_loss:
+                #     loss_begin = time()
+                #     train_loss = training_loss(model, sess, batches)
+                #     loss_time = time() - loss_begin
+                # else:
+                #     loss_time, train_loss = 0, 0
 
                 eval_begin = time()
                 (hits, ndcgs, losses) = evaluate.eval(model, sess, dataset.testRatings, dataset.testNegatives, testDict)
@@ -316,16 +316,16 @@ def training(flag, model, dataset, epochs, num_negatives):
                     best_hr = hr
                     best_ndcg = ndcg
 
-                logging.info("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
-                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
-                print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
-                    epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
+                logging.info("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time))
+                print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs]" % (
+                    epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time))
 
             batch_begin = time()
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-        model_saver.save(sess, './DeepICF_a%d.ckpt' % (time()))
+        model_saver.save(sess, './Stability-Models-DeepICF-a/DeepICF_a%d.ckpt' % (time()))
         return best_hr, best_ndcg
 
 

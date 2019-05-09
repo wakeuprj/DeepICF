@@ -227,7 +227,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = True
+    load_weights = False
 
     with tf.Session() as sess:
         if load_weights:
@@ -349,9 +349,10 @@ def training_loss(model, sess, batches):
 
 
 if __name__ == '__main__':
-
+    print("Started running deepICF_a")
     args = parse_args()
     regs = eval(args.regs)
+    print("Arguments Evaluated.")
 
     logging.info("dataset:%s  pretrain:%d   weight_size:%d  embedding_size:%d"
                  % (args.dataset, args.pretrain, args.weight_size, args.embed_size))
@@ -359,16 +360,16 @@ if __name__ == '__main__':
                  % (regs[0], regs[1], regs[2], args.beta, args.lr, args.train_loss, args.activation))
 
 
-    import pickle
-    pkl_dataset_filename = 'dataset-3-output.pkl'
+    #import pickle
+    #pkl_dataset_filename = 'dataset-3-output.pkl'
     # #
-    # dataset = Dataset(args.path + args.dataset)
+    dataset = Dataset(args.path + args.dataset)
     # #
     # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
     # pickle.dump(dataset, pkl_dataset_file)
     # pkl_dataset_file.close()
     # exit(0)
-    dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
+    #dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
     best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)

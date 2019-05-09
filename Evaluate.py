@@ -63,6 +63,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global perm_conf_vs_acc_map
     global perm_conf_vs_variation
     global positive_tests_permutation_scores
+    global negative_tests_permutation_scores
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
@@ -74,6 +75,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
 
     # store all target item scores before and after permutation
     positive_tests_permutation_scores = []
+    negative_tests_permutation_scores = []
 
 
     # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
@@ -146,10 +148,10 @@ def eval(model, sess, testRatings, testNegatives, DictList):
 
     # print("Accuracy stats")
     # print(accuracy_stats)
-    maps = (positive_tests_conf_vs_acc_map, positive_tests_permutation_scores)
+    maps = (positive_tests_permutation_scores, negative_tests_permutation_scores)
 
     import pickle
-    file_name = "positive-tests-conf-map-and-permutation-scores.pkl"
+    file_name = "positive-negative-tests-permutation-scores.pkl"
     pkl_file = open(file_name, 'wb')
     pickle.dump(maps, pkl_file)
     pkl_file.close()
@@ -222,12 +224,19 @@ def _eval_one_rating(idx):
     # bucket_sizes[confidence // 0.1 / 10] += 1
 
     feed_dict[_model.random_attention] = True
-    # random_prediction = np.array([[0, 0]]*100)
+    random_prediction = np.array([[0, 0]]*100)
     num_samples = 100
     for i in range(num_samples):
         random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
+        random_prediction = np.add(random_prediction_i, random_prediction)
+    random_prediction = np.divide(random_prediction, num_samples)
+    for i in range(len(predictions) - 1):
+        negative_tests_scores_dict = {'og': [], 'perm': []}
+        negative_tests_scores_dict['og'].append(predictions[i])
+        negative_tests_scores_dict['perm'].append(random_prediction[i])
     positive_tests_permutation_scores.append(positive_tests_scores_dict)
+    negative_tests_permutation_scores.append(positive_tests_scores_dict)
         # if np.argmax(random_prediction_i[-1]) == 0:
         #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
         # else:

@@ -70,10 +70,6 @@ def _preprocess(get_train_batch):    #generate the masked batch list
     return (user_input_list, num_idx_list, item_input_list, labels_list)
 
 def _get_train_data_user():
-    import pickle
-    num_items, user_input, item_input, labels, batch_length = pickle.load(open("train_data_user.pkl", 'rb'))
-    return num_items, user_input, item_input, labels, batch_length
-
     user_input, item_input, labels, batch_length = [],[],[],[]
     train = _Dataset.trainMatrix
     trainList = _Dataset.trainList

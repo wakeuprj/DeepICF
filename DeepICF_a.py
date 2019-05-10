@@ -363,17 +363,7 @@ if __name__ == '__main__':
     logging.info("regs:%.8f, %.8f, %.8f  beta:%.1f  learning_rate:%.4f  train_loss:%d  activation:%d"
                  % (regs[0], regs[1], regs[2], args.beta, args.lr, args.train_loss, args.activation))
 
-
-    import pickle
-    pkl_dataset_filename = 'dataset.pkl'
-
-    # dataset = Dataset(args.path + args.dataset)
-
-    # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
-    # pickle.dump(dataset, pkl_dataset_file)
-    # pkl_dataset_file.close()
-    # exit(0)
-    dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
+    dataset = Dataset(args.path + args.dataset)
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
     best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)

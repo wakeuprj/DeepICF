@@ -236,7 +236,7 @@ def _eval_one_rating(idx):
         negative_tests_scores_dict['og'].append(predictions[i])
         negative_tests_scores_dict['perm'].append(random_prediction[i])
     positive_tests_permutation_scores.append(positive_tests_scores_dict)
-    negative_tests_permutation_scores.append(positive_tests_scores_dict)
+    negative_tests_permutation_scores.append(negative_tests_scores_dict)
         # if np.argmax(random_prediction_i[-1]) == 0:
         #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
         # else:

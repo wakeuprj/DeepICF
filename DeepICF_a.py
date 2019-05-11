@@ -335,7 +335,7 @@ def training(flag, model, dataset, epochs, num_negatives):
 def training_batch(batch_index, model, sess, batches):
     for index in batch_index:
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
-        labels_sq = np.squeeze(labels[:, None])
+        labels_sq = labels[:, None]
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
                      model.labels: labels_sq, model.is_train_phase: True}
         sess.run([model.loss, model.optimizer], feed_dict)
@@ -346,7 +346,7 @@ def training_loss(model, sess, batches):
     num_batch = len(batches[1])
     for index in range(num_batch):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
-        labels_sq = np.squeeze(labels[:, None])
+        labels_sq = labels[:, None]
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
                      model.labels: labels_sq, model.is_train_phase: True}
         train_loss += sess.run(model.loss, feed_dict)

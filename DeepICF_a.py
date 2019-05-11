@@ -201,15 +201,17 @@ class DeepICF_a:
                     layer1 = batch_norm_layer(layer1, train_phase=self.is_train_phase, scope_bn='bn_%d' % i)
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
-
-            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
+            self.output_logits = tf.add_n([out_layer, self.bias_i])
+            self.output = tf.nn.softmax(self.output_logits)  # (b, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output) + \
-                        self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
-                        self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
+            self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                   self.output_logits)
+            # self.loss = tf.losses.log_loss(self.labels, self.output) + \
+            #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+            #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
+            #             self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:

@@ -86,8 +86,8 @@ def _get_train_data_user():
             # positive instance
             user_input.append(u)
             item_input.append(i)
-            # labels.append(1)
-            labels.append([1, 0])
+            labels.append(1)
+            # labels.append([1, 0])
             # negative instances
             for t in range(_num_negatives):
                 j = np.random.randint(num_items)
@@ -95,8 +95,8 @@ def _get_train_data_user():
                     j = np.random.randint(num_items)
                 user_input.append(u)
                 item_input.append(j)
-                # labels.append(0)
-                labels.append([0, 1])
+                labels.append(0)
+                # labels.append([0, 1])
     return num_items, user_input, item_input, labels, batch_length
 
 

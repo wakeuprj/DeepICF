@@ -132,10 +132,10 @@ def _eval_one_rating(idx):
     rating = _testRatings[idx]
     items = _testNegatives[idx]
     gtItem = rating[1]
-    # labels = np.zeros(len(items))[:, None]
-    labels = np.matrix([[0, 1]] * 100)
-    # labels[-1] = 1
-    labels[-1] = [1, 0]
+    labels = np.zeros(len(items))[:, None]
+    # labels = np.matrix([[0, 1]] * 100)
+    labels[-1] = 1
+    # labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
     hrs = []

@@ -93,7 +93,7 @@ class DeepICF_a:
         self.reg_W = eval(args.reg_W)
         self.train_loss = args.train_loss
         self.use_batch_norm = args.batch_norm
-        self.num_outputs = 2
+        self.num_outputs = 1
 
     def _create_placeholders(self):
         with tf.name_scope("input_data"):
@@ -202,7 +202,7 @@ class DeepICF_a:
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
 
-            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
+            self.output = tf.sigmoid(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):

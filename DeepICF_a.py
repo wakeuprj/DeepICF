@@ -110,7 +110,7 @@ class DeepICF_a:
             self.c2 = tf.constant(0.0, tf.float32, [1, self.embedding_size], name='c2')
             self.embedding_Q_ = tf.concat([self.c1, self.c2], 0, name='embedding_Q_')
             self.embedding_Q = tf.Variable(tf.truncated_normal(shape=[self.num_items, self.embedding_size], mean=0.0, stddev=0.01), name='embedding_Q', dtype=tf.float32, trainable=trainable_flag)
-            self.bias = tf.Variable(tf.zeros([self.num_items, self.num_outputs]), name='bias', trainable=trainable_flag)
+            self.bias = tf.Variable(tf.zeros(self.num_items), name='bias', trainable=trainable_flag)
 
             # Variables for attention
             if self.algorithm == 0:
@@ -189,7 +189,7 @@ class DeepICF_a:
                 self.A, self.embedding_p = self._attention_MLP(tf.concat([self.embedding_q_, tf.tile(self.embedding_q, tf.stack([1, n, 1]))], 2))  # (?, k)
 
             self.embedding_q = tf.reduce_sum(self.embedding_q, 1)  # (b, e)
-            self.bias_i = tf.squeeze(tf.nn.embedding_lookup(self.bias, self.item_input))  # (b, 1)
+            self.bias_i = tf.nn.embedding_lookup(self.bias, self.item_input)  # (b, 1)
             self.coeff = tf.pow(self.num_idx, tf.constant(self.alpha, tf.float32, [1]))
             self.embedding_p = self.coeff * self.embedding_p  # (b, e)
 
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     dataset = Dataset(args.path + args.dataset)
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
-    best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)
+    best_hr, best_ndcg = training(args.pretrain, model, dataset, args.epochs, args.num_neg)
 
     print("End. best HR = %.4f, best NDCG = %.4f" % (best_hr, best_ndcg))
 

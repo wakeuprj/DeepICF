@@ -133,7 +133,7 @@ def _eval_one_rating(idx):
     items = _testNegatives[idx]
     gtItem = rating[1]
     # labels = np.zeros(len(items))[:, None]
-    labels = np.matrix([[0, 1]] * 100)
+    labels = np.squeeze([[0, 1]] * 100)
     # labels[-1] = 1
     labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
@@ -147,7 +147,7 @@ def _eval_one_rating(idx):
     num_negatives = total_cases - num_positives
     imbalace_weights = []
     for i in range(len(labels)):
-        if labels[i][0][0] == 1:
+        if labels[i][0] == 1:
             imbalace_weights.append(total_cases / (2 * num_positives))
         else:
             imbalace_weights.append(total_cases / (2 * num_negatives))

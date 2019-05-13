@@ -142,6 +142,16 @@ def _eval_one_rating(idx):
     ndcgs = []
     losses = []
     predictions = []
+    total_cases = len(labels)
+    num_positives = np.count_nonzero(labels[:, 0])
+    num_negatives = total_cases - num_positives
+    imbalace_weights = []
+    for i in range(len(labels)):
+        if labels[i][0] == 1:
+            imbalace_weights.append(total_cases / (2 * num_positives))
+        else:
+            imbalace_weights.append(total_cases / (2 * num_negatives))
+    feed_dict[_model.imbalance_weights] = np.array(imbalace_weights)
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)

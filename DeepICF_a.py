@@ -102,6 +102,7 @@ class DeepICF_a:
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
             self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
+            self.imbalance_weights = tf.placeholder(tf.float32, shape=[None])
 
     def _create_variables(self):
         with tf.name_scope("embedding"):  # The embedding initialization is unknown now
@@ -206,20 +207,17 @@ class DeepICF_a:
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            imbalance_weights = [50 / 99] * 100
-            imbalance_weights[-1] = 50
-            self.class_imbalance_weights = tf.constant(imbalance_weights)
             self.loss = tf.losses.softmax_cross_entropy(self.labels,
                                                         self.output_logits,
-                                                        self.class_imbalance_weights)
+                                                        weights=self.imbalance_weights)
             # self.loss = tf.losses.log_loss(self.labels, self.output) + \
             #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
             #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
             #             self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
-            # for i in range(min(len(self.n_hidden), len(self.reg_W))):
-            #     if self.reg_W[i] > 0:
-            #         self.loss = self.loss + self.reg_W[i] * tf.reduce_sum(tf.square(self.weights['h%d'%i]))
+            for i in range(min(len(self.n_hidden), len(self.reg_W))):
+                if self.reg_W[i] > 0:
+                    self.loss = self.loss + self.reg_W[i] * tf.reduce_sum(tf.square(self.weights['h%d'%i]))
 
     def _create_optimizer(self):
         with tf.name_scope("optimizer"):
@@ -359,8 +357,17 @@ def training_batch(batch_index, model, sess, batches):
     for index in batch_index:
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
+        total_cases = len(labels_sq)
+        num_positives = np.count_nonzero(labels_sq[:, 0])
+        num_negatives = total_cases - num_positives
+        imbalace_weights = []
+        for i in range(len(labels)):
+            if labels[i][0] == 1:
+                imbalace_weights.append(total_cases / (2 * num_positives))
+            else:
+                imbalace_weights.append(total_cases / (2 * num_negatives))
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True, model.imbalance_weights: np.array(imbalace_weights)}
         sess.run([model.loss, model.optimizer], feed_dict)
 
 
@@ -370,8 +377,17 @@ def training_loss(model, sess, batches):
     for index in range(num_batch):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
+        total_cases = len(labels_sq)
+        num_positives = np.count_nonzero(labels_sq[:, 0])
+        num_negatives = total_cases - num_positives
+        imbalace_weights = []
+        for i in range(len(labels)):
+            if labels[i][0] == 1:
+                imbalace_weights.append(total_cases / (2 * num_positives))
+            else:
+                imbalace_weights.append(total_cases / (2 * num_negatives))
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True, model.imbalance_weights: np.array(imbalace_weights)}
         train_loss += sess.run(model.loss, feed_dict)
     return train_loss / num_batch
 

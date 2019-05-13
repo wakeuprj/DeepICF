@@ -293,6 +293,7 @@ def training(flag, model, dataset, epochs, num_negatives):
         testDict = evaluate.init_evaluate_model(model, sess, dataset.testRatings, dataset.testNegatives, dataset.trainList)
 
         best_hr, best_ndcg = 0, 0
+        patience_cnt = 0
         # train by epoch
         for epoch_count in range(epochs):
 
@@ -314,6 +315,13 @@ def training(flag, model, dataset, epochs, num_negatives):
                 hr, ndcg, test_loss = np.array(hits).mean(), np.array(ndcgs).mean(), np.array(losses).mean()
                 eval_time = time() - eval_begin
 
+                patience = 8
+                min_delta = 0.002
+                if epoch_count > 0 and hr - best_hr > min_delta:
+                    patience_cnt = 0
+                else:
+                    patience_cnt += 1
+
                 if hr > best_hr:
                     best_hr = hr
                     best_ndcg = ndcg
@@ -326,6 +334,11 @@ def training(flag, model, dataset, epochs, num_negatives):
                     "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
                         epoch_count, batch_time, train_time, hr, ndcg,
                         test_loss, eval_time, train_loss, loss_time))
+
+                if patience_cnt > patience:
+                    print("early stopping...")
+                    break
+
 
             batch_begin = time()
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)

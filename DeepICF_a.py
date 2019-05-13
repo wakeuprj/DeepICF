@@ -206,16 +206,20 @@ class DeepICF_a:
 
     def _create_loss(self):
         with tf.name_scope("loss"):
+            imbalance_weights = [50 / 99] * 100
+            imbalance_weights[-1] = 50
+            self.class_imbalance_weights = tf.constant(imbalance_weights)
             self.loss = tf.losses.softmax_cross_entropy(self.labels,
-                                                   self.output_logits)
+                                                        self.output_logits,
+                                                        self.class_imbalance_weights)
             # self.loss = tf.losses.log_loss(self.labels, self.output) + \
             #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
             #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
             #             self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
-            for i in range(min(len(self.n_hidden), len(self.reg_W))):
-                if self.reg_W[i] > 0:
-                    self.loss = self.loss + self.reg_W[i] * tf.reduce_sum(tf.square(self.weights['h%d'%i]))
+            # for i in range(min(len(self.n_hidden), len(self.reg_W))):
+            #     if self.reg_W[i] > 0:
+            #         self.loss = self.loss + self.reg_W[i] * tf.reduce_sum(tf.square(self.weights['h%d'%i]))
 
     def _create_optimizer(self):
         with tf.name_scope("optimizer"):
@@ -236,7 +240,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = False
+    load_weights = True
 
     with tf.Session() as sess:
         if load_weights:

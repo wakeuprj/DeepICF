@@ -147,7 +147,7 @@ def _eval_one_rating(idx):
     num_negatives = total_cases - num_positives
     imbalace_weights = []
     for i in range(len(labels)):
-        if labels[i][0] == 1:
+        if labels[i][0][0] == 1:
             imbalace_weights.append(total_cases / (2 * num_positives))
         else:
             imbalace_weights.append(total_cases / (2 * num_negatives))

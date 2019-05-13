@@ -302,12 +302,12 @@ def training(flag, model, dataset, epochs, num_negatives):
 
             if epoch_count % model.verbose == 0:
 
-                # if model.train_loss:
-                #     loss_begin = time()
-                #     train_loss = training_loss(model, sess, batches)
-                #     loss_time = time() - loss_begin
-                # else:
-                #     loss_time, train_loss = 0, 0
+                if model.train_loss:
+                    loss_begin = time()
+                    train_loss = training_loss(model, sess, batches)
+                    loss_time = time() - loss_begin
+                else:
+                    loss_time, train_loss = 0, 0
 
                 eval_begin = time()
                 (hits, ndcgs, losses) = evaluate.eval(model, sess, dataset.testRatings, dataset.testNegatives, testDict)
@@ -318,10 +318,14 @@ def training(flag, model, dataset, epochs, num_negatives):
                     best_hr = hr
                     best_ndcg = ndcg
 
-                logging.info("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs]" % (
-                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time))
-                print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs]" % (
-                    epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time))
+                logging.info(
+                    "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg,
+                        test_loss, eval_time, train_loss, loss_time))
+                print(
+                    "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg,
+                        test_loss, eval_time, train_loss, loss_time))
 
             batch_begin = time()
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)

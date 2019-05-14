@@ -6,15 +6,20 @@ import os
 from util import perfTSNE, plotPoints
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['PYTHONHASHSEED'] = str(21)
 
 import tensorflow as tf
+tf.set_random_seed(21)
 import numpy as np
+np.random.seed(21)
 import logging
 from time import time
 from Dataset import Dataset
 import Batch_gen as data
 import Evaluate as evaluate
 import matplotlib.pyplot as plt
+import random
+random.seed(21)
 
 import argparse
 from tensorflow.contrib.layers.python.layers import batch_norm as batch_norm

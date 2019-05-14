@@ -59,6 +59,8 @@ def parse_args():
                         help='Activation for ReLU, sigmoid, tanh.')
     parser.add_argument('--algorithm', type=int, default=0,
                         help='0 for prod, 1 for concat')
+    parser.add_argument('--imbalance', type=int, default=0,
+                        help='0 for nothing, 1 for weight im-balance in loss')
     return parser.parse_args()
 
 # batch norm
@@ -69,6 +71,18 @@ def batch_norm_layer(x, train_phase, scope_bn):
         is_training=False, reuse=True, trainable=True, scope=scope_bn)
     z = tf.cond(train_phase, lambda: bn_train, lambda: bn_inference)
     return z
+
+def weight_imb_function(labels):
+    total_cases = len(labels)
+    num_positives = np.count_nonzero(labels[:, 0])
+    num_negatives = total_cases - num_positives
+    imbalace_weights = []
+    for i in range(len(labels)):
+        if labels[i][0] == 1:
+            imbalace_weights.append(total_cases / (2 * num_positives))
+        else:
+            imbalace_weights.append(total_cases / (2 * num_negatives))
+    return np.array(imbalace_weights)
 
 class DeepICF_a:
 
@@ -94,6 +108,7 @@ class DeepICF_a:
         self.train_loss = args.train_loss
         self.use_batch_norm = args.batch_norm
         self.num_outputs = 2
+        self.weights_balancing = args.imbalance
 
     def _create_placeholders(self):
         with tf.name_scope("input_data"):
@@ -102,7 +117,6 @@ class DeepICF_a:
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
             self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
-            self.imbalance_weights = tf.placeholder(tf.float32, shape=[None])
 
     def _create_variables(self):
         with tf.name_scope("embedding"):  # The embedding initialization is unknown now
@@ -207,9 +221,17 @@ class DeepICF_a:
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.softmax_cross_entropy(self.labels,
-                                                        self.output_logits,
-                                                        weights=self.imbalance_weights)
+            if self.weights_balancing:
+                print("Balancing weights for loss calculation.")
+                self.imbalance_weights = tf.py_func(weight_imb_function,
+                                                    [self.labels],
+                                                    tf.double)
+                self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                            self.output_logits,
+                                                            weights=self.imbalance_weights)
+            else:
+                self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                            self.output_logits)
             # self.loss = tf.losses.log_loss(self.labels, self.output) + \
             #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
             #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
@@ -356,17 +378,8 @@ def training_batch(batch_index, model, sess, batches):
     for index in batch_index:
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
-        total_cases = len(labels_sq)
-        num_positives = np.count_nonzero(labels_sq[:, 0])
-        num_negatives = total_cases - num_positives
-        imbalace_weights = []
-        for i in range(len(labels)):
-            if labels[i][0] == 1:
-                imbalace_weights.append(total_cases / (2 * num_positives))
-            else:
-                imbalace_weights.append(total_cases / (2 * num_negatives))
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True, model.imbalance_weights: np.array(imbalace_weights)}
+                     model.labels: labels_sq, model.is_train_phase: True}
         sess.run([model.loss, model.optimizer], feed_dict)
 
 
@@ -376,17 +389,8 @@ def training_loss(model, sess, batches):
     for index in range(num_batch):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
-        total_cases = len(labels_sq)
-        num_positives = np.count_nonzero(labels_sq[:, 0])
-        num_negatives = total_cases - num_positives
-        imbalace_weights = []
-        for i in range(len(labels)):
-            if labels[i][0] == 1:
-                imbalace_weights.append(total_cases / (2 * num_positives))
-            else:
-                imbalace_weights.append(total_cases / (2 * num_negatives))
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True, model.imbalance_weights: np.array(imbalace_weights)}
+                     model.labels: labels_sq, model.is_train_phase: True}
         train_loss += sess.run(model.loss, feed_dict)
     return train_loss / num_batch
 

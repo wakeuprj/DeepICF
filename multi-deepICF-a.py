@@ -1,11 +1,23 @@
 from Dataset import Dataset
 from DeepICF_a import parse_args, DeepICF_a, training
+import os
+import tensorflow as tf
+import numpy as np
+import random
 
 if __name__ == '__main__':
 
     args = parse_args()
     regs = eval(args.regs)
-    for iteration_num in range(10):
+    seeds = [0, 2 ** 32 - 1, 32, 4, 2 ** 18, 137, 5051, 813773, 997,
+             51023]
+    seeds = [21] * 10
+    for iteration_num in range(len(seeds)):
+        tf.reset_default_graph()
+        os.environ['PYTHONHASHSEED'] = str(seeds[iteration_num])
+        tf.set_random_seed(seeds[iteration_num])
+        np.random.seed(seeds[iteration_num])
+        random.seed(seeds[iteration_num])
         print("Iteration:", iteration_num)
         dataset = Dataset(args.path + args.dataset)
         model = DeepICF_a(dataset.num_items, args)

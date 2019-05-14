@@ -117,6 +117,7 @@ class DeepICF_a:
             self.item_input = tf.placeholder(tf.int32, shape=[None, 1])  # the index of items
             self.labels = tf.placeholder(tf.float32, shape=[None, self.num_outputs])  # the ground truth
             self.is_train_phase = tf.placeholder(tf.bool)  # mark is training or testing
+            self.random_attention = tf.placeholder(tf.bool)
 
     def _create_variables(self):
         with tf.name_scope("embedding"):  # The embedding initialization is unknown now
@@ -182,9 +183,9 @@ class DeepICF_a:
             self.random_perm = tf.range(tf.shape(A)[1])
             self.random_perm = tf.random_shuffle(self.random_perm)
             self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
-
-            # return A, tf.reduce_sum(self.shuffled_A * self.embedding_q_, 1)
-            return A, tf.reduce_sum(A * self.embedding_q_, 1)
+            cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
+            return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
+            # return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):
         with tf.name_scope("inference"):
@@ -265,8 +266,10 @@ def training(flag, model, dataset, epochs, num_negatives):
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
-            weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557605717.ckpt'  # 2-opt cross-loss 40 epchs
-            # weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557825370.ckpt' # 2-opt-class-balanced
+            if model.weights_balancing == 0:
+                weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557605717.ckpt'  # 2-opt cross-loss 40 epchs
+            else:
+                weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557829760.ckpt' # 2-opt-class-balanced
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 

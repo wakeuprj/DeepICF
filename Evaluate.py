@@ -51,6 +51,8 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _sess
     global conf_vs_acc_maps
     global bucket_sizes
+    global positive_tests_permutation_scores
+    global negative_tests_permutation_scores
     _model = model
     _testRatings = testRatings
     _testNegatives = testNegatives
@@ -64,6 +66,9 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     #     conf_vs_acc_maps.append(conf_vs_acc_map)
     # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
     #
+    # store all target item scores before and after permutation
+    positive_tests_permutation_scores = []
+    negative_tests_permutation_scores = []
     num_thread = 1 #multiprocessing.cpu_count()
     hits, ndcgs, losses = [],[],[]
     if(num_thread > 1): # Multi-thread
@@ -111,6 +116,14 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # plt.show()
     # exit(0)
 
+    maps = (positive_tests_permutation_scores, negative_tests_permutation_scores)
+
+    import pickle
+    file_name = "positive-negative-tests-permutation-scores-balanced-loss.pkl"
+    pkl_file = open(file_name, 'wb')
+    pickle.dump(maps, pkl_file)
+    pkl_file.close()
+
     return (hits, ndcgs, losses)
 
 def load_test_as_list():
@@ -148,10 +161,13 @@ def _eval_one_rating(idx):
     labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
     feed_dict[_model.labels] = labels
+    feed_dict[_model.random_attention] = False
     hrs = []
     ndcgs = []
     losses = []
     predictions = []
+    positive_tests_scores_dict = {'og': [], 'perm': []}
+    negative_tests_scores_dict = {'og': [], 'perm': []}
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
@@ -167,6 +183,23 @@ def _eval_one_rating(idx):
         hrs.append(hr)
         ndcgs.append(ndcg)
         losses.append(loss)
+
+    positive_tests_scores_dict['og'].append(predictions[-1])
+
+    feed_dict[_model.random_attention] = True
+    random_prediction = np.array([[0, 0]]*100)
+    num_samples = 100
+    for i in range(num_samples):
+        random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+        positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
+        random_prediction = np.add(random_prediction_i, random_prediction)
+    random_prediction = np.divide(random_prediction, num_samples)
+    for i in range(len(predictions) - 1):
+        negative_tests_scores_dict = {'og': [], 'perm': []}
+        negative_tests_scores_dict['og'].append(predictions[i])
+        negative_tests_scores_dict['perm'].append(random_prediction[i])
+    positive_tests_permutation_scores.append(positive_tests_scores_dict)
+    negative_tests_permutation_scores.append(negative_tests_scores_dict)
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

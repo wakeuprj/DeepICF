@@ -318,8 +318,7 @@ def training(flag, model, dataset, epochs, num_negatives):
                 eval_time = time() - eval_begin
 
                 patience = 8
-                min_delta = 0.002
-                if epoch_count > 0 and hr - best_hr > min_delta:
+                if epoch_count > 0 and hr > best_hr:
                     patience_cnt = 0
                 else:
                     patience_cnt += 1

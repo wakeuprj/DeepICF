@@ -261,6 +261,8 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
+    model_file_name = './Stability-Models-DeepICF-a/DeepICF_a' + str(
+        int(time())) + '.ckpt'
     load_weights = False
 
     with tf.Session() as sess:
@@ -350,6 +352,8 @@ def training(flag, model, dataset, epochs, num_negatives):
                 if hr > best_hr:
                     best_hr = hr
                     best_ndcg = ndcg
+                    print("Beat best HR, Saving model in", model_file_name)
+                    model_saver.save(sess, model_file_name)
 
                 logging.info(
                     "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
@@ -369,8 +373,6 @@ def training(flag, model, dataset, epochs, num_negatives):
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-        model_file_name = './Stability-Models-DeepICF-a/DeepICF_a' + str(int(time())) + '.ckpt'
-        model_saver.save(sess, model_file_name)
         print('Model saved as:', model_file_name)
         return best_hr, best_ndcg
 

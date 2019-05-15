@@ -194,8 +194,8 @@ def _eval_one_rating(idx):
         positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
         random_prediction = np.add(random_prediction_i, random_prediction)
     random_prediction = np.divide(random_prediction, num_samples)
+    negative_tests_scores_dict = {'og': [], 'perm': []}
     for i in range(len(predictions) - 1):
-        negative_tests_scores_dict = {'og': [], 'perm': []}
         negative_tests_scores_dict['og'].append(predictions[i])
         negative_tests_scores_dict['perm'].append(random_prediction[i])
     positive_tests_permutation_scores.append(positive_tests_scores_dict)

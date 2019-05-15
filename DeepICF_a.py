@@ -60,6 +60,8 @@ def parse_args():
                         help='0 for prod, 1 for concat')
     parser.add_argument('--imbalance', type=int, default=0,
                         help='0 for nothing, 1 for weight im-balance in loss')
+    parser.add_argument('--seeds', nargs='?', default='[2,9001,2**18]',
+                        help='Seeds for runs.')
     return parser.parse_args()
 
 # batch norm

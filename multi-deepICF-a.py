@@ -9,8 +9,8 @@ if __name__ == '__main__':
 
     args = parse_args()
     regs = eval(args.regs)
-    seeds = [0, 2 ** 32 - 1, 32, 4, 2 ** 18, 137, 5051, 813773, 997,
-             51023]
+    seeds = eval(args.seeds)
+    print("Seeds", seeds)
     for iteration_num in range(len(seeds)):
         tf.reset_default_graph()
         os.environ['PYTHONHASHSEED'] = str(seeds[iteration_num])

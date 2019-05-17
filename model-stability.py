@@ -1,3 +1,6 @@
+import heapq
+import pdb
+
 import Evaluate
 from Dataset import Dataset
 from DeepICF_a import parse_args, DeepICF_a
@@ -5,7 +8,12 @@ import tensorflow as tf
 import numpy as np
 from functools import partial
 from itertools import combinations
-from sklearn.metrics import jaccard_similarity_score
+from sklearn.preprocessing import normalize
+
+
+def jaccard_score(a, b):
+    set_a, set_b = set(a), set(b)
+    return len(set_a & set_b) / len(set_a | set_b)
 
 
 def ignore_vals(x):
@@ -69,16 +77,24 @@ def plot_map(conf_vs_acc_map):
     plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
             tick_label=list(conf_map.keys()))
     plt.xlabel("Positive label prediction score")
-    plt.ylabel("Average Jaccard similarity score")
+    plt.ylabel("Average Jaccard index for top 5 attention weights")
     plt.show()
+
+
+def avg_variation(all_vals):
+    variations = []
+    for comb in list(combinations(range(len(all_vals)), 2)):
+        variations.append(np.abs(all_vals[comb[0]] - all_vals[comb[1]]))
+    return np.mean(variations)
 
 
 def plot_avg_variation(all_models_predictions):
     all_avg_preds = []
     for column in all_models_predictions.T:
         mean = np.mean(column)
-        std = np.mean(np.abs(column - mean))
+        # std = np.mean(np.abs(column - mean))
         # std = np.std(column)
+        std = avg_variation(column)
         all_avg_preds.append((mean, std))
     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
 
@@ -141,11 +157,12 @@ def get_pre_attention_score_for_tests(model, dataset, weight_path):
 
 
 def plot_jaccard_vs_pred_score():
-    num_models = len(models_paths)
-    top_n_attention_weights = 1
+    # num_models = len(models_paths)
+    num_models = 10
+    top_n_attention_weights = 5
     bound_top_n_indices = partial(top_n_indices, top_n_attention_weights)
-    all_max_indices = []
     all_predictions = []
+    all_attention_vectors = []
     for model_path in models_paths[:num_models]:
         print('Getting predictions for ', model_path)
         preds = get_prediction_scores(model, dataset, model_path)
@@ -153,28 +170,25 @@ def plot_jaccard_vs_pred_score():
 
         attention_vectors = get_attention_score_for_tests(model, dataset,
                                                           model_path)
-        max_indices = list(
-            map(bound_top_n_indices,
-                attention_vectors))  # shape (num_tests,top_n_weights)
-        all_max_indices.append(max_indices)
-    all_max_indices = np.array(all_max_indices).reshape(num_models, 6040,
-                                                        top_n_attention_weights)
-    all_predictions = np.array(all_predictions).reshape(num_models, 6040).T
-
+        all_attention_vectors.append(attention_vectors)
+    all_predictions = np.array(all_predictions).reshape(num_models, len(dataset.testRatings)).T
     combins = list(combinations(range(num_models), 2))
-
     conf_vs_jaccard_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
-    for test_num in range(all_max_indices.shape[1]):
-        total_jaccard_score = 0.0
-        for comb in combins:
-            total_jaccard_score += jaccard_similarity_score(
-                all_max_indices[comb[0]][test_num],
-                all_max_indices[comb[1]][test_num])
-        avg_jaccard_score = total_jaccard_score / len(combins)
+    for test_num in range(len(dataset.testRatings)):
+        jaccard_scores = []
         avg_prediction_score = np.mean(all_predictions[test_num])
-        conf_vs_jaccard_map[avg_prediction_score // 0.1 / 10][
+        avg_prediction_score_round = avg_prediction_score // 0.1 / 10
+        for comb in combins:
+            model_i, model_j = comb[0], comb[1]
+            atn_vec_i, atn_vec_j = all_attention_vectors[model_i][test_num], all_attention_vectors[model_j][test_num]
+            atn_vec_i_norm, atn_vec_j_norm = np.squeeze(normalize(atn_vec_i[None, :])), np.squeeze(
+                normalize(atn_vec_j[None, :]))
+            top_n_i, top_n_j = bound_top_n_indices(atn_vec_i_norm), bound_top_n_indices(atn_vec_j_norm)
+            jaccard_scores.append(jaccard_score(top_n_i, top_n_j))
+        avg_jaccard_score = np.mean(jaccard_scores)
+        conf_vs_jaccard_map[avg_prediction_score_round][
             0] += avg_jaccard_score
-        conf_vs_jaccard_map[avg_prediction_score // 0.1 / 10][1] += 1
+        conf_vs_jaccard_map[avg_prediction_score_round][1] += 1
     plot_map(conf_vs_jaccard_map)
 
 
@@ -189,9 +203,16 @@ if __name__ == '__main__':
     eg_model_path = models_paths[1]
     attention_vectors = get_attention_score_for_tests(model, dataset,
                                                       eg_model_path)
-    count = 0
-    for vector in attention_vectors:
-        normalized_vec = softmax(vector)
-        if np.max(normalized_vec) > 0.99:
-            count += 1
-    print(count)
+    preds = get_prediction_scores(model, dataset, eg_model_path)
+    conf_vs_max_attentions_sum = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+    for i in range(len(attention_vectors)):
+        vector = attention_vectors[i]
+        # n_l = int(0.05 * len(vector) + 1)
+        n_l = 5
+        normalized_vec = np.squeeze(normalize(vector[None, :], 'l1'))
+        print(np.sum(normalized_vec))
+        n_largest = np.sum(heapq.nlargest(n_l, normalized_vec))
+        pred = preds[i] // 0.1 / 10
+        conf_vs_max_attentions_sum[pred][0] += n_largest
+        conf_vs_max_attentions_sum[pred][1] += 1
+    plot_map(conf_vs_max_attentions_sum)

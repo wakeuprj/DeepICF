@@ -1,0 +1,1356 @@
+python3 multi-deepICF-a.py --path Data/ --dataset ml-1m --epochs 100 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 -
+-verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr 0
+.01 --batch_norm 1 --pretrain 0 --imbalance 0 --seeds [2**7-1,2**9]
+Seeds [127, 512]
+Iteration: 0
+start load_training_file_as_matrix 1557919931
+got number of users and items load_training_file_as_matrix 1557919932
+already load the trainMatrix... 1557919938
+start load_training_file_as_list 1557919938
+already load the trainList... 1557919939
+WARNING:tensorflow:From /homes/rj2315/DeepICF/DeepICF_a.py:178: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will
+be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 0 [67.4s + 54.7s]: HR = 0.5459, NDCG = 0.3057, loss = 0.2742 [8.0s] train_loss = 0.3181 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 1 [66.9s + 338.0s]: HR = 0.5959, NDCG = 0.3355, loss = 0.2742 [8.7s] train_loss = 0.2919 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 2 [71.3s + 54.6s]: HR = 0.6164, NDCG = 0.3589, loss = 0.2780 [12.8s] train_loss = 0.2774 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 3 [67.4s + 52.6s]: HR = 0.6280, NDCG = 0.3660, loss = 0.2843 [8.2s] train_loss = 0.2700 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 4 [67.1s + 51.3s]: HR = 0.6353, NDCG = 0.3718, loss = 0.2740 [8.1s] train_loss = 0.2631 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 5 [66.0s + 52.6s]: HR = 0.6535, NDCG = 0.3871, loss = 0.3088 [8.2s] train_loss = 0.2576 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 6 [66.7s + 52.3s]: HR = 0.6555, NDCG = 0.3880, loss = 0.2883 [8.1s] train_loss = 0.2534 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 7 [66.4s + 52.7s]: HR = 0.6581, NDCG = 0.3938, loss = 0.3063 [8.2s] train_loss = 0.2510 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 8 [66.9s + 51.7s]: HR = 0.6700, NDCG = 0.3999, loss = 0.2994 [8.1s] train_loss = 0.2477 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 9 [66.1s + 52.9s]: HR = 0.6710, NDCG = 0.3993, loss = 0.2879 [8.3s] train_loss = 0.2444 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 10 [66.8s + 52.8s]: HR = 0.6785, NDCG = 0.4077, loss = 0.2698 [8.2s] train_loss = 0.2423 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 11 [66.3s + 52.8s]: HR = 0.6808, NDCG = 0.4097, loss = 0.2921 [8.3s] train_loss = 0.2389 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 12 [66.1s + 53.0s]: HR = 0.6816, NDCG = 0.4119, loss = 0.3031 [8.2s] train_loss = 0.2369 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 13 [65.6s + 51.9s]: HR = 0.6841, NDCG = 0.4133, loss = 0.3115 [8.2s] train_loss = 0.2346 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 14 [66.1s + 51.6s]: HR = 0.6868, NDCG = 0.4187, loss = 0.3321 [8.1s] train_loss = 0.2338 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 15 [66.2s + 52.0s]: HR = 0.6869, NDCG = 0.4175, loss = 0.2980 [8.2s] train_loss = 0.2314 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 16 [65.9s + 51.8s]: HR = 0.6896, NDCG = 0.4204, loss = 0.3263 [8.2s] train_loss = 0.2302 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 17 [66.9s + 51.4s]: HR = 0.6921, NDCG = 0.4214, loss = 0.3153 [8.2s] train_loss = 0.2286 [16.7s]
+start preprocess 6040
+Epoch 18 [65.6s + 52.0s]: HR = 0.6921, NDCG = 0.4225, loss = 0.2954 [8.2s] train_loss = 0.2273 [17.1s]
+start preprocess 6040
+Epoch 19 [66.0s + 51.6s]: HR = 0.6896, NDCG = 0.4201, loss = 0.3359 [8.2s] train_loss = 0.2272 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 20 [66.1s + 51.9s]: HR = 0.6959, NDCG = 0.4249, loss = 0.3056 [8.2s] train_loss = 0.2269 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 21 [65.9s + 51.5s]: HR = 0.6985, NDCG = 0.4242, loss = 0.3385 [8.2s] train_loss = 0.2250 [16.7s]
+start preprocess 6040
+Epoch 22 [66.9s + 51.8s]: HR = 0.6940, NDCG = 0.4215, loss = 0.3264 [8.2s] train_loss = 0.2239 [17.1s]
+start preprocess 6040
+Epoch 23 [66.8s + 51.5s]: HR = 0.6954, NDCG = 0.4234, loss = 0.3114 [8.2s] train_loss = 0.2239 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 24 [66.9s + 51.8s]: HR = 0.6998, NDCG = 0.4305, loss = 0.3070 [8.2s] train_loss = 0.2233 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 25 [65.5s + 51.4s]: HR = 0.7020, NDCG = 0.4302, loss = 0.3134 [8.2s] train_loss = 0.2230 [16.7s]
+start preprocess 6040
+Epoch 26 [66.1s + 51.9s]: HR = 0.6988, NDCG = 0.4273, loss = 0.3125 [8.2s] train_loss = 0.2214 [17.1s]
+start preprocess 6040
+Epoch 27 [66.6s + 51.6s]: HR = 0.6992, NDCG = 0.4299, loss = 0.3103 [8.2s] train_loss = 0.2212 [16.7s]
+start preprocess 6040
+Epoch 28 [67.5s + 53.1s]: HR = 0.6997, NDCG = 0.4273, loss = 0.3205 [8.2s] train_loss = 0.2212 [17.0s]
+start preprocess 6040
+Epoch 29 [66.2s + 51.5s]: HR = 0.6960, NDCG = 0.4254, loss = 0.2975 [8.2s] train_loss = 0.2210 [16.7s]
+start preprocess 6040
+Epoch 30 [65.9s + 51.9s]: HR = 0.6985, NDCG = 0.4276, loss = 0.3224 [8.2s] train_loss = 0.2196 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+Epoch 31 [65.8s + 51.6s]: HR = 0.7058, NDCG = 0.4332, loss = 0.3355 [8.2s] train_loss = 0.2197 [16.7s]
+start preprocess 6040
+Epoch 32 [66.1s + 51.8s]: HR = 0.6978, NDCG = 0.4283, loss = 0.3091 [8.2s] train_loss = 0.2193 [17.0s]
+start preprocess 6040
+Epoch 33 [65.9s + 51.3s]: HR = 0.7003, NDCG = 0.4280, loss = 0.3193 [8.2s] train_loss = 0.2177 [16.7s]
+start preprocess 6040
+Epoch 34 [66.3s + 52.0s]: HR = 0.6998, NDCG = 0.4290, loss = 0.3163 [8.2s] train_loss = 0.2180 [17.0s]
+start preprocess 6040
+Epoch 35 [66.0s + 51.4s]: HR = 0.7005, NDCG = 0.4301, loss = 0.3119 [8.2s] train_loss = 0.2169 [16.7s]
+start preprocess 6040
+Epoch 36 [65.7s + 51.7s]: HR = 0.7013, NDCG = 0.4306, loss = 0.3241 [8.2s] train_loss = 0.2173 [17.0s]
+start preprocess 6040
+Epoch 37 [66.2s + 51.2s]: HR = 0.6939, NDCG = 0.4241, loss = 0.3299 [8.2s] train_loss = 0.2172 [16.5s]
+start preprocess 6040
+Epoch 38 [66.1s + 51.8s]: HR = 0.6993, NDCG = 0.4277, loss = 0.3533 [8.2s] train_loss = 0.2166 [17.1s]
+start preprocess 6040
+Epoch 39 [65.7s + 51.3s]: HR = 0.6980, NDCG = 0.4262, loss = 0.3262 [8.2s] train_loss = 0.2157 [16.7s]
+start preprocess 6040
+Epoch 40 [66.2s + 52.0s]: HR = 0.7025, NDCG = 0.4307, loss = 0.3202 [8.2s] train_loss = 0.2168 [17.2s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557919939.ckpt
+End. best HR = 0.7058, best NDCG = 0.4332
+Iteration: 1
+start load_training_file_as_matrix 1557926128
+got number of users and items load_training_file_as_matrix 1557926129
+already load the trainMatrix... 1557926135
+start load_training_file_as_list 1557926135
+already load the trainList... 1557926136
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 0 [65.7s + 51.8s]: HR = 0.5247, NDCG = 0.2928, loss = 0.2643 [8.0s] train_loss = 0.3232 [16.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 1 [65.0s + 51.8s]: HR = 0.6083, NDCG = 0.3463, loss = 0.2735 [8.1s] train_loss = 0.2835 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 2 [65.2s + 51.1s]: HR = 0.6323, NDCG = 0.3676, loss = 0.3137 [8.0s] train_loss = 0.2669 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 3 [65.6s + 51.7s]: HR = 0.6505, NDCG = 0.3797, loss = 0.2842 [8.2s] train_loss = 0.2583 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 4 [65.4s + 51.2s]: HR = 0.6576, NDCG = 0.3866, loss = 0.2901 [8.0s] train_loss = 0.2529 [16.5s]
+start preprocess 6040
+Epoch 5 [66.2s + 51.8s]: HR = 0.6556, NDCG = 0.3892, loss = 0.2895 [8.2s] train_loss = 0.2486 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 6 [66.3s + 51.4s]: HR = 0.6639, NDCG = 0.3954, loss = 0.2804 [8.1s] train_loss = 0.2441 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 7 [65.5s + 51.7s]: HR = 0.6659, NDCG = 0.3982, loss = 0.2848 [8.2s] train_loss = 0.2401 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 8 [66.6s + 51.3s]: HR = 0.6694, NDCG = 0.4006, loss = 0.2953 [8.1s] train_loss = 0.2372 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 9 [65.6s + 51.8s]: HR = 0.6735, NDCG = 0.4058, loss = 0.2917 [8.2s] train_loss = 0.2341 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 10 [65.7s + 51.4s]: HR = 0.6803, NDCG = 0.4091, loss = 0.2885 [8.1s] train_loss = 0.2324 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 11 [65.6s + 51.9s]: HR = 0.6823, NDCG = 0.4099, loss = 0.3080 [8.2s] train_loss = 0.2302 [17.0s]
+start preprocess 6040
+Epoch 12 [66.2s + 51.5s]: HR = 0.6773, NDCG = 0.4078, loss = 0.3046 [8.1s] train_loss = 0.2288 [16.7s]
+start preprocess 6040
+Epoch 13 [65.7s + 51.8s]: HR = 0.6791, NDCG = 0.4093, loss = 0.2902 [8.2s] train_loss = 0.2302 [17.0s]
+start preprocess 6040
+Epoch 14 [65.5s + 51.5s]: HR = 0.6806, NDCG = 0.4121, loss = 0.3023 [8.1s] train_loss = 0.2260 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 15 [65.6s + 51.7s]: HR = 0.6848, NDCG = 0.4154, loss = 0.3102 [8.2s] train_loss = 0.2248 [17.0s]
+start preprocess 6040
+Epoch 16 [66.0s + 51.4s]: HR = 0.6828, NDCG = 0.4137, loss = 0.3000 [8.1s] train_loss = 0.2247 [16.7s]
+start preprocess 6040
+Epoch 17 [65.9s + 51.9s]: HR = 0.6831, NDCG = 0.4151, loss = 0.2904 [8.2s] train_loss = 0.2237 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 18 [66.3s + 52.9s]: HR = 0.6876, NDCG = 0.4176, loss = 0.2905 [8.2s] train_loss = 0.2234 [17.7s]                                                 [36/265]
+start preprocess 6040
+Epoch 19 [65.4s + 51.8s]: HR = 0.6874, NDCG = 0.4170, loss = 0.3016 [8.2s] train_loss = 0.2219 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 20 [65.8s + 51.7s]: HR = 0.6891, NDCG = 0.4188, loss = 0.3135 [8.1s] train_loss = 0.2210 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 21 [65.8s + 51.6s]: HR = 0.6907, NDCG = 0.4207, loss = 0.3075 [8.2s] train_loss = 0.2205 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 22 [65.9s + 51.6s]: HR = 0.6916, NDCG = 0.4220, loss = 0.3075 [8.2s] train_loss = 0.2207 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 23 [66.7s + 51.8s]: HR = 0.6929, NDCG = 0.4221, loss = 0.3035 [8.2s] train_loss = 0.2190 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 24 [66.7s + 51.5s]: HR = 0.6949, NDCG = 0.4227, loss = 0.3078 [8.3s] train_loss = 0.2189 [16.5s]
+start preprocess 6040
+Epoch 25 [66.4s + 51.7s]: HR = 0.6927, NDCG = 0.4234, loss = 0.3261 [8.2s] train_loss = 0.2189 [17.0s]
+start preprocess 6040
+Epoch 26 [65.8s + 51.4s]: HR = 0.6921, NDCG = 0.4231, loss = 0.3232 [8.2s] train_loss = 0.2178 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 27 [66.1s + 51.7s]: HR = 0.6954, NDCG = 0.4236, loss = 0.3409 [8.2s] train_loss = 0.2183 [17.0s]
+start preprocess 6040
+Epoch 28 [66.3s + 51.6s]: HR = 0.6927, NDCG = 0.4237, loss = 0.3225 [8.2s] train_loss = 0.2170 [16.8s]
+start preprocess 6040
+Epoch 29 [65.9s + 51.6s]: HR = 0.6922, NDCG = 0.4231, loss = 0.3138 [8.2s] train_loss = 0.2161 [17.0s]
+start preprocess 6040
+Epoch 30 [66.1s + 51.6s]: HR = 0.6952, NDCG = 0.4252, loss = 0.3100 [8.2s] train_loss = 0.2163 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 31 [65.7s + 51.7s]: HR = 0.6965, NDCG = 0.4259, loss = 0.3223 [8.2s] train_loss = 0.2152 [17.0s]
+start preprocess 6040
+Epoch 32 [66.7s + 51.4s]: HR = 0.6964, NDCG = 0.4260, loss = 0.2970 [8.2s] train_loss = 0.2151 [16.6s]
+start preprocess 6040
+Epoch 33 [65.7s + 51.6s]: HR = 0.6949, NDCG = 0.4264, loss = 0.3206 [8.2s] train_loss = 0.2148 [17.0s]
+start preprocess 6040
+Epoch 34 [66.2s + 51.6s]: HR = 0.6950, NDCG = 0.4244, loss = 0.3003 [8.2s] train_loss = 0.2149 [16.6s]
+start preprocess 6040
+Epoch 35 [65.5s + 51.6s]: HR = 0.6962, NDCG = 0.4255, loss = 0.3048 [8.2s] train_loss = 0.2149 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 36 [65.9s + 51.6s]: HR = 0.6982, NDCG = 0.4268, loss = 0.3263 [8.2s] train_loss = 0.2136 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 37 [65.8s + 52.1s]: HR = 0.6983, NDCG = 0.4274, loss = 0.3244 [8.2s] train_loss = 0.2130 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 38 [66.0s + 51.6s]: HR = 0.6990, NDCG = 0.4279, loss = 0.3281 [8.2s] train_loss = 0.2129 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+Epoch 39 [66.0s + 51.6s]: HR = 0.7017, NDCG = 0.4308, loss = 0.3124 [8.2s] train_loss = 0.2134 [16.9s]
+start preprocess 6040
+Epoch 40 [65.9s + 51.7s]: HR = 0.6965, NDCG = 0.4273, loss = 0.3097 [8.2s] train_loss = 0.2129 [16.7s]
+start preprocess 6040
+Epoch 41 [65.9s + 51.6s]: HR = 0.6985, NDCG = 0.4285, loss = 0.3125 [8.2s] train_loss = 0.2123 [17.0s]
+start preprocess 6040
+Epoch 42 [66.1s + 51.7s]: HR = 0.7015, NDCG = 0.4311, loss = 0.3458 [8.2s] train_loss = 0.2115 [16.8s]
+start preprocess 6040
+Epoch 43 [65.3s + 51.6s]: HR = 0.6988, NDCG = 0.4287, loss = 0.3256 [8.2s] train_loss = 0.2117 [17.0s]
+start preprocess 6040
+Epoch 44 [66.2s + 51.6s]: HR = 0.6987, NDCG = 0.4296, loss = 0.3381 [8.2s] train_loss = 0.2112 [16.6s]
+start preprocess 6040
+Epoch 45 [66.0s + 51.6s]: HR = 0.6998, NDCG = 0.4302, loss = 0.3288 [8.2s] train_loss = 0.2108 [17.0s]
+start preprocess 6040
+Epoch 46 [65.7s + 51.8s]: HR = 0.7007, NDCG = 0.4310, loss = 0.3336 [8.2s] train_loss = 0.2107 [16.8s]
+start preprocess 6040
+Epoch 47 [66.5s + 51.6s]: HR = 0.7008, NDCG = 0.4299, loss = 0.3376 [8.2s] train_loss = 0.2102 [17.0s]
+start preprocess 6040
+Epoch 48 [66.1s + 51.6s]: HR = 0.6985, NDCG = 0.4286, loss = 0.3183 [8.2s] train_loss = 0.2103 [16.8s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557926137.ckpt
+End. best HR = 0.7017, best NDCG = 0.4308
+
+
+python3 multi-deepICF-a.py --path Data/ --dataset ml-1m --epochs 100 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 $
+-verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr 0
+.01 --batch_norm 1 --pretrain 0 --imbalance 0 --seeds [2**18,51,1091]
+Seeds [262144, 51, 1091]
+Iteration: 0
+start load_training_file_as_matrix 1557919736
+got number of users and items load_training_file_as_matrix 1557919736
+already load the trainMatrix... 1557919742
+start load_training_file_as_list 1557919742
+already load the trainList... 1557919743
+WARNING:tensorflow:From /homes/rj2315/DeepICF/DeepICF_a.py:178: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will
+be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 0 [66.9s + 53.8s]: HR = 0.5131, NDCG = 0.2865, loss = 0.2591 [8.0s] train_loss = 0.3261 [16.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 1 [66.7s + 134.6s]: HR = 0.5871, NDCG = 0.3331, loss = 0.2793 [9.1s] train_loss = 0.2885 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 2 [68.1s + 52.4s]: HR = 0.6175, NDCG = 0.3580, loss = 0.2636 [8.1s] train_loss = 0.2726 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 3 [69.9s + 53.3s]: HR = 0.6369, NDCG = 0.3744, loss = 0.2767 [8.3s] train_loss = 0.2599 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 4 [75.5s + 51.5s]: HR = 0.6535, NDCG = 0.3866, loss = 0.2967 [8.1s] train_loss = 0.2523 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 5 [65.8s + 52.8s]: HR = 0.6571, NDCG = 0.3912, loss = 0.2789 [8.4s] train_loss = 0.2470 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 6 [66.7s + 52.0s]: HR = 0.6677, NDCG = 0.3996, loss = 0.2772 [8.2s] train_loss = 0.2415 [17.0s]
+start preprocess 6040
+Epoch 7 [68.9s + 52.9s]: HR = 0.6743, NDCG = 0.4054, loss = 0.2796 [8.3s] train_loss = 0.2375 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 8 [67.1s + 51.9s]: HR = 0.6790, NDCG = 0.4085, loss = 0.2964 [8.2s] train_loss = 0.2340 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 9 [66.1s + 53.0s]: HR = 0.6801, NDCG = 0.4077, loss = 0.2928 [8.8s] train_loss = 0.2319 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 10 [66.9s + 53.1s]: HR = 0.6863, NDCG = 0.4144, loss = 0.2785 [8.3s] train_loss = 0.2304 [17.1s]
+start preprocess 6040
+Epoch 11 [66.1s + 53.0s]: HR = 0.6854, NDCG = 0.4156, loss = 0.2824 [8.3s] train_loss = 0.2310 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 12 [67.9s + 53.4s]: HR = 0.6919, NDCG = 0.4164, loss = 0.3119 [8.3s] train_loss = 0.2260 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 13 [66.2s + 51.9s]: HR = 0.6922, NDCG = 0.4194, loss = 0.3073 [8.3s] train_loss = 0.2256 [16.7s]
+start preprocess 6040
+Epoch 14 [67.7s + 63.5s]: HR = 0.6922, NDCG = 0.4198, loss = 0.2960 [9.5s] train_loss = 0.2251 [21.3s]
+start preprocess 6040
+Epoch 15 [78.6s + 64.1s]: HR = 0.6922, NDCG = 0.4195, loss = 0.2932 [8.7s] train_loss = 0.2240 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 16 [66.2s + 52.3s]: HR = 0.6934, NDCG = 0.4222, loss = 0.3038 [8.3s] train_loss = 0.2214 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 17 [66.6s + 52.0s]: HR = 0.6992, NDCG = 0.4226, loss = 0.3121 [8.3s] train_loss = 0.2217 [16.8s]
+start preprocess 6040
+Epoch 18 [66.6s + 52.3s]: HR = 0.6977, NDCG = 0.4228, loss = 0.3061 [8.3s] train_loss = 0.2208 [17.2s]
+start preprocess 6040
+Epoch 19 [66.2s + 52.0s]: HR = 0.6959, NDCG = 0.4228, loss = 0.3168 [8.3s] train_loss = 0.2209 [16.7s]
+start preprocess 6040
+Epoch 20 [66.6s + 52.2s]: HR = 0.6937, NDCG = 0.4235, loss = 0.3374 [8.3s] train_loss = 0.2214 [17.2s]
+Epoch 21 [66.5s + 51.9s]: HR = 0.7003, NDCG = 0.4256, loss = 0.3010 [8.3s] train_loss = 0.2186 [16.7s]
+start preprocess 6040
+Epoch 22 [66.5s + 52.4s]: HR = 0.6974, NDCG = 0.4238, loss = 0.3107 [8.3s] train_loss = 0.2185 [17.2s]
+start preprocess 6040
+Epoch 23 [66.7s + 51.9s]: HR = 0.7002, NDCG = 0.4248, loss = 0.3134 [8.3s] train_loss = 0.2181 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 24 [67.0s + 52.2s]: HR = 0.7025, NDCG = 0.4297, loss = 0.2878 [8.3s] train_loss = 0.2187 [17.2s]
+start preprocess 6040
+Epoch 25 [66.9s + 55.0s]: HR = 0.6992, NDCG = 0.4273, loss = 0.2942 [10.4s] train_loss = 0.2169 [18.6s]
+start preprocess 6040
+Epoch 26 [70.2s + 53.7s]: HR = 0.6974, NDCG = 0.4274, loss = 0.3255 [8.3s] train_loss = 0.2158 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+Epoch 27 [66.9s + 52.3s]: HR = 0.7041, NDCG = 0.4302, loss = 0.2957 [8.4s] train_loss = 0.2156 [17.0s]
+start preprocess 6040
+Epoch 28 [66.9s + 52.7s]: HR = 0.6985, NDCG = 0.4275, loss = 0.3180 [8.4s] train_loss = 0.2154 [17.4s]
+start preprocess 6040
+Epoch 29 [66.8s + 52.1s]: HR = 0.7025, NDCG = 0.4309, loss = 0.3299 [8.4s] train_loss = 0.2143 [16.9s]
+start preprocess 6040
+Epoch 30 [66.9s + 52.7s]: HR = 0.7010, NDCG = 0.4287, loss = 0.3087 [8.4s] train_loss = 0.2142 [17.3s]
+start preprocess 6040
+Epoch 31 [66.6s + 52.1s]: HR = 0.7020, NDCG = 0.4305, loss = 0.3036 [8.4s] train_loss = 0.2138 [16.8s]
+start preprocess 6040
+Epoch 32 [66.3s + 52.8s]: HR = 0.7017, NDCG = 0.4307, loss = 0.3241 [8.4s] train_loss = 0.2129 [17.3s]
+start preprocess 6040
+Epoch 33 [66.8s + 52.1s]: HR = 0.6983, NDCG = 0.4297, loss = 0.3170 [8.4s] train_loss = 0.2129 [16.8s]
+start preprocess 6040
+Epoch 34 [66.8s + 52.6s]: HR = 0.6990, NDCG = 0.4296, loss = 0.2950 [8.4s] train_loss = 0.2134 [17.4s]
+start preprocess 6040
+Epoch 35 [66.7s + 52.1s]: HR = 0.7018, NDCG = 0.4303, loss = 0.3296 [8.4s] train_loss = 0.2126 [16.8s]
+start preprocess 6040
+Epoch 36 [66.9s + 52.7s]: HR = 0.7012, NDCG = 0.4299, loss = 0.3096 [8.4s] train_loss = 0.2122 [17.3s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557919744.ckpt
+End. best HR = 0.7041, best NDCG = 0.4302
+Iteration: 1
+start load_training_file_as_matrix 1557925252
+got number of users and items load_training_file_as_matrix 1557925253
+already load the trainMatrix... 1557925259
+start load_training_file_as_list 1557925259
+already load the trainList... 1557925259
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 0 [67.0s + 52.0s]: HR = 0.5545, NDCG = 0.3109, loss = 0.2655 [8.2s] train_loss = 0.3113 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 1 [65.8s + 52.5s]: HR = 0.6227, NDCG = 0.3588, loss = 0.2392 [8.3s] train_loss = 0.2788 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 2 [66.3s + 51.6s]: HR = 0.6460, NDCG = 0.3776, loss = 0.2507 [8.2s] train_loss = 0.2602 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 3 [65.7s + 52.6s]: HR = 0.6546, NDCG = 0.3864, loss = 0.2299 [8.4s] train_loss = 0.2550 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 4 [66.6s + 51.9s]: HR = 0.6626, NDCG = 0.3910, loss = 0.2429 [8.3s] train_loss = 0.2502 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 5 [66.3s + 52.6s]: HR = 0.6699, NDCG = 0.3973, loss = 0.2672 [9.3s] train_loss = 0.2447 [18.9s]
+start preprocess 6040
+Epoch 6 [66.9s + 53.3s]: HR = 0.6674, NDCG = 0.3976, loss = 0.2290 [8.3s] train_loss = 0.2440 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 7 [66.3s + 52.5s]: HR = 0.6735, NDCG = 0.4027, loss = 0.2543 [8.4s] train_loss = 0.2390 [17.3s]
+Epoch 8 [67.0s + 52.3s]: HR = 0.6825, NDCG = 0.4094, loss = 0.2637 [8.3s] train_loss = 0.2359 [17.0s]
+start preprocess 6040
+Epoch 9 [66.3s + 52.9s]: HR = 0.6793, NDCG = 0.4073, loss = 0.2623 [8.4s] train_loss = 0.2347 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 10 [67.1s + 52.4s]: HR = 0.6829, NDCG = 0.4133, loss = 0.2602 [8.3s] train_loss = 0.2323 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 11 [66.5s + 52.5s]: HR = 0.6859, NDCG = 0.4137, loss = 0.2611 [8.4s] train_loss = 0.2298 [17.3s]
+start preprocess 6040
+Epoch 12 [67.4s + 53.4s]: HR = 0.6841, NDCG = 0.4152, loss = 0.2695 [8.4s] train_loss = 0.2296 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 13 [66.5s + 52.4s]: HR = 0.6882, NDCG = 0.4183, loss = 0.2547 [8.4s] train_loss = 0.2278 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 14 [67.2s + 52.4s]: HR = 0.6917, NDCG = 0.4197, loss = 0.2623 [8.4s] train_loss = 0.2266 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 15 [66.5s + 52.7s]: HR = 0.6924, NDCG = 0.4204, loss = 0.2781 [8.4s] train_loss = 0.2261 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 16 [67.0s + 52.4s]: HR = 0.6935, NDCG = 0.4218, loss = 0.2520 [8.3s] train_loss = 0.2249 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 17 [66.7s + 52.6s]: HR = 0.6944, NDCG = 0.4225, loss = 0.2533 [8.4s] train_loss = 0.2241 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 18 [67.4s + 52.5s]: HR = 0.6959, NDCG = 0.4256, loss = 0.2571 [8.4s] train_loss = 0.2234 [17.1s]
+start preprocess 6040
+Epoch 19 [66.5s + 52.6s]: HR = 0.6954, NDCG = 0.4266, loss = 0.2668 [8.4s] train_loss = 0.2218 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 20 [67.1s + 52.5s]: HR = 0.6988, NDCG = 0.4270, loss = 0.2743 [8.4s] train_loss = 0.2207 [17.1s]
+start preprocess 6040
+Epoch 21 [66.9s + 52.6s]: HR = 0.6983, NDCG = 0.4259, loss = 0.2708 [8.4s] train_loss = 0.2200 [17.4s]
+start preprocess 6040
+Epoch 22 [67.0s + 52.5s]: HR = 0.6955, NDCG = 0.4246, loss = 0.2685 [8.4s] train_loss = 0.2197 [17.1s]
+Epoch 23 [66.7s + 52.5s]: HR = 0.6992, NDCG = 0.4283, loss = 0.2768 [8.4s] train_loss = 0.2190 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 24 [66.8s + 52.5s]: HR = 0.7000, NDCG = 0.4295, loss = 0.2717 [8.4s] train_loss = 0.2185 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 25 [66.7s + 52.5s]: HR = 0.7035, NDCG = 0.4300, loss = 0.2586 [8.4s] train_loss = 0.2181 [17.4s]
+start preprocess 6040
+Epoch 26 [67.0s + 52.5s]: HR = 0.7017, NDCG = 0.4304, loss = 0.2677 [8.4s] train_loss = 0.2178 [17.1s]
+start preprocess 6040
+Epoch 27 [66.4s + 52.6s]: HR = 0.7012, NDCG = 0.4303, loss = 0.2463 [8.4s] train_loss = 0.2179 [17.3s]
+start preprocess 6040
+Epoch 28 [66.7s + 52.3s]: HR = 0.7028, NDCG = 0.4314, loss = 0.2782 [8.4s] train_loss = 0.2164 [17.2s]
+start preprocess 6040
+Epoch 29 [66.7s + 52.6s]: HR = 0.7025, NDCG = 0.4322, loss = 0.2850 [8.4s] train_loss = 0.2162 [17.3s]
+start preprocess 6040
+Epoch 30 [67.0s + 52.7s]: HR = 0.6998, NDCG = 0.4306, loss = 0.2545 [8.4s] train_loss = 0.2159 [17.1s]
+start preprocess 6040
+Epoch 31 [66.5s + 52.5s]: HR = 0.7031, NDCG = 0.4320, loss = 0.2574 [8.4s] train_loss = 0.2157 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 32 [66.6s + 52.4s]: HR = 0.7041, NDCG = 0.4324, loss = 0.2770 [8.4s] train_loss = 0.2147 [17.2s]
+start preprocess 6040
+Epoch 33 [66.5s + 52.4s]: HR = 0.7000, NDCG = 0.4283, loss = 0.2696 [8.4s] train_loss = 0.2141 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 34 [66.7s + 52.4s]: HR = 0.7053, NDCG = 0.4319, loss = 0.2819 [8.4s] train_loss = 0.2137 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+Epoch 35 [66.2s + 52.5s]: HR = 0.7083, NDCG = 0.4322, loss = 0.2576 [8.4s] train_loss = 0.2139 [17.3s]
+start preprocess 6040
+Epoch 36 [67.0s + 52.6s]: HR = 0.7055, NDCG = 0.4319, loss = 0.2591 [9.3s] train_loss = 0.2134 [18.3s]
+start preprocess 6040
+Epoch 37 [67.3s + 53.6s]: HR = 0.7005, NDCG = 0.4292, loss = 0.2669 [8.4s] train_loss = 0.2128 [17.3s]
+Epoch 38 [66.9s + 52.5s]: HR = 0.7045, NDCG = 0.4319, loss = 0.2831 [8.4s] train_loss = 0.2123 [17.1s]
+start preprocess 6040
+Epoch 39 [66.9s + 52.5s]: HR = 0.7045, NDCG = 0.4314, loss = 0.2635 [8.4s] train_loss = 0.2126 [17.3s]
+start preprocess 6040
+Epoch 40 [66.7s + 52.4s]: HR = 0.7051, NDCG = 0.4310, loss = 0.2746 [8.4s] train_loss = 0.2115 [17.1s]
+start preprocess 6040
+Epoch 41 [67.0s + 52.6s]: HR = 0.7060, NDCG = 0.4318, loss = 0.2817 [8.4s] train_loss = 0.2108 [17.3s]
+start preprocess 6040
+Epoch 42 [66.9s + 52.6s]: HR = 0.7056, NDCG = 0.4313, loss = 0.2583 [8.4s] train_loss = 0.2111 [17.2s]
+start preprocess 6040
+Epoch 43 [67.5s + 52.5s]: HR = 0.7048, NDCG = 0.4326, loss = 0.2601 [8.4s] train_loss = 0.2112 [17.3s]
+start preprocess 6040
+Epoch 44 [67.6s + 52.6s]: HR = 0.7051, NDCG = 0.4318, loss = 0.2755 [8.4s] train_loss = 0.2105 [17.2s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt
+End. best HR = 0.7083, best NDCG = 0.4322
+Iteration: 2
+start load_training_file_as_matrix 1557931789
+got number of users and items load_training_file_as_matrix 1557931790
+already load the trainMatrix... 1557931797
+start load_training_file_as_list 1557931797
+already load the trainList... 1557931797
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 0 [66.2s + 52.2s]: HR = 0.5447, NDCG = 0.3085, loss = 0.2816 [8.2s] train_loss = 0.3118 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 1 [66.6s + 52.7s]: HR = 0.6068, NDCG = 0.3490, loss = 0.2751 [8.4s] train_loss = 0.2846 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 2 [66.9s + 51.6s]: HR = 0.6325, NDCG = 0.3704, loss = 0.2737 [8.2s] train_loss = 0.2656 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 3 [66.1s + 52.9s]: HR = 0.6422, NDCG = 0.3816, loss = 0.2796 [8.4s] train_loss = 0.2561 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 4 [67.4s + 51.9s]: HR = 0.6609, NDCG = 0.3910, loss = 0.2731 [8.3s] train_loss = 0.2501 [16.7s]
+Epoch 5 [66.8s + 52.8s]: HR = 0.6636, NDCG = 0.3975, loss = 0.2867 [8.4s] train_loss = 0.2449 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 6 [66.8s + 52.1s]: HR = 0.6657, NDCG = 0.3996, loss = 0.2862 [8.3s] train_loss = 0.2426 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 7 [66.7s + 52.8s]: HR = 0.6710, NDCG = 0.4026, loss = 0.2756 [8.4s] train_loss = 0.2399 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 8 [66.6s + 52.0s]: HR = 0.6786, NDCG = 0.4074, loss = 0.2935 [8.3s] train_loss = 0.2362 [16.8s]
+start preprocess 6040
+Epoch 9 [66.5s + 52.9s]: HR = 0.6781, NDCG = 0.4106, loss = 0.2740 [8.4s] train_loss = 0.2344 [17.5s]
+start preprocess 6040
+Epoch 10 [67.1s + 52.1s]: HR = 0.6785, NDCG = 0.4123, loss = 0.2826 [8.3s] train_loss = 0.2319 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 11 [66.1s + 52.7s]: HR = 0.6805, NDCG = 0.4143, loss = 0.3024 [8.4s] train_loss = 0.2309 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 12 [66.8s + 52.2s]: HR = 0.6836, NDCG = 0.4163, loss = 0.2733 [8.3s] train_loss = 0.2293 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 13 [66.8s + 52.6s]: HR = 0.6876, NDCG = 0.4186, loss = 0.2983 [8.4s] train_loss = 0.2272 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 14 [67.0s + 52.1s]: HR = 0.6901, NDCG = 0.4196, loss = 0.2871 [8.3s] train_loss = 0.2264 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 15 [66.2s + 52.7s]: HR = 0.6916, NDCG = 0.4213, loss = 0.3086 [8.4s] train_loss = 0.2255 [17.5s]
+start preprocess 6040
+Epoch 16 [67.1s + 52.6s]: HR = 0.6907, NDCG = 0.4216, loss = 0.3073 [8.3s] train_loss = 0.2243 [17.1s]
+start preprocess 6040
+Epoch 17 [66.4s + 52.9s]: HR = 0.6899, NDCG = 0.4235, loss = 0.2999 [8.4s] train_loss = 0.2233 [17.4s]
+Epoch 18 [66.8s + 52.4s]: HR = 0.6874, NDCG = 0.4191, loss = 0.3160 [8.3s] train_loss = 0.2232 [17.1s]
+start preprocess 6040
+Epoch 19 [66.7s + 52.7s]: HR = 0.6904, NDCG = 0.4221, loss = 0.3052 [8.4s] train_loss = 0.2226 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 20 [66.9s + 52.4s]: HR = 0.6942, NDCG = 0.4235, loss = 0.2841 [8.3s] train_loss = 0.2218 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 21 [66.3s + 52.6s]: HR = 0.6960, NDCG = 0.4250, loss = 0.3038 [8.4s] train_loss = 0.2202 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 22 [66.7s + 52.3s]: HR = 0.6988, NDCG = 0.4268, loss = 0.2870 [9.3s] train_loss = 0.2201 [18.4s]
+start preprocess 6040
+Epoch 23 [66.3s + 52.6s]: HR = 0.6954, NDCG = 0.4247, loss = 0.2999 [8.4s] train_loss = 0.2188 [17.4s]
+start preprocess 6040
+Epoch 24 [66.7s + 52.3s]: HR = 0.6939, NDCG = 0.4274, loss = 0.3099 [8.3s] train_loss = 0.2186 [16.9s]
+start preprocess 6040
+Epoch 25 [66.7s + 52.6s]: HR = 0.6957, NDCG = 0.4274, loss = 0.3042 [8.5s] train_loss = 0.2183 [17.5s]
+start preprocess 6040
+Epoch 26 [67.1s + 52.4s]: HR = 0.6957, NDCG = 0.4274, loss = 0.3168 [8.4s] train_loss = 0.2174 [17.2s]
+start preprocess 6040
+Epoch 27 [66.4s + 52.8s]: HR = 0.6957, NDCG = 0.4285, loss = 0.3206 [8.4s] train_loss = 0.2169 [17.4s]
+start preprocess 6040
+Epoch 28 [67.0s + 52.4s]: HR = 0.6927, NDCG = 0.4259, loss = 0.3077 [8.4s] train_loss = 0.2165 [17.1s]
+start preprocess 6040
+Epoch 29 [67.0s + 52.7s]: HR = 0.6974, NDCG = 0.4276, loss = 0.3213 [8.4s] train_loss = 0.2166 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 30 [67.2s + 52.5s]: HR = 0.7003, NDCG = 0.4284, loss = 0.2980 [8.4s] train_loss = 0.2160 [17.1s]
+start preprocess 6040
+Epoch 31 [66.6s + 52.6s]: HR = 0.6965, NDCG = 0.4277, loss = 0.3064 [8.4s] train_loss = 0.2150 [17.4s]
+start preprocess 6040
+Epoch 32 [67.3s + 52.5s]: HR = 0.6954, NDCG = 0.4258, loss = 0.3201 [8.4s] train_loss = 0.2152 [17.1s]
+start preprocess 6040
+Epoch 33 [66.9s + 52.6s]: HR = 0.6944, NDCG = 0.4266, loss = 0.3299 [8.4s] train_loss = 0.2149 [17.4s]
+start preprocess 6040
+Epoch 34 [66.8s + 52.3s]: HR = 0.7003, NDCG = 0.4300, loss = 0.3183 [8.3s] train_loss = 0.2139 [17.0s]
+start preprocess 6040
+Epoch 35 [67.3s + 52.6s]: HR = 0.7003, NDCG = 0.4300, loss = 0.3189 [8.4s] train_loss = 0.2133 [17.4s]
+Epoch 36 [67.3s + 52.5s]: HR = 0.6990, NDCG = 0.4296, loss = 0.3153 [8.4s] train_loss = 0.2132 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 37 [67.1s + 52.7s]: HR = 0.7013, NDCG = 0.4311, loss = 0.3046 [8.4s] train_loss = 0.2131 [17.3s]
+start preprocess 6040
+Epoch 38 [67.1s + 52.3s]: HR = 0.7003, NDCG = 0.4307, loss = 0.3127 [8.3s] train_loss = 0.2129 [16.9s]
+start preprocess 6040
+Epoch 39 [67.0s + 52.5s]: HR = 0.6965, NDCG = 0.4298, loss = 0.3006 [8.4s] train_loss = 0.2135 [17.4s]
+start preprocess 6040
+Epoch 40 [66.9s + 52.5s]: HR = 0.7013, NDCG = 0.4311, loss = 0.3346 [8.4s] train_loss = 0.2123 [16.9s]
+start preprocess 6040
+Epoch 41 [67.0s + 52.6s]: HR = 0.7008, NDCG = 0.4309, loss = 0.3291 [8.4s] train_loss = 0.2119 [17.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 42 [67.2s + 52.5s]: HR = 0.7023, NDCG = 0.4332, loss = 0.3545 [8.4s] train_loss = 0.2119 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 43 [67.1s + 52.7s]: HR = 0.7033, NDCG = 0.4339, loss = 0.3353 [8.4s] train_loss = 0.2113 [17.4s]
+start preprocess 6040
+Epoch 44 [67.0s + 52.5s]: HR = 0.6995, NDCG = 0.4302, loss = 0.3125 [8.4s] train_loss = 0.2107 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 45 [66.9s + 52.6s]: HR = 0.7038, NDCG = 0.4335, loss = 0.3301 [8.4s] train_loss = 0.2103 [17.4s]
+start preprocess 6040
+Epoch 46 [67.3s + 52.6s]: HR = 0.7033, NDCG = 0.4337, loss = 0.3142 [8.4s] train_loss = 0.2101 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+Epoch 47 [66.7s + 52.9s]: HR = 0.7061, NDCG = 0.4344, loss = 0.3455 [8.4s] train_loss = 0.2098 [17.3s]
+start preprocess 6040
+Epoch 48 [67.2s + 52.5s]: HR = 0.7017, NDCG = 0.4313, loss = 0.3296 [8.4s] train_loss = 0.2101 [17.2s]
+start preprocess 6040
+Epoch 49 [66.9s + 52.6s]: HR = 0.7053, NDCG = 0.4332, loss = 0.3307 [8.4s] train_loss = 0.2088 [17.3s]
+start preprocess 6040
+Epoch 50 [66.9s + 52.6s]: HR = 0.7055, NDCG = 0.4338, loss = 0.3284 [8.4s] train_loss = 0.2091 [17.1s]
+start preprocess 6040
+Epoch 51 [67.0s + 52.7s]: HR = 0.7031, NDCG = 0.4328, loss = 0.3295 [8.4s] train_loss = 0.2095 [17.4s]
+start preprocess 6040
+Epoch 52 [66.8s + 52.5s]: HR = 0.7008, NDCG = 0.4328, loss = 0.3433 [8.4s] train_loss = 0.2085 [17.1s]
+start preprocess 6040
+Epoch 53 [66.7s + 52.8s]: HR = 0.7018, NDCG = 0.4337, loss = 0.3372 [8.7s] train_loss = 0.2083 [19.0s]
+start preprocess 6040
+Epoch 54 [67.1s + 53.5s]: HR = 0.7056, NDCG = 0.4345, loss = 0.3401 [8.4s] train_loss = 0.2078 [17.2s]
+start preprocess 6040
+Epoch 55 [66.5s + 52.7s]: HR = 0.7050, NDCG = 0.4346, loss = 0.3201 [8.4s] train_loss = 0.2080 [17.4s]
+start preprocess 6040
+Epoch 56 [67.1s + 52.7s]: HR = 0.7022, NDCG = 0.4331, loss = 0.3037 [8.4s] train_loss = 0.2082 [17.1s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557931798.ckpt
+End. best HR = 0.7061, best NDCG = 0.4344
+
+
+
+python3 multi-deepICF-a.py --path Data/ --dataset ml-1m --epochs 100 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 $
+-verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr $
+.01 --batch_norm 1 --pretrain 0 --imbalance 0 --seeds [0,2**32-1,32]
+Seeds [0, 4294967295, 32]
+Iteration: 0
+start load_training_file_as_matrix 1557919467
+got number of users and items load_training_file_as_matrix 1557919467
+already load the trainMatrix... 1557919474
+start load_training_file_as_list 1557919474
+already load the trainList... 1557919474
+WARNING:tensorflow:From /homes/rj2315/DeepICF/DeepICF_a.py:178: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will
+be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 0 [67.8s + 53.7s]: HR = 0.5386, NDCG = 0.3025, loss = 0.2440 [8.0s] train_loss = 0.3128 [16.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 1 [68.5s + 129.0s]: HR = 0.6083, NDCG = 0.3454, loss = 0.2674 [8.8s] train_loss = 0.2834 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 2 [76.5s + 291.2s]: HR = 0.6285, NDCG = 0.3631, loss = 0.2847 [9.1s] train_loss = 0.2683 [95.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 3 [66.2s + 52.5s]: HR = 0.6386, NDCG = 0.3729, loss = 0.2755 [8.2s] train_loss = 0.2619 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 4 [69.9s + 51.6s]: HR = 0.6517, NDCG = 0.3808, loss = 0.2885 [8.1s] train_loss = 0.2559 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 5 [66.3s + 53.3s]: HR = 0.6570, NDCG = 0.3867, loss = 0.2877 [8.5s] train_loss = 0.2503 [16.9s]                                                 [271/341]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 6 [66.4s + 52.9s]: HR = 0.6604, NDCG = 0.3928, loss = 0.3032 [8.2s] train_loss = 0.2476 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 7 [66.2s + 53.1s]: HR = 0.6654, NDCG = 0.3973, loss = 0.3059 [8.3s] train_loss = 0.2439 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 8 [66.3s + 52.0s]: HR = 0.6700, NDCG = 0.4012, loss = 0.2938 [8.2s] train_loss = 0.2411 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 9 [65.9s + 51.8s]: HR = 0.6717, NDCG = 0.4036, loss = 0.2950 [8.3s] train_loss = 0.2395 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 10 [66.1s + 52.0s]: HR = 0.6762, NDCG = 0.4089, loss = 0.2915 [8.2s] train_loss = 0.2364 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 11 [65.7s + 51.9s]: HR = 0.6790, NDCG = 0.4124, loss = 0.3039 [8.3s] train_loss = 0.2346 [17.4s]
+start preprocess 6040
+Epoch 12 [66.0s + 52.1s]: HR = 0.6773, NDCG = 0.4115, loss = 0.2902 [8.2s] train_loss = 0.2329 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 13 [65.8s + 52.0s]: HR = 0.6821, NDCG = 0.4149, loss = 0.3116 [8.3s] train_loss = 0.2311 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 14 [66.3s + 52.2s]: HR = 0.6828, NDCG = 0.4142, loss = 0.3012 [8.2s] train_loss = 0.2300 [17.2s]
+start preprocess 6040
+Epoch 15 [66.3s + 51.9s]: HR = 0.6818, NDCG = 0.4139, loss = 0.3067 [8.3s] train_loss = 0.2284 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 16 [66.1s + 52.2s]: HR = 0.6849, NDCG = 0.4158, loss = 0.2975 [8.2s] train_loss = 0.2271 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 17 [66.5s + 52.0s]: HR = 0.6886, NDCG = 0.4196, loss = 0.3083 [8.3s] train_loss = 0.2256 [16.9s]
+start preprocess 6040
+Epoch 18 [67.5s + 53.4s]: HR = 0.6879, NDCG = 0.4201, loss = 0.2943 [8.3s] train_loss = 0.2255 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 19 [66.3s + 51.9s]: HR = 0.6917, NDCG = 0.4238, loss = 0.2988 [8.3s] train_loss = 0.2249 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 20 [66.3s + 52.2s]: HR = 0.6921, NDCG = 0.4214, loss = 0.3105 [8.3s] train_loss = 0.2233 [17.2s]
+start preprocess 6040
+Epoch 21 [66.2s + 52.0s]: HR = 0.6906, NDCG = 0.4233, loss = 0.3127 [8.3s] train_loss = 0.2230 [17.0s]
+start preprocess 6040
+Epoch 22 [66.2s + 52.2s]: HR = 0.6912, NDCG = 0.4221, loss = 0.3236 [8.3s] train_loss = 0.2219 [17.3s]
+start preprocess 6040
+Epoch 23 [66.2s + 51.9s]: HR = 0.6881, NDCG = 0.4202, loss = 0.3071 [8.3s] train_loss = 0.2216 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 24 [66.0s + 52.1s]: HR = 0.6932, NDCG = 0.4250, loss = 0.3024 [8.3s] train_loss = 0.2208 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 25 [66.3s + 51.8s]: HR = 0.6972, NDCG = 0.4253, loss = 0.3187 [8.3s] train_loss = 0.2193 [16.9s]
+start preprocess 6040
+Epoch 26 [65.8s + 52.3s]: HR = 0.6916, NDCG = 0.4222, loss = 0.3178 [8.3s] train_loss = 0.2188 [17.2s]
+start preprocess 6040
+Epoch 27 [65.9s + 51.8s]: HR = 0.6960, NDCG = 0.4261, loss = 0.3121 [8.3s] train_loss = 0.2198 [16.9s]
+start preprocess 6040
+Epoch 28 [66.2s + 52.3s]: HR = 0.6965, NDCG = 0.4266, loss = 0.3083 [8.3s] train_loss = 0.2178 [17.3s]
+start preprocess 6040
+Epoch 29 [66.4s + 51.7s]: HR = 0.6962, NDCG = 0.4255, loss = 0.3162 [8.3s] train_loss = 0.2181 [16.8s]
+start preprocess 6040
+Epoch 30 [66.5s + 52.8s]: HR = 0.6960, NDCG = 0.4274, loss = 0.3039 [8.3s] train_loss = 0.2173 [17.3s]
+start preprocess 6040
+Epoch 31 [66.8s + 51.9s]: HR = 0.6942, NDCG = 0.4260, loss = 0.3474 [8.3s] train_loss = 0.2169 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 32 [66.8s + 52.2s]: HR = 0.7002, NDCG = 0.4277, loss = 0.3150 [8.3s] train_loss = 0.2167 [17.2s]
+Epoch 33 [66.2s + 51.8s]: HR = 0.6965, NDCG = 0.4263, loss = 0.3211 [8.3s] train_loss = 0.2154 [16.9s]
+start preprocess 6040
+Epoch 34 [66.5s + 52.1s]: HR = 0.6950, NDCG = 0.4251, loss = 0.3129 [8.3s] train_loss = 0.2153 [17.2s]
+start preprocess 6040
+Epoch 35 [66.0s + 51.8s]: HR = 0.6975, NDCG = 0.4284, loss = 0.3154 [8.3s] train_loss = 0.2141 [16.7s]
+start preprocess 6040
+Epoch 36 [66.3s + 52.2s]: HR = 0.6972, NDCG = 0.4277, loss = 0.3195 [8.3s] train_loss = 0.2134 [17.3s]
+start preprocess 6040
+Epoch 37 [66.4s + 51.7s]: HR = 0.6978, NDCG = 0.4295, loss = 0.3103 [8.3s] train_loss = 0.2139 [16.8s]
+start preprocess 6040
+Epoch 38 [66.4s + 52.2s]: HR = 0.6985, NDCG = 0.4295, loss = 0.3206 [8.3s] train_loss = 0.2138 [17.2s]
+start preprocess 6040
+Epoch 39 [66.3s + 51.7s]: HR = 0.6974, NDCG = 0.4281, loss = 0.3246 [8.3s] train_loss = 0.2130 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+Epoch 40 [66.1s + 52.1s]: HR = 0.7010, NDCG = 0.4302, loss = 0.3259 [8.3s] train_loss = 0.2120 [17.2s]
+start preprocess 6040
+Epoch 41 [66.6s + 51.6s]: HR = 0.7007, NDCG = 0.4299, loss = 0.3144 [8.3s] train_loss = 0.2126 [16.7s]
+start preprocess 6040
+Epoch 42 [66.1s + 52.2s]: HR = 0.6965, NDCG = 0.4292, loss = 0.3288 [8.3s] train_loss = 0.2118 [17.2s]
+start preprocess 6040
+Epoch 43 [67.3s + 51.7s]: HR = 0.6974, NDCG = 0.4296, loss = 0.3288 [8.3s] train_loss = 0.2113 [16.7s]
+start preprocess 6040
+Epoch 44 [66.7s + 52.2s]: HR = 0.6982, NDCG = 0.4310, loss = 0.3445 [8.3s] train_loss = 0.2108 [17.2s]
+start preprocess 6040
+Epoch 45 [66.4s + 51.6s]: HR = 0.6960, NDCG = 0.4271, loss = 0.3351 [8.3s] train_loss = 0.2109 [16.7s]
+start preprocess 6040
+Epoch 46 [66.6s + 52.1s]: HR = 0.6959, NDCG = 0.4285, loss = 0.3295 [8.3s] train_loss = 0.2104 [17.2s]
+start preprocess 6040
+Epoch 47 [66.8s + 51.6s]: HR = 0.6925, NDCG = 0.4267, loss = 0.3217 [8.3s] train_loss = 0.2105 [16.7s]
+start preprocess 6040
+Epoch 48 [66.6s + 52.0s]: HR = 0.6959, NDCG = 0.4287, loss = 0.3413 [8.3s] train_loss = 0.2097 [17.2s]
+start preprocess 6040
+Epoch 49 [67.2s + 52.6s]: HR = 0.6962, NDCG = 0.4301, loss = 0.3373 [8.2s] train_loss = 0.2096 [16.7s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557919475.ckpt
+End. best HR = 0.7010, best NDCG = 0.4302
+Iteration: 1
+start load_training_file_as_matrix 1557927091
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 0 [67.7s + 52.1s]: HR = 0.5513, NDCG = 0.3116, loss = 0.2640 [8.1s] train_loss = 0.3145 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 1 [65.5s + 52.1s]: HR = 0.5949, NDCG = 0.3400, loss = 0.2748 [8.3s] train_loss = 0.2895 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 2 [66.1s + 51.3s]: HR = 0.6192, NDCG = 0.3581, loss = 0.2824 [8.1s] train_loss = 0.2750 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 3 [65.2s + 52.2s]: HR = 0.6295, NDCG = 0.3673, loss = 0.2606 [8.3s] train_loss = 0.2691 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 4 [65.9s + 51.4s]: HR = 0.6434, NDCG = 0.3791, loss = 0.2787 [8.2s] train_loss = 0.2581 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 5 [65.7s + 52.6s]: HR = 0.6556, NDCG = 0.3870, loss = 0.2799 [8.3s] train_loss = 0.2517 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 6 [65.9s + 51.8s]: HR = 0.6644, NDCG = 0.3941, loss = 0.2782 [8.2s] train_loss = 0.2477 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 7 [65.9s + 52.2s]: HR = 0.6657, NDCG = 0.3960, loss = 0.2587 [8.3s] train_loss = 0.2445 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 8 [66.0s + 51.6s]: HR = 0.6767, NDCG = 0.4022, loss = 0.2805 [8.2s] train_loss = 0.2408 [16.8s]
+Epoch 9 [66.1s + 52.2s]: HR = 0.6747, NDCG = 0.4024, loss = 0.2850 [8.3s] train_loss = 0.2388 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 10 [66.5s + 51.7s]: HR = 0.6786, NDCG = 0.4052, loss = 0.2663 [8.2s] train_loss = 0.2370 [16.6s]
+start preprocess 6040
+Epoch 11 [66.2s + 52.3s]: HR = 0.6768, NDCG = 0.4072, loss = 0.2898 [8.3s] train_loss = 0.2340 [17.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 12 [66.3s + 51.9s]: HR = 0.6793, NDCG = 0.4090, loss = 0.2818 [8.2s] train_loss = 0.2323 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 13 [66.0s + 52.1s]: HR = 0.6846, NDCG = 0.4151, loss = 0.2770 [8.3s] train_loss = 0.2299 [17.2s]
+start preprocess 6040
+Epoch 14 [66.1s + 51.9s]: HR = 0.6841, NDCG = 0.4133, loss = 0.2799 [8.3s] train_loss = 0.2297 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 15 [65.8s + 52.3s]: HR = 0.6864, NDCG = 0.4162, loss = 0.2843 [8.3s] train_loss = 0.2266 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 16 [66.5s + 51.8s]: HR = 0.6902, NDCG = 0.4184, loss = 0.2964 [8.3s] train_loss = 0.2253 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 17 [65.9s + 52.1s]: HR = 0.6935, NDCG = 0.4201, loss = 0.2842 [8.3s] train_loss = 0.2251 [17.2s]
+start preprocess 6040
+Epoch 18 [66.2s + 51.8s]: HR = 0.6896, NDCG = 0.4184, loss = 0.2923 [8.3s] train_loss = 0.2234 [16.7s]
+start preprocess 6040
+Epoch 19 [66.0s + 52.3s]: HR = 0.6922, NDCG = 0.4214, loss = 0.2696 [8.3s] train_loss = 0.2235 [17.2s]
+start preprocess 6040
+Epoch 20 [66.4s + 52.0s]: HR = 0.6921, NDCG = 0.4238, loss = 0.2970 [8.3s] train_loss = 0.2219 [16.9s]
+start preprocess 6040
+Epoch 21 [66.0s + 52.2s]: HR = 0.6882, NDCG = 0.4200, loss = 0.3064 [8.3s] train_loss = 0.2211 [17.2s]
+start preprocess 6040
+Epoch 22 [66.7s + 52.0s]: HR = 0.6917, NDCG = 0.4206, loss = 0.2935 [8.3s] train_loss = 0.2200 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 23 [66.6s + 52.1s]: HR = 0.6957, NDCG = 0.4247, loss = 0.2972 [8.3s] train_loss = 0.2196 [17.2s]
+Epoch 24 [66.7s + 52.0s]: HR = 0.6952, NDCG = 0.4247, loss = 0.2914 [8.3s] train_loss = 0.2193 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 25 [66.6s + 52.1s]: HR = 0.6969, NDCG = 0.4235, loss = 0.2931 [8.3s] train_loss = 0.2185 [17.2s]
+start preprocess 6040
+Epoch 26 [66.3s + 51.9s]: HR = 0.6950, NDCG = 0.4255, loss = 0.3026 [8.3s] train_loss = 0.2175 [16.9s]
+start preprocess 6040
+Epoch 27 [66.3s + 52.3s]: HR = 0.6954, NDCG = 0.4258, loss = 0.2829 [8.3s] train_loss = 0.2177 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 28 [66.5s + 52.0s]: HR = 0.6987, NDCG = 0.4272, loss = 0.2987 [8.3s] train_loss = 0.2168 [16.9s]
+start preprocess 6040
+Epoch 29 [66.1s + 52.2s]: HR = 0.6959, NDCG = 0.4241, loss = 0.2996 [8.3s] train_loss = 0.2160 [17.2s]
+start preprocess 6040
+Epoch 30 [66.1s + 53.6s]: HR = 0.6978, NDCG = 0.4271, loss = 0.3225 [8.3s] train_loss = 0.2163 [17.6s]
+start preprocess 6040
+Epoch 31 [66.2s + 52.1s]: HR = 0.6970, NDCG = 0.4281, loss = 0.3018 [8.3s] train_loss = 0.2150 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+Epoch 32 [66.3s + 52.0s]: HR = 0.7026, NDCG = 0.4293, loss = 0.2803 [8.3s] train_loss = 0.2156 [16.9s]
+start preprocess 6040
+Epoch 33 [65.8s + 52.2s]: HR = 0.6992, NDCG = 0.4270, loss = 0.3039 [8.3s] train_loss = 0.2148 [17.2s]
+start preprocess 6040
+Epoch 34 [66.3s + 52.1s]: HR = 0.7003, NDCG = 0.4287, loss = 0.3033 [8.3s] train_loss = 0.2140 [16.9s]
+start preprocess 6040
+Epoch 35 [65.9s + 52.1s]: HR = 0.6977, NDCG = 0.4289, loss = 0.3009 [8.3s] train_loss = 0.2135 [17.2s]
+start preprocess 6040
+Epoch 36 [66.4s + 51.9s]: HR = 0.6982, NDCG = 0.4280, loss = 0.3071 [8.3s] train_loss = 0.2135 [17.0s]
+start preprocess 6040
+Epoch 37 [66.4s + 52.3s]: HR = 0.6972, NDCG = 0.4267, loss = 0.3025 [8.3s] train_loss = 0.2131 [17.2s]
+start preprocess 6040
+Epoch 38 [66.5s + 52.0s]: HR = 0.7005, NDCG = 0.4293, loss = 0.3149 [8.3s] train_loss = 0.2122 [16.9s]
+start preprocess 6040
+Epoch 39 [66.4s + 52.0s]: HR = 0.6972, NDCG = 0.4261, loss = 0.3003 [8.3s] train_loss = 0.2119 [17.1s]
+start preprocess 6040
+Epoch 40 [66.6s + 52.0s]: HR = 0.7012, NDCG = 0.4280, loss = 0.3152 [8.3s] train_loss = 0.2121 [17.0s]
+start preprocess 6040
+Epoch 41 [66.5s + 52.1s]: HR = 0.6977, NDCG = 0.4263, loss = 0.2896 [8.3s] train_loss = 0.2133 [17.2s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557927099.ckpt
+End. best HR = 0.7026, best NDCG = 0.4293
+Iteration: 2
+start load_training_file_as_matrix 1557933137
+got number of users and items load_training_file_as_matrix 1557933138
+already load the trainMatrix... 1557933144
+start load_training_file_as_list 1557933144
+already load the trainList... 1557933145
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 0 [66.0s + 51.9s]: HR = 0.5339, NDCG = 0.2991, loss = 0.2567 [8.1s] train_loss = 0.3257 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 1 [66.2s + 52.2s]: HR = 0.6164, NDCG = 0.3612, loss = 0.2805 [8.3s] train_loss = 0.2749 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 2 [66.4s + 51.4s]: HR = 0.6419, NDCG = 0.3832, loss = 0.2906 [8.1s] train_loss = 0.2584 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 3 [66.0s + 52.2s]: HR = 0.6626, NDCG = 0.3922, loss = 0.2863 [8.3s] train_loss = 0.2512 [17.4s]
+start preprocess 6040
+Epoch 4 [66.0s + 51.6s]: HR = 0.6626, NDCG = 0.3947, loss = 0.2933 [8.2s] train_loss = 0.2462 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 5 [65.7s + 52.3s]: HR = 0.6737, NDCG = 0.4031, loss = 0.2929 [8.3s] train_loss = 0.2409 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 6 [66.4s + 51.5s]: HR = 0.6770, NDCG = 0.4057, loss = 0.2856 [8.2s] train_loss = 0.2389 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 7 [66.1s + 52.3s]: HR = 0.6793, NDCG = 0.4083, loss = 0.3114 [8.3s] train_loss = 0.2359 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 8 [66.4s + 51.7s]: HR = 0.6834, NDCG = 0.4118, loss = 0.2927 [8.2s] train_loss = 0.2336 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 9 [66.2s + 52.3s]: HR = 0.6892, NDCG = 0.4156, loss = 0.3046 [8.3s] train_loss = 0.2307 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 10 [66.4s + 51.8s]: HR = 0.6904, NDCG = 0.4165, loss = 0.3209 [8.2s] train_loss = 0.2307 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 11 [66.5s + 52.4s]: HR = 0.6906, NDCG = 0.4158, loss = 0.3125 [8.3s] train_loss = 0.2278 [17.3s]
+start preprocess 6040
+Epoch 12 [66.8s + 51.9s]: HR = 0.6876, NDCG = 0.4148, loss = 0.3063 [8.2s] train_loss = 0.2277 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 13 [66.3s + 52.7s]: HR = 0.6959, NDCG = 0.4206, loss = 0.2991 [8.3s] train_loss = 0.2258 [17.3s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 14 [66.5s + 51.9s]: HR = 0.6993, NDCG = 0.4221, loss = 0.3234 [8.2s] train_loss = 0.2247 [16.9s]
+start preprocess 6040
+Epoch 15 [66.1s + 52.3s]: HR = 0.6950, NDCG = 0.4206, loss = 0.3201 [8.3s] train_loss = 0.2232 [17.3s]
+start preprocess 6040
+Epoch 16 [66.6s + 51.9s]: HR = 0.6972, NDCG = 0.4217, loss = 0.3116 [8.2s] train_loss = 0.2227 [17.0s]
+start preprocess 6040
+Epoch 17 [65.9s + 52.3s]: HR = 0.6970, NDCG = 0.4211, loss = 0.3029 [8.3s] train_loss = 0.2235 [17.3s]
+start preprocess 6040
+Epoch 18 [66.4s + 52.0s]: HR = 0.6965, NDCG = 0.4233, loss = 0.3143 [8.3s] train_loss = 0.2209 [16.9s]
+start preprocess 6040
+Epoch 19 [65.9s + 52.2s]: HR = 0.6967, NDCG = 0.4237, loss = 0.3127 [8.3s] train_loss = 0.2203 [17.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+Epoch 20 [67.8s + 53.3s]: HR = 0.7068, NDCG = 0.4272, loss = 0.3160 [8.2s] train_loss = 0.2200 [16.9s]
+start preprocess 6040
+Epoch 21 [65.9s + 52.1s]: HR = 0.6983, NDCG = 0.4229, loss = 0.3245 [8.3s] train_loss = 0.2185 [17.3s]
+start preprocess 6040
+Epoch 22 [66.5s + 51.8s]: HR = 0.7033, NDCG = 0.4282, loss = 0.3060 [8.2s] train_loss = 0.2179 [16.9s]
+start preprocess 6040
+Epoch 23 [66.0s + 52.2s]: HR = 0.7003, NDCG = 0.4253, loss = 0.3042 [8.2s] train_loss = 0.2174 [17.3s]
+start preprocess 6040
+Epoch 24 [66.6s + 52.0s]: HR = 0.6987, NDCG = 0.4259, loss = 0.3100 [8.2s] train_loss = 0.2164 [16.9s]
+start preprocess 6040
+Epoch 25 [65.9s + 52.1s]: HR = 0.7008, NDCG = 0.4266, loss = 0.3246 [8.2s] train_loss = 0.2159 [17.2s]
+start preprocess 6040
+Epoch 26 [67.0s + 51.9s]: HR = 0.7055, NDCG = 0.4304, loss = 0.3120 [8.2s] train_loss = 0.2161 [16.9s]
+start preprocess 6040
+Epoch 27 [66.4s + 52.2s]: HR = 0.7058, NDCG = 0.4308, loss = 0.3243 [8.2s] train_loss = 0.2152 [17.2s]
+start preprocess 6040
+Epoch 28 [66.7s + 52.0s]: HR = 0.7010, NDCG = 0.4270, loss = 0.3317 [8.2s] train_loss = 0.2142 [16.9s]
+start preprocess 6040
+Epoch 29 [66.3s + 52.3s]: HR = 0.7010, NDCG = 0.4293, loss = 0.3271 [8.2s] train_loss = 0.2138 [17.2s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557933145.ckpt
+End. best HR = 0.7068, best NDCG = 0.4272
+
+
+
+
+python3 multi-deepICF-a.py --path Data/ --dataset ml-1m --epochs 100 --beta 0.8 --weight_size 16 --activation 0 --algorithm 0 -
+-verbose 1 --batch_choice user --embed_size 16 --layers [64,32,16] --regs [1e-06,1e-06,1e-06] --reg_W [10,10,10,10] --alpha 0 --train_loss 1 --num_neg 4 --lr 0
+.01 --batch_norm 1 --pretrain 0 --imbalance 0 --seeds [8583,79999,10]
+Seeds [8583, 79999, 10]
+Iteration: 0
+start load_training_file_as_matrix 1557919845
+got number of users and items load_training_file_as_matrix 1557919845
+already load the trainMatrix... 1557919852
+start load_training_file_as_list 1557919852
+already load the trainList... 1557919852
+WARNING:tensorflow:From /homes/rj2315/DeepICF/DeepICF_a.py:178: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will
+be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 0 [67.4s + 53.8s]: HR = 0.5664, NDCG = 0.3231, loss = 0.2635 [7.9s] train_loss = 0.2990 [16.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 1 [66.9s + 225.2s]: HR = 0.6232, NDCG = 0.3590, loss = 0.2823 [9.7s] train_loss = 0.2734 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 2 [74.0s + 52.1s]: HR = 0.6331, NDCG = 0.3679, loss = 0.2987 [9.8s] train_loss = 0.2651 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 3 [68.1s + 52.8s]: HR = 0.6474, NDCG = 0.3797, loss = 0.2805 [8.2s] train_loss = 0.2569 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 4 [75.3s + 51.3s]: HR = 0.6588, NDCG = 0.3899, loss = 0.2993 [8.0s] train_loss = 0.2497 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 5 [66.3s + 52.6s]: HR = 0.6674, NDCG = 0.3973, loss = 0.2760 [8.2s] train_loss = 0.2446 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 6 [67.4s + 51.5s]: HR = 0.6715, NDCG = 0.4008, loss = 0.2827 [8.1s] train_loss = 0.2418 [16.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 7 [70.1s + 52.8s]: HR = 0.6793, NDCG = 0.4075, loss = 0.2905 [12.9s] train_loss = 0.2371 [16.7s]
+start preprocess 6040
+Epoch 8 [70.5s + 51.4s]: HR = 0.6695, NDCG = 0.4042, loss = 0.2752 [8.1s] train_loss = 0.2350 [16.9s]
+start preprocess 6040
+Epoch 9 [66.1s + 52.5s]: HR = 0.6725, NDCG = 0.4065, loss = 0.2897 [8.2s] train_loss = 0.2326 [16.5s]
+start preprocess 6040
+Epoch 10 [66.1s + 52.1s]: HR = 0.6790, NDCG = 0.4124, loss = 0.2850 [8.5s] train_loss = 0.2302 [16.9s]
+start preprocess 6040
+Epoch 11 [65.8s + 51.2s]: HR = 0.6791, NDCG = 0.4133, loss = 0.3093 [8.2s] train_loss = 0.2286 [16.6s]
+start preprocess 6040
+Epoch 12 [65.9s + 51.8s]: HR = 0.6773, NDCG = 0.4160, loss = 0.2904 [8.1s] train_loss = 0.2268 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 13 [66.1s + 51.4s]: HR = 0.6839, NDCG = 0.4179, loss = 0.2912 [8.2s] train_loss = 0.2257 [16.5s]
+start preprocess 6040
+Epoch 14 [66.2s + 51.6s]: HR = 0.6800, NDCG = 0.4145, loss = 0.3001 [8.2s] train_loss = 0.2247 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 15 [66.1s + 51.3s]: HR = 0.6868, NDCG = 0.4193, loss = 0.2913 [8.2s] train_loss = 0.2233 [16.7s]
+start preprocess 6040
+Epoch 16 [65.9s + 51.8s]: HR = 0.6813, NDCG = 0.4190, loss = 0.3005 [8.4s] train_loss = 0.2220 [17.0s]
+start preprocess 6040
+Epoch 17 [67.9s + 52.7s]: HR = 0.6808, NDCG = 0.4181, loss = 0.3163 [8.2s] train_loss = 0.2215 [16.8s]
+Epoch 18 [66.4s + 51.6s]: HR = 0.6877, NDCG = 0.4207, loss = 0.3043 [8.1s] train_loss = 0.2210 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 19 [65.7s + 51.5s]: HR = 0.6879, NDCG = 0.4210, loss = 0.3117 [8.2s] train_loss = 0.2194 [16.8s]
+start preprocess 6040
+Epoch 20 [66.1s + 51.7s]: HR = 0.6873, NDCG = 0.4214, loss = 0.3271 [8.2s] train_loss = 0.2186 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 21 [65.6s + 51.4s]: HR = 0.6897, NDCG = 0.4215, loss = 0.3174 [8.2s] train_loss = 0.2180 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 22 [66.0s + 51.6s]: HR = 0.6955, NDCG = 0.4262, loss = 0.3120 [8.2s] train_loss = 0.2182 [17.0s]
+start preprocess 6040
+Epoch 23 [66.3s + 51.1s]: HR = 0.6889, NDCG = 0.4232, loss = 0.3199 [8.2s] train_loss = 0.2171 [16.6s]
+start preprocess 6040
+Epoch 24 [65.9s + 51.8s]: HR = 0.6907, NDCG = 0.4249, loss = 0.3061 [8.2s] train_loss = 0.2169 [17.0s]
+start preprocess 6040
+Epoch 25 [68.2s + 57.7s]: HR = 0.6914, NDCG = 0.4249, loss = 0.3074 [9.8s] train_loss = 0.2165 [20.0s]
+start preprocess 6040
+Epoch 26 [67.9s + 52.9s]: HR = 0.6942, NDCG = 0.4263, loss = 0.3081 [8.2s] train_loss = 0.2159 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 27 [67.6s + 51.6s]: HR = 0.6962, NDCG = 0.4271, loss = 0.3108 [8.2s] train_loss = 0.2150 [16.8s]
+start preprocess 6040
+Epoch 28 [66.4s + 51.7s]: HR = 0.6937, NDCG = 0.4267, loss = 0.2912 [8.2s] train_loss = 0.2156 [17.1s]
+start preprocess 6040
+Epoch 29 [66.5s + 51.5s]: HR = 0.6924, NDCG = 0.4266, loss = 0.3196 [8.2s] train_loss = 0.2142 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 30 [66.2s + 51.7s]: HR = 0.6974, NDCG = 0.4275, loss = 0.3122 [8.2s] train_loss = 0.2141 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+Epoch 31 [66.5s + 51.4s]: HR = 0.7005, NDCG = 0.4296, loss = 0.3051 [8.2s] train_loss = 0.2139 [16.8s]
+start preprocess 6040
+Epoch 32 [66.3s + 51.9s]: HR = 0.6965, NDCG = 0.4260, loss = 0.3225 [8.2s] train_loss = 0.2129 [17.1s]
+start preprocess 6040
+Epoch 33 [66.8s + 51.3s]: HR = 0.6949, NDCG = 0.4279, loss = 0.3168 [8.2s] train_loss = 0.2125 [16.8s]
+Epoch 34 [66.5s + 51.8s]: HR = 0.7010, NDCG = 0.4313, loss = 0.3464 [8.2s] train_loss = 0.2124 [17.1s]
+start preprocess 6040
+Epoch 35 [66.5s + 51.6s]: HR = 0.6980, NDCG = 0.4306, loss = 0.3267 [8.2s] train_loss = 0.2116 [16.8s]
+start preprocess 6040
+Epoch 36 [66.3s + 51.8s]: HR = 0.6967, NDCG = 0.4292, loss = 0.3181 [8.2s] train_loss = 0.2115 [17.0s]
+start preprocess 6040
+Epoch 37 [65.8s + 51.4s]: HR = 0.6987, NDCG = 0.4302, loss = 0.3133 [8.2s] train_loss = 0.2119 [16.7s]
+start preprocess 6040
+Epoch 38 [66.0s + 51.7s]: HR = 0.6969, NDCG = 0.4302, loss = 0.3376 [8.2s] train_loss = 0.2106 [17.1s]
+start preprocess 6040
+Epoch 39 [66.5s + 51.3s]: HR = 0.6962, NDCG = 0.4284, loss = 0.3435 [8.1s] train_loss = 0.2105 [16.8s]
+start preprocess 6040
+Epoch 40 [66.4s + 51.8s]: HR = 0.6965, NDCG = 0.4307, loss = 0.3175 [8.2s] train_loss = 0.2105 [17.1s]
+start preprocess 6040
+Epoch 41 [67.0s + 51.2s]: HR = 0.6952, NDCG = 0.4291, loss = 0.3274 [8.1s] train_loss = 0.2100 [16.7s]
+start preprocess 6040
+Epoch 42 [67.1s + 51.7s]: HR = 0.6992, NDCG = 0.4300, loss = 0.3152 [8.2s] train_loss = 0.2104 [17.1s]
+start preprocess 6040
+Epoch 43 [66.6s + 51.2s]: HR = 0.6967, NDCG = 0.4291, loss = 0.3218 [8.2s] train_loss = 0.2095 [16.5s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557919853.ckpt
+End. best HR = 0.7010, best NDCG = 0.4313
+Iteration: 1
+start load_training_file_as_matrix 1557926388
+got number of users and items load_training_file_as_matrix 1557926389
+already load the trainMatrix... 1557926395
+start load_training_file_as_list 1557926395
+already load the trainList... 1557926395
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 0 [66.8s + 51.1s]: HR = 0.5387, NDCG = 0.3020, loss = 0.2762 [8.0s] train_loss = 0.3188 [15.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 0 [66.8s + 51.1s]: HR = 0.5387, NDCG = 0.3020, loss = 0.2762 [8.0s] train_loss = 0.3188 [15.9s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 1 [66.3s + 51.7s]: HR = 0.6036, NDCG = 0.3438, loss = 0.2934 [8.2s] train_loss = 0.2864 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 2 [65.8s + 51.0s]: HR = 0.6167, NDCG = 0.3567, loss = 0.2852 [8.0s] train_loss = 0.2754 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 3 [65.3s + 51.7s]: HR = 0.6386, NDCG = 0.3717, loss = 0.2961 [8.2s] train_loss = 0.2640 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 4 [67.2s + 52.3s]: HR = 0.6459, NDCG = 0.3734, loss = 0.2908 [8.1s] train_loss = 0.2581 [16.4s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 5 [65.6s + 51.8s]: HR = 0.6594, NDCG = 0.3861, loss = 0.2982 [8.2s] train_loss = 0.2525 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 6 [66.0s + 51.3s]: HR = 0.6608, NDCG = 0.3891, loss = 0.2657 [8.1s] train_loss = 0.2508 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 7 [65.9s + 51.7s]: HR = 0.6677, NDCG = 0.3897, loss = 0.2850 [8.2s] train_loss = 0.2465 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 8 [66.2s + 51.1s]: HR = 0.6682, NDCG = 0.3911, loss = 0.2988 [8.1s] train_loss = 0.2440 [16.5s]
+start preprocess 6040
+Epoch 9 [66.0s + 51.7s]: HR = 0.6661, NDCG = 0.3897, loss = 0.2953 [8.2s] train_loss = 0.2417 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 10 [66.0s + 51.5s]: HR = 0.6717, NDCG = 0.3951, loss = 0.2853 [8.1s] train_loss = 0.2398 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 11 [66.0s + 51.8s]: HR = 0.6775, NDCG = 0.3969, loss = 0.2975 [8.2s] train_loss = 0.2380 [17.1s]
+start preprocess 6040
+Epoch 12 [66.3s + 51.3s]: HR = 0.6768, NDCG = 0.3989, loss = 0.2983 [8.1s] train_loss = 0.2363 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 13 [65.9s + 51.7s]: HR = 0.6790, NDCG = 0.3979, loss = 0.3074 [8.2s] train_loss = 0.2349 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 14 [66.4s + 51.5s]: HR = 0.6818, NDCG = 0.4026, loss = 0.3078 [8.1s] train_loss = 0.2330 [16.6s]
+Epoch 15 [65.5s + 51.8s]: HR = 0.6805, NDCG = 0.4013, loss = 0.3200 [8.2s] train_loss = 0.2327 [17.0s]
+start preprocess 6040
+Epoch 16 [66.5s + 51.4s]: HR = 0.6790, NDCG = 0.4052, loss = 0.3107 [8.1s] train_loss = 0.2313 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 17 [66.4s + 51.7s]: HR = 0.6846, NDCG = 0.4055, loss = 0.3110 [8.2s] train_loss = 0.2296 [17.1s]
+start preprocess 6040
+Epoch 18 [66.5s + 51.6s]: HR = 0.6841, NDCG = 0.4047, loss = 0.3084 [8.1s] train_loss = 0.2296 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 19 [66.1s + 51.8s]: HR = 0.6874, NDCG = 0.4053, loss = 0.3225 [8.2s] train_loss = 0.2276 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 20 [66.2s + 51.7s]: HR = 0.6891, NDCG = 0.4095, loss = 0.2994 [8.2s] train_loss = 0.2266 [16.8s]
+start preprocess 6040
+Epoch 21 [65.5s + 51.8s]: HR = 0.6882, NDCG = 0.4115, loss = 0.3070 [8.2s] train_loss = 0.2254 [17.1s]
+start preprocess 6040
+Epoch 22 [66.5s + 51.5s]: HR = 0.6891, NDCG = 0.4083, loss = 0.3104 [8.2s] train_loss = 0.2244 [16.8s]
+start preprocess 6040
+Epoch 23 [66.5s + 51.7s]: HR = 0.6861, NDCG = 0.4106, loss = 0.3082 [8.2s] train_loss = 0.2238 [17.0s]
+start preprocess 6040
+Epoch 24 [66.3s + 51.6s]: HR = 0.6877, NDCG = 0.4105, loss = 0.3257 [8.1s] train_loss = 0.2234 [16.8s]
+start preprocess 6040
+Epoch 25 [66.2s + 51.7s]: HR = 0.6874, NDCG = 0.4113, loss = 0.3067 [8.2s] train_loss = 0.2236 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 26 [66.9s + 51.4s]: HR = 0.6954, NDCG = 0.4144, loss = 0.3225 [8.2s] train_loss = 0.2227 [16.8s]
+start preprocess 6040
+Epoch 27 [66.5s + 51.6s]: HR = 0.6914, NDCG = 0.4139, loss = 0.3155 [8.2s] train_loss = 0.2214 [17.0s]
+start preprocess 6040
+Epoch 28 [66.1s + 51.5s]: HR = 0.6940, NDCG = 0.4135, loss = 0.3254 [8.2s] train_loss = 0.2211 [16.9s]
+start preprocess 6040
+Epoch 29 [66.6s + 51.5s]: HR = 0.6922, NDCG = 0.4178, loss = 0.3126 [8.2s] train_loss = 0.2200 [17.0s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 30 [66.6s + 51.5s]: HR = 0.6978, NDCG = 0.4193, loss = 0.3160 [8.2s] train_loss = 0.2188 [16.9s]
+start preprocess 6040
+Epoch 31 [66.1s + 51.6s]: HR = 0.6950, NDCG = 0.4167, loss = 0.3351 [8.2s] train_loss = 0.2192 [17.1s]
+start preprocess 6040
+Epoch 32 [66.1s + 51.6s]: HR = 0.6954, NDCG = 0.4172, loss = 0.3149 [8.2s] train_loss = 0.2185 [16.9s]
+Epoch 33 [66.4s + 51.6s]: HR = 0.6970, NDCG = 0.4169, loss = 0.3143 [8.2s] train_loss = 0.2175 [17.0s]
+start preprocess 6040
+Epoch 34 [66.6s + 51.7s]: HR = 0.6977, NDCG = 0.4186, loss = 0.3135 [8.2s] train_loss = 0.2176 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 35 [66.5s + 52.6s]: HR = 0.7005, NDCG = 0.4204, loss = 0.3180 [8.3s] train_loss = 0.2166 [18.5s]
+start preprocess 6040
+Epoch 36 [66.6s + 51.5s]: HR = 0.6962, NDCG = 0.4163, loss = 0.3387 [8.2s] train_loss = 0.2159 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 37 [66.3s + 51.6s]: HR = 0.7007, NDCG = 0.4200, loss = 0.3186 [8.2s] train_loss = 0.2156 [17.0s]
+start preprocess 6040
+Epoch 38 [66.5s + 51.6s]: HR = 0.6990, NDCG = 0.4186, loss = 0.3219 [8.2s] train_loss = 0.2158 [16.9s]
+start preprocess 6040
+Epoch 39 [66.0s + 51.6s]: HR = 0.6965, NDCG = 0.4194, loss = 0.3242 [8.2s] train_loss = 0.2151 [17.0s]
+start preprocess 6040
+Epoch 40 [66.5s + 51.7s]: HR = 0.7002, NDCG = 0.4168, loss = 0.3403 [8.2s] train_loss = 0.2149 [16.9s]
+start preprocess 6040
+Epoch 41 [66.0s + 51.7s]: HR = 0.6990, NDCG = 0.4209, loss = 0.3267 [8.3s] train_loss = 0.2136 [17.0s]
+start preprocess 6040
+Epoch 42 [66.6s + 51.6s]: HR = 0.7002, NDCG = 0.4224, loss = 0.3337 [8.2s] train_loss = 0.2140 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+Epoch 43 [65.9s + 51.6s]: HR = 0.7035, NDCG = 0.4216, loss = 0.3290 [8.2s] train_loss = 0.2136 [17.0s]
+start preprocess 6040
+Epoch 44 [66.6s + 51.5s]: HR = 0.6964, NDCG = 0.4165, loss = 0.3317 [8.2s] train_loss = 0.2141 [16.8s]
+start preprocess 6040
+Epoch 45 [66.1s + 51.6s]: HR = 0.6995, NDCG = 0.4183, loss = 0.3448 [8.2s] train_loss = 0.2126 [17.0s]
+start preprocess 6040
+Epoch 46 [66.4s + 51.7s]: HR = 0.7000, NDCG = 0.4198, loss = 0.3366 [8.2s] train_loss = 0.2128 [16.9s]
+start preprocess 6040
+Epoch 47 [66.4s + 51.6s]: HR = 0.6993, NDCG = 0.4181, loss = 0.3335 [8.2s] train_loss = 0.2133 [17.0s]
+start preprocess 6040
+Epoch 48 [66.8s + 51.6s]: HR = 0.7012, NDCG = 0.4226, loss = 0.3345 [8.2s] train_loss = 0.2119 [16.8s]
+start preprocess 6040
+Epoch 49 [66.4s + 51.6s]: HR = 0.7015, NDCG = 0.4229, loss = 0.3263 [8.2s] train_loss = 0.2116 [17.0s]
+start preprocess 6040
+Epoch 50 [66.4s + 51.7s]: HR = 0.6995, NDCG = 0.4205, loss = 0.3404 [8.2s] train_loss = 0.2110 [16.8s]
+start preprocess 6040
+Epoch 51 [66.1s + 51.5s]: HR = 0.7012, NDCG = 0.4221, loss = 0.3596 [8.2s] train_loss = 0.2113 [17.0s]
+Epoch 52 [66.1s + 51.6s]: HR = 0.7005, NDCG = 0.4195, loss = 0.3461 [8.2s] train_loss = 0.2116 [16.8s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557926396.ckpt
+End. best HR = 0.7035, best NDCG = 0.4216
+Iteration: 2
+start load_training_file_as_matrix 1557933980
+got number of users and items load_training_file_as_matrix 1557933981
+already load the trainMatrix... 1557933987
+start load_training_file_as_list 1557933987
+already load the trainList... 1557933988
+initialized
+start preprocess 6040
+started loading tests as list
+already load the evaluate model...
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 0 [65.5s + 51.7s]: HR = 0.5358, NDCG = 0.3036, loss = 0.2613 [8.0s] train_loss = 0.3098 [16.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 1 [65.6s + 51.9s]: HR = 0.6142, NDCG = 0.3588, loss = 0.3006 [8.2s] train_loss = 0.2749 [17.2s]
+Epoch 2 [66.1s + 50.9s]: HR = 0.6381, NDCG = 0.3774, loss = 0.2631 [8.1s] train_loss = 0.2588 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 3 [66.3s + 51.8s]: HR = 0.6546, NDCG = 0.3883, loss = 0.2459 [8.2s] train_loss = 0.2528 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 4 [66.3s + 51.2s]: HR = 0.6687, NDCG = 0.4001, loss = 0.2853 [8.1s] train_loss = 0.2457 [16.6s]
+start preprocess 6040
+Epoch 5 [66.0s + 52.0s]: HR = 0.6679, NDCG = 0.3973, loss = 0.2989 [8.2s] train_loss = 0.2426 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 6 [65.9s + 51.0s]: HR = 0.6728, NDCG = 0.4052, loss = 0.2868 [8.1s] train_loss = 0.2389 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 7 [66.5s + 52.3s]: HR = 0.6796, NDCG = 0.4095, loss = 0.2760 [8.2s] train_loss = 0.2364 [17.6s]
+start preprocess 6040
+Epoch 8 [66.3s + 51.3s]: HR = 0.6738, NDCG = 0.4080, loss = 0.2943 [8.1s] train_loss = 0.2351 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 9 [65.5s + 51.9s]: HR = 0.6833, NDCG = 0.4152, loss = 0.2887 [8.2s] train_loss = 0.2333 [17.2s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 10 [66.2s + 51.5s]: HR = 0.6871, NDCG = 0.4170, loss = 0.3208 [8.1s] train_loss = 0.2314 [16.7s]
+start preprocess 6040
+Epoch 11 [66.1s + 52.0s]: HR = 0.6815, NDCG = 0.4135, loss = 0.3022 [8.2s] train_loss = 0.2296 [17.2s]
+start preprocess 6040
+Epoch 12 [66.3s + 51.4s]: HR = 0.6856, NDCG = 0.4164, loss = 0.3130 [8.1s] train_loss = 0.2282 [16.5s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 13 [66.2s + 51.9s]: HR = 0.6912, NDCG = 0.4208, loss = 0.3031 [8.2s] train_loss = 0.2262 [17.2s]
+start preprocess 6040
+Epoch 14 [68.0s + 52.7s]: HR = 0.6871, NDCG = 0.4198, loss = 0.2899 [8.1s] train_loss = 0.2260 [16.6s]
+Epoch 15 [66.0s + 51.8s]: HR = 0.6884, NDCG = 0.4197, loss = 0.3125 [8.2s] train_loss = 0.2233 [17.2s]
+start preprocess 6040
+Epoch 16 [66.6s + 51.4s]: HR = 0.6882, NDCG = 0.4221, loss = 0.3240 [8.2s] train_loss = 0.2234 [16.6s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 17 [65.9s + 51.9s]: HR = 0.6932, NDCG = 0.4260, loss = 0.2959 [8.2s] train_loss = 0.2230 [17.2s]
+start preprocess 6040
+Epoch 18 [66.5s + 51.3s]: HR = 0.6871, NDCG = 0.4200, loss = 0.3235 [8.2s] train_loss = 0.2219 [16.6s]
+start preprocess 6040
+Epoch 19 [65.6s + 51.8s]: HR = 0.6932, NDCG = 0.4234, loss = 0.3102 [8.2s] train_loss = 0.2205 [17.2s]
+start preprocess 6040
+Epoch 20 [66.6s + 51.4s]: HR = 0.6930, NDCG = 0.4252, loss = 0.3157 [8.1s] train_loss = 0.2200 [16.7s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 21 [65.8s + 51.9s]: HR = 0.6955, NDCG = 0.4267, loss = 0.2934 [8.2s] train_loss = 0.2198 [17.1s]
+start preprocess 6040
+Epoch 22 [66.5s + 51.6s]: HR = 0.6954, NDCG = 0.4273, loss = 0.3073 [8.2s] train_loss = 0.2178 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 23 [66.4s + 51.9s]: HR = 0.6959, NDCG = 0.4285, loss = 0.2866 [8.2s] train_loss = 0.2187 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 24 [66.3s + 51.5s]: HR = 0.6960, NDCG = 0.4273, loss = 0.3268 [8.2s] train_loss = 0.2174 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 25 [66.4s + 51.8s]: HR = 0.6982, NDCG = 0.4299, loss = 0.3245 [8.2s] train_loss = 0.2163 [17.1s]
+start preprocess 6040
+Epoch 26 [66.0s + 51.7s]: HR = 0.6960, NDCG = 0.4300, loss = 0.3181 [8.2s] train_loss = 0.2163 [16.8s]
+start preprocess 6040
+Epoch 27 [66.4s + 51.8s]: HR = 0.6977, NDCG = 0.4301, loss = 0.3364 [8.2s] train_loss = 0.2158 [17.1s]
+start preprocess 6040
+Epoch 28 [66.3s + 51.5s]: HR = 0.6962, NDCG = 0.4276, loss = 0.3281 [8.2s] train_loss = 0.2154 [16.9s]
+start preprocess 6040
+Epoch 29 [66.2s + 51.8s]: HR = 0.6962, NDCG = 0.4292, loss = 0.3250 [8.2s] train_loss = 0.2143 [17.2s]
+start preprocess 6040
+Epoch 30 [66.3s + 51.6s]: HR = 0.6959, NDCG = 0.4295, loss = 0.3146 [8.2s] train_loss = 0.2142 [16.6s]
+start preprocess 6040
+Epoch 31 [65.9s + 51.8s]: HR = 0.6965, NDCG = 0.4285, loss = 0.3247 [8.2s] train_loss = 0.2142 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 32 [66.4s + 51.5s]: HR = 0.7022, NDCG = 0.4317, loss = 0.3228 [8.6s] train_loss = 0.2133 [16.7s]
+start preprocess 6040
+Epoch 33 [65.9s + 51.8s]: HR = 0.7002, NDCG = 0.4308, loss = 0.3201 [8.2s] train_loss = 0.2128 [17.1s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 34 [66.5s + 51.7s]: HR = 0.7030, NDCG = 0.4319, loss = 0.3201 [8.2s] train_loss = 0.2132 [16.9s]
+start preprocess 6040
+Epoch 35 [66.6s + 51.9s]: HR = 0.7012, NDCG = 0.4316, loss = 0.3172 [8.2s] train_loss = 0.2119 [17.1s]
+start preprocess 6040
+Epoch 36 [65.9s + 51.6s]: HR = 0.6992, NDCG = 0.4312, loss = 0.3267 [8.2s] train_loss = 0.2116 [16.8s]
+start preprocess 6040
+Beat best HR, Saving model in ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+Epoch 37 [65.9s + 51.8s]: HR = 0.7031, NDCG = 0.4323, loss = 0.3245 [8.2s] train_loss = 0.2119 [17.1s]
+start preprocess 6040
+Epoch 38 [66.1s + 51.6s]: HR = 0.6972, NDCG = 0.4300, loss = 0.3157 [8.2s] train_loss = 0.2112 [16.9s]
+start preprocess 6040
+Epoch 39 [66.5s + 51.7s]: HR = 0.6982, NDCG = 0.4304, loss = 0.3244 [8.2s] train_loss = 0.2105 [17.1s]
+start preprocess 6040
+Epoch 40 [66.7s + 51.6s]: HR = 0.6978, NDCG = 0.4303, loss = 0.3366 [8.2s] train_loss = 0.2105 [16.9s]
+start preprocess 6040
+Epoch 41 [66.1s + 51.6s]: HR = 0.6995, NDCG = 0.4300, loss = 0.3334 [8.2s] train_loss = 0.2107 [17.1s]
+start preprocess 6040
+Epoch 42 [66.4s + 51.6s]: HR = 0.7002, NDCG = 0.4314, loss = 0.3256 [8.2s] train_loss = 0.2109 [16.9s]
+start preprocess 6040
+Epoch 43 [66.5s + 51.7s]: HR = 0.6960, NDCG = 0.4293, loss = 0.3197 [8.2s] train_loss = 0.2093 [17.1s]
+start preprocess 6040
+Epoch 44 [66.5s + 51.7s]: HR = 0.6982, NDCG = 0.4313, loss = 0.3194 [8.2s] train_loss = 0.2095 [16.9s]
+start preprocess 6040
+Epoch 45 [66.1s + 53.9s]: HR = 0.6954, NDCG = 0.4301, loss = 0.3379 [8.6s] train_loss = 0.2088 [17.1s]
+start preprocess 6040
+Epoch 46 [66.8s + 51.6s]: HR = 0.6974, NDCG = 0.4294, loss = 0.3387 [8.2s] train_loss = 0.2088 [16.8s]
+early stopping...
+Model saved as: ./Stability-Models-DeepICF-a/DeepICF_a1557933988.ckpt
+End. best HR = 0.7031, best NDCG = 0.4323

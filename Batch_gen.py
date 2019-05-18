@@ -50,7 +50,7 @@ def batch_gen(batches, i):
 def _preprocess(get_train_batch):    #generate the masked batch list
     print("start preprocess " + str(int(_num_batch)))
     user_input_list, num_idx_list, item_input_list, labels_list = [], [], [], []
-    cpu_count = 1#multiprocessing.cpu_count()
+    cpu_count = 1 #multiprocessing.cpu_count()
     if cpu_count == 1:
         for i in range(int(_num_batch)):
             ui, ni, ii, l = get_train_batch(i)
@@ -69,11 +69,8 @@ def _preprocess(get_train_batch):    #generate the masked batch list
         labels_list = [r[3] for r in res]
     return (user_input_list, num_idx_list, item_input_list, labels_list)
 
-def _get_train_data_user():
-    # import pickle
-    # num_items, user_input, item_input, labels, batch_length = pickle.load(open("train_data_user.pkl", 'rb'))
-    # return num_items, user_input, item_input, labels, batch_length
 
+def _get_train_data_user():
     user_input, item_input, labels, batch_length = [],[],[],[]
     train = _Dataset.trainMatrix
     trainList = _Dataset.trainList
@@ -102,7 +99,6 @@ def _get_train_data_user():
                 # labels.append(0)
                 labels.append([0, 1])
     return num_items, user_input, item_input, labels, batch_length
-
 
 def _get_train_batch_user(i):
     #represent the feature of users via items rated by him/her

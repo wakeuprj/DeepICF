@@ -12,6 +12,7 @@ import multiprocessing
 import numpy as np
 from time import time
 #from numba import jit, autojit
+import matplotlib.pyplot as plt
 
 # Global variables that are shared across processes
 _model = None
@@ -27,6 +28,7 @@ variation_positive = []
 variation_negative = []
 accuracy_stats = {}
 perm_conf_vs_variation = None
+conf_vs_acc_maps = None
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -55,6 +57,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _DictList
     global _sess
     global positive_tests_conf_vs_acc_map
+    global conf_vs_acc_maps
     global bucket_sizes
     global variation_all
     global variation_positive
@@ -70,19 +73,20 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     _DictList = DictList
     _sess = sess
     _K = 10
-    positive_tests_conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
-    perm_conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
 
-    # store all target item scores before and after permutation
     positive_tests_permutation_scores = []
     negative_tests_permutation_scores = []
 
 
+    # conf_vs_acc_maps = []
+    # num_maps = 4
+    # for i in range(num_maps):
+    #     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+    #     conf_vs_acc_maps.append(conf_vs_acc_map)
     # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
-    # accuracy_stats['normal'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
-    # accuracy_stats['random'] = {'positive': {'correct': 0, 'incorrect': 0}, 'neutral': {'correct': 0, 'incorrect': 0}}
 
-    num_thread = 1#multiprocessing.cpu_count()
+    num_thread = 1 #multiprocessing.cpu_count()
+
     hits, ndcgs, losses = [],[],[]
     if(num_thread > 1): # Multi-thread
         pool = multiprocessing.Pool(num_thread)
@@ -100,32 +104,32 @@ def eval(model, sess, testRatings, testNegatives, DictList):
             ndcgs.append(ndcg)  
             losses.append(loss)
 
-    conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-                for k, v in positive_tests_conf_vs_acc_map.items()}
-
-    # perm_conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
-    #             for k, v in perm_conf_vs_acc_map.items()}
-    # ece = 0.0
-    # for key in bucket_sizes.keys():
-    #     confidence = key + 0.05
-    #     accuracy = conf_map[key]
-    #     diff = np.abs(confidence - accuracy)
-    #     ece += bucket_sizes[key] * diff
-    # ece = ece / np.sum(list(bucket_sizes.values()))
-    # print("ECE:")
-    # print(ece)
-    # import matplotlib.pyplot as plt
-    # # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
-    # plt.bar(range(len(conf_map.keys())), list(conf_map.values()),
-    #         tick_label=list(conf_map.keys()))
-    # plt.bar(range(len(perm_conf_map.keys())), list(perm_conf_map.values()),
-    #         tick_label=list(perm_conf_map.keys()), color=(0, 0, 0, 0), edgecolor='r')
-    # plt.bar(range(len(conf_map.keys())),
-    #         list(map(lambda x: x + 0.05, list(conf_map.keys()))),
-    #         tick_label=list(conf_map.keys()), color=(0, 0, 0, 0), edgecolor='g')
-    # # # plt.hist(scores, bins=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-    # plt.xlabel('Confidence')
-    # plt.ylabel('Accuracy')
+    # fig, axs = plt.subplots(num_maps, 1, constrained_layout=True)
+    #
+    # axs_titles = ["Positive Predictions", "Negative Predictions", "Positive GT", "Negative GT"]
+    # for i in range(num_maps):
+    #     conf_map = {k: v[1] / (v[1] + v[0] + 0.00001)
+    #                 for k, v in conf_vs_acc_maps[i].items()}
+    #     ece = 0.0
+    #     for key in bucket_sizes.keys():
+    #         confidence = key + 0.05
+    #         accuracy = conf_map[key]
+    #         diff = np.abs(confidence - accuracy)
+    #         ece += bucket_sizes[key] * diff
+    #     ece = ece / np.sum(list(bucket_sizes.values()))
+    #     print("ECE for map ", axs_titles[i])
+    #     print(ece)
+    #
+    #     # hr_vs_conf_map = {k:np.count_nonzero(v)/len(v) for k,v in hits_map.items()}
+    #     axs[i].bar(range(len(conf_map.keys())), list(conf_map.values()),
+    #                tick_label=list(conf_map.keys()))
+    #     axs[i].bar(range(len(conf_map.keys())),
+    #                list(map(lambda x: x + 0.05, list(conf_map.keys()))),
+    #                tick_label=list(conf_map.keys()), color=(0, 0, 0, 0),
+    #                edgecolor='g')
+    #     axs[i].set_title(axs_titles[i])
+    # axs[0].set_ylabel('Accuracy')
+    # axs[-1].set_xlabel('Confidence')
     # plt.show()
     # exit(0)
     # print("\n\n+ve var hist\n")
@@ -135,19 +139,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # print("\n\n-ve var hist\n")
     # negative_var_hist = np.histogram(variation_negative, bins=20)
     # print(negative_var_hist)
-    # print("Positive")
-    # print(np.mean(variation_positive))
-    # print(np.median(variation_positive))
-    # print(np.max(variation_positive))
-    # print(np.min(variation_positive))
-    # print("Negative")
-    # print(np.mean(variation_negative))
-    # print(np.median(variation_negative))
-    # print(np.max(variation_negative))
-    # print(np.min(variation_negative))
 
-    # print("Accuracy stats")
-    # print(accuracy_stats)
     maps = (positive_tests_permutation_scores, negative_tests_permutation_scores)
 
     import pickle
@@ -188,7 +180,7 @@ def _eval_one_rating(idx):
     items = _testNegatives[idx]
     gtItem = rating[1]
     # labels = np.zeros(len(items))[:, None]
-    labels = np.matrix([[0, 1]] * 100)
+    labels = np.squeeze([[0, 1]] * 100)
     # labels[-1] = 1
     labels[-1] = [1, 0]
     feed_dict = _DictList[idx]
@@ -279,14 +271,31 @@ def _eval_one_rating(idx):
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0
     # for i in range(0, len(predictions)):
-    #     if expected_argmax[i] == 0:
-    #         continue
     #     confidence = np.max(predictions[i])
-    #     if np.argmax(predictions[i]) == expected_argmax[i]:
-    #         conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
-    #     else:
-    #         conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
-        # bucket_sizes[confidence // 0.1 / 10] += 1
+    #     conf_round_down = confidence // 0.1 / 10
+    #     if np.argmax(predictions[i]) == 0:
+    #         if np.argmax(predictions[i]) == expected_argmax[i]:
+    #             conf_vs_acc_maps[0][conf_round_down][1] += 1
+    #         else:
+    #             conf_vs_acc_maps[0][conf_round_down][0] += 1
+    #     elif np.argmax(predictions[i]) == 1:
+    #         if np.argmax(predictions[i]) == expected_argmax[i]:
+    #             conf_vs_acc_maps[1][conf_round_down][1] += 1
+    #         else:
+    #             conf_vs_acc_maps[1][conf_round_down][0] += 1
+    #     if expected_argmax[i] == 0:
+    #         if np.argmax(predictions[i]) == expected_argmax[i]:
+    #             conf_vs_acc_maps[2][conf_round_down][1] += 1
+    #         else:
+    #             conf_vs_acc_maps[2][conf_round_down][0] += 1
+    #     elif expected_argmax[i] == 1:
+    #         if np.argmax(predictions[i]) == expected_argmax[i]:
+    #             conf_vs_acc_maps[3][conf_round_down][1] += 1
+    #         else:
+    #             conf_vs_acc_maps[3][conf_round_down][0] += 1
+    #
+    #
+    #     bucket_sizes[conf_round_down] += 1
 
     return (np.mean(hrs), np.mean(ndcgs), np.mean(losses))
 

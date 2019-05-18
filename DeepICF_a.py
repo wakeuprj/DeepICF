@@ -14,7 +14,6 @@ from time import time
 from Dataset import Dataset
 import Batch_gen as data
 import Evaluate as evaluate
-import matplotlib.pyplot as plt
 
 import argparse
 from tensorflow.contrib.layers.python.layers import batch_norm as batch_norm
@@ -59,6 +58,10 @@ def parse_args():
                         help='Activation for ReLU, sigmoid, tanh.')
     parser.add_argument('--algorithm', type=int, default=0,
                         help='0 for prod, 1 for concat')
+    parser.add_argument('--imbalance', type=int, default=0,
+                        help='0 for nothing, 1 for weight im-balance in loss')
+    parser.add_argument('--seeds', nargs='?', default='[2,9001,2**18]',
+                        help='Seeds for runs.')
     return parser.parse_args()
 
 # batch norm
@@ -69,6 +72,18 @@ def batch_norm_layer(x, train_phase, scope_bn):
         is_training=False, reuse=True, trainable=True, scope=scope_bn)
     z = tf.cond(train_phase, lambda: bn_train, lambda: bn_inference)
     return z
+
+def weight_imb_function(labels):
+    total_cases = len(labels)
+    num_positives = np.count_nonzero(labels[:, 0])
+    num_negatives = total_cases - num_positives
+    imbalace_weights = []
+    for i in range(len(labels)):
+        if labels[i][0] == 1:
+            imbalace_weights.append(total_cases / (2 * num_positives))
+        else:
+            imbalace_weights.append(total_cases / (2 * num_negatives))
+    return np.array(imbalace_weights)
 
 class DeepICF_a:
 
@@ -94,6 +109,7 @@ class DeepICF_a:
         self.train_loss = args.train_loss
         self.use_batch_norm = args.batch_norm
         self.num_outputs = 2
+        self.weights_balancing = args.imbalance
 
     def _create_placeholders(self):
         with tf.name_scope("input_data"):
@@ -202,15 +218,26 @@ class DeepICF_a:
                     layer1 = batch_norm_layer(layer1, train_phase=self.is_train_phase, scope_bn='bn_%d' % i)
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
-
-            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (b, 1)
+            self.output_logits = tf.add_n([out_layer, self.bias_i])
+            self.output = tf.nn.softmax(self.output_logits)  # (b, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output) + \
-                        self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
-                        self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
+            if self.weights_balancing:
+                print("Balancing weights for loss calculation.")
+                self.imbalance_weights = tf.py_func(weight_imb_function,
+                                                    [self.labels],
+                                                    tf.double)
+                self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                            self.output_logits,
+                                                            weights=self.imbalance_weights)
+            else:
+                self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                            self.output_logits)
+            # self.loss = tf.losses.log_loss(self.labels, self.output) + \
+            #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+            #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_)) + \
+            #             self.eta_bilinear * tf.reduce_sum(tf.square(self.W))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:
@@ -235,12 +262,15 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = True
+    model_file_name = './Stability-Models-DeepICF-a/DeepICF_a' + str(
+        int(time())) + '.ckpt'
+    load_weights = False
 
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
-            weight_path = './1epoch1556643194.ckpt'  # Softmax with two output neurons
+            weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557605717.ckpt'  # 2-opt cross-loss 40 epchs
+            # weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557825370.ckpt' # 2-opt-class-balanced
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 
@@ -292,6 +322,7 @@ def training(flag, model, dataset, epochs, num_negatives):
         testDict = evaluate.init_evaluate_model(model, sess, dataset.testRatings, dataset.testNegatives, dataset.trainList)
 
         best_hr, best_ndcg = 0, 0
+        patience_cnt = 0
         # train by epoch
         for epoch_count in range(epochs):
 
@@ -313,20 +344,37 @@ def training(flag, model, dataset, epochs, num_negatives):
                 hr, ndcg, test_loss = np.array(hits).mean(), np.array(ndcgs).mean(), np.array(losses).mean()
                 eval_time = time() - eval_begin
 
+                patience = 8
+                if epoch_count > 0 and hr > best_hr:
+                    patience_cnt = 0
+                else:
+                    patience_cnt += 1
+
                 if hr > best_hr:
                     best_hr = hr
                     best_ndcg = ndcg
+                    print("Beat best HR, Saving model in", model_file_name)
+                    model_saver.save(sess, model_file_name)
 
-                logging.info("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
-                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
-                print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
-                    epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
+                logging.info(
+                    "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg,
+                        test_loss, eval_time, train_loss, loss_time))
+                print(
+                    "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg,
+                        test_loss, eval_time, train_loss, loss_time))
+
+                if patience_cnt > patience:
+                    print("early stopping...")
+                    break
+
 
             batch_begin = time()
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-        model_saver.save(sess, './DeepICF_a%d.ckpt' % (time()))
+        print('Model saved as:', model_file_name)
         return best_hr, best_ndcg
 
 
@@ -362,17 +410,7 @@ if __name__ == '__main__':
     logging.info("regs:%.8f, %.8f, %.8f  beta:%.1f  learning_rate:%.4f  train_loss:%d  activation:%d"
                  % (regs[0], regs[1], regs[2], args.beta, args.lr, args.train_loss, args.activation))
 
-
-    # import pickle
-    # pkl_dataset_filename = 'dataset.pkl'
-
     dataset = Dataset(args.path + args.dataset)
-
-    # pkl_dataset_file = open(pkl_dataset_filename, 'wb')
-    # pickle.dump(dataset, pkl_dataset_file)
-    # pkl_dataset_file.close()
-    # exit(0)
-    # dataset = pickle.load(open(pkl_dataset_filename, 'rb'))
     model = DeepICF_a(dataset.num_items, args)
     model.build_graph()
     best_hr, best_ndcg = training(0, model, dataset, args.epochs, args.num_neg)

@@ -10,8 +10,6 @@ import math
 import heapq # for retrieval topK
 import multiprocessing
 import numpy as np
-from time import time
-#from numba import jit, autojit
 import matplotlib.pyplot as plt
 
 # Global variables that are shared across processes
@@ -21,13 +19,6 @@ _testNegatives = None
 _K = None
 _DictList = None
 _sess = None
-positive_tests_conf_vs_acc_map = None
-perm_conf_vs_acc_map = None
-variation_all = []
-variation_positive = []
-variation_negative = []
-accuracy_stats = {}
-perm_conf_vs_variation = None
 conf_vs_acc_maps = None
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
@@ -56,15 +47,8 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     global _K
     global _DictList
     global _sess
-    global positive_tests_conf_vs_acc_map
     global conf_vs_acc_maps
     global bucket_sizes
-    global variation_all
-    global variation_positive
-    global variation_negative
-    global accuracy_stats
-    global perm_conf_vs_acc_map
-    global perm_conf_vs_variation
     global positive_tests_permutation_scores
     global negative_tests_permutation_scores
     _model = model
@@ -77,7 +61,6 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     positive_tests_permutation_scores = []
     negative_tests_permutation_scores = []
 
-
     # conf_vs_acc_maps = []
     # num_maps = 4
     # for i in range(num_maps):
@@ -85,10 +68,10 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     #     conf_vs_acc_maps.append(conf_vs_acc_map)
     # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
 
-    num_thread = 1 #multiprocessing.cpu_count()
+    num_thread = 1  # multiprocessing.cpu_count()
 
-    hits, ndcgs, losses = [],[],[]
-    if(num_thread > 1): # Multi-thread
+    hits, ndcgs, losses = [], [], []
+    if (num_thread > 1):  # Multi-thread
         pool = multiprocessing.Pool(num_thread)
         res = pool.map(_eval_one_rating, range(len(_testRatings)))
         pool.close()
@@ -191,6 +174,7 @@ def _eval_one_rating(idx):
     losses = []
     predictions = []
     positive_tests_scores_dict = {'og': [], 'perm': []}
+    negative_tests_scores_dict = {'og': [], 'perm': []}
     for i in range(1):
         predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
@@ -208,12 +192,6 @@ def _eval_one_rating(idx):
         losses.append(loss)
 
     positive_tests_scores_dict['og'].append(predictions[-1])
-    confidence = np.max(predictions[-1])
-    if np.argmax(predictions[-1]) == 0:  # correctly predicted
-        positive_tests_conf_vs_acc_map[confidence // 0.1 / 10][1] += 1
-    else:
-        positive_tests_conf_vs_acc_map[confidence // 0.1 / 10][0] += 1
-    # bucket_sizes[confidence // 0.1 / 10] += 1
 
     feed_dict[_model.random_attention] = True
     random_prediction = np.array([[0, 0]]*100)
@@ -224,29 +202,10 @@ def _eval_one_rating(idx):
         random_prediction = np.add(random_prediction_i, random_prediction)
     random_prediction = np.divide(random_prediction, num_samples)
     for i in range(len(predictions) - 1):
-        negative_tests_scores_dict = {'og': [], 'perm': []}
         negative_tests_scores_dict['og'].append(predictions[i])
         negative_tests_scores_dict['perm'].append(random_prediction[i])
     positive_tests_permutation_scores.append(positive_tests_scores_dict)
     negative_tests_permutation_scores.append(negative_tests_scores_dict)
-        # if np.argmax(random_prediction_i[-1]) == 0:
-        #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][1] += 1
-        # else:
-        #     perm_conf_vs_acc_map[random_pred_confidence // 0.1 / 10][0] += 1
-
-
-    #     random_prediction = np.add(random_prediction_i, random_prediction)
-    #     # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
-    #     # print(np.max(attention_map))
-    # random_prediction = np.divide(random_prediction, num_samples)
-    # diff_predictions = (predictions - random_prediction)[:, 0]
-    # # variation_positive.append(diff_predictions[-1])
-    # # variation_negative.extend(diff_predictions[:99])
-    # for i in range(0, len(predictions)):
-    #     if np.argmax(predictions[i]) == 0:
-    #         variation_positive.append(diff_predictions[i])
-    #     else:
-    #         variation_negative.append(diff_predictions[i])
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0

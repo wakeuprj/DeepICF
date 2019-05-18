@@ -140,13 +140,16 @@ class DeepICF:
                 layer1 = tf.nn.relu(layer1)
             out_layer = tf.matmul(layer1, self.weights['out']) + self.biases['out']  # (?, 1)
 
-            self.output = tf.nn.softmax(tf.add_n([out_layer, self.bias_i]))  # (?, 1)
+            self.output_logits = tf.add_n([out_layer, self.bias_i])
+            self.output = tf.nn.softmax(self.output_logits)  # (?, 1)
 
     def _create_loss(self):
         with tf.name_scope("loss"):
-            self.loss = tf.losses.log_loss(self.labels, self.output, reduction=tf.losses.Reduction.MEAN)
-                        # self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
-                        # self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_))
+            self.loss = tf.losses.softmax_cross_entropy(self.labels,
+                                                        self.output_logits)
+            # self.loss = tf.losses.log_loss(self.labels, self.output, reduction=tf.losses.Reduction.MEAN) \+
+            #             self.lambda_bilinear * tf.reduce_sum(tf.square(self.embedding_Q)) + \
+            #             self.gamma_bilinear * tf.reduce_sum(tf.square(self.embedding_Q_))
 
             for i in range(min(len(self.n_hidden), len(self.reg_W))):
                 if self.reg_W[i] > 0:
@@ -170,7 +173,7 @@ def training(flag, model, dataset, epochs, num_negatives):
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
-    load_weights = True
+    load_weights = False
 
     with tf.Session() as sess:
         # pretrain nor not
@@ -205,10 +208,8 @@ def training(flag, model, dataset, epochs, num_negatives):
             # Why not load/save the weights and biases as well?
 
             print("using pretrained variables")
-            print("using pretrained variables")
         else:
             sess.run(tf.global_variables_initializer())
-            print("initialized")
             print("initialized")
 
         # initialize for training batches
@@ -260,7 +261,7 @@ def training(flag, model, dataset, epochs, num_negatives):
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
             batch_time = time() - batch_begin
-        model_file_name = 'deepICF-' + str(int(time())) + '.ckpt'
+        model_file_name = './Stability-Models-DeepICF-a/deepICF-' + str(int(time())) + '.ckpt'
         model_saver.save(sess, model_file_name)
         print('Model saved as:', model_file_name)
         return best_hr, best_ndcg

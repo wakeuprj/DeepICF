@@ -3,7 +3,6 @@ from __future__ import division
 
 import os
 
-from util import perfTSNE, plotPoints
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -269,8 +268,10 @@ def training(flag, model, dataset, epochs, num_negatives):
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
-            weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557605717.ckpt'  # 2-opt cross-loss 40 epchs
-            # weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557825370.ckpt' # 2-opt-class-balanced
+            if model.weights_balancing == 0:
+                weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557605717.ckpt'  # 2-opt cross-loss 40 epchs
+            else:
+                weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557829760.ckpt' # 2-opt-class-balanced
             saver = tf.train.Saver()
             saver.restore(sess, weight_path)
 

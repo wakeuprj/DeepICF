@@ -7,7 +7,7 @@ Evaluate the performance of Top-K recommendation:
 @author: hexiangnan
 '''
 import math
-import heapq # for retrieval topK
+import heapq  # for retrieval topK
 import multiprocessing
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,6 +20,7 @@ _K = None
 _DictList = None
 _sess = None
 conf_vs_acc_maps = None
+
 
 def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     """
@@ -39,8 +40,8 @@ def init_evaluate_model(model, sess, testRatings, testNegatives, trainList):
     _trainList = trainList
     return load_test_as_list()
 
-def eval(model, sess, testRatings, testNegatives, DictList):
 
+def eval(model, sess, testRatings, testNegatives, DictList):
     global _model
     global _testRatings
     global _testNegatives
@@ -61,12 +62,12 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     positive_tests_permutation_scores = []
     negative_tests_permutation_scores = []
 
-    # conf_vs_acc_maps = []
-    # num_maps = 4
-    # for i in range(num_maps):
-    #     conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
-    #     conf_vs_acc_maps.append(conf_vs_acc_map)
-    # bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
+    conf_vs_acc_maps = []
+    num_maps = 4
+    for i in range(num_maps):
+        conf_vs_acc_map = {(round(k, 1)): [0, 0] for k in np.arange(0, 1, 0.1)}
+        conf_vs_acc_maps.append(conf_vs_acc_map)
+    bucket_sizes = {(round(k, 1)): 0 for k in np.arange(0, 1, 0.1)}
 
     num_thread = 1  # multiprocessing.cpu_count()
 
@@ -84,7 +85,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
         for idx in range(len(_testRatings)):
             (hr, ndcg, loss) = _eval_one_rating(idx)
             hits.append(hr)
-            ndcgs.append(ndcg)  
+            ndcgs.append(ndcg)
             losses.append(loss)
 
     # fig, axs = plt.subplots(num_maps, 1, constrained_layout=True)
@@ -123,15 +124,17 @@ def eval(model, sess, testRatings, testNegatives, DictList):
     # negative_var_hist = np.histogram(variation_negative, bins=20)
     # print(negative_var_hist)
 
-    maps = (positive_tests_permutation_scores, negative_tests_permutation_scores)
-
-    import pickle
-    file_name = "positive-negative-tests-permutation-scores.pkl"
-    pkl_file = open(file_name, 'wb')
-    pickle.dump(maps, pkl_file)
-    pkl_file.close()
+    # maps = (
+    #     conf_vs_acc_maps, bucket_sizes)
+    #
+    # import pickle
+    # file_name = "calib-stats.pkl"
+    # pkl_file = open(file_name, 'wb')
+    # pickle.dump(maps, pkl_file)
+    # pkl_file.close()
 
     return (hits, ndcgs, losses)
+
 
 def load_test_as_list():
     DictList = []
@@ -144,20 +147,21 @@ def load_test_as_list():
         gtItem = rating[1]
         items.append(gtItem)
         # Get prediction scores
-        num_idx = np.full(len(items),num_idx_, dtype=np.int32 )[:,None]
+        num_idx = np.full(len(items), num_idx_, dtype=np.int32)[:, None]
         user_input = []
         for i in range(len(items)):
             user_input.append(user)
         user_input = np.array(user_input)
-        item_input = np.array(items)[:,None]
+        item_input = np.array(items)[:, None]
         feed_dict = {_model.user_input: user_input, _model.num_idx: num_idx,
-                     _model.item_input: item_input, _model.is_train_phase: False}
+                     _model.item_input: item_input,
+                     _model.is_train_phase: False}
         DictList.append(feed_dict)
     print("already load the evaluate model...")
     return DictList
 
-def _eval_one_rating(idx):
 
+def _eval_one_rating(idx):
     map_item_score = {}
     rating = _testRatings[idx]
     items = _testNegatives[idx]
@@ -173,10 +177,11 @@ def _eval_one_rating(idx):
     ndcgs = []
     losses = []
     predictions = []
-    positive_tests_scores_dict = {'og': [], 'perm': []}
-    negative_tests_scores_dict = {'og': [], 'perm': []}
+    # positive_tests_scores_dict = {'og': [], 'perm': []}
+    # negative_tests_scores_dict = {'og': [], 'perm': []}
     for i in range(1):
-        predictions, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+        predictions, loss = _sess.run([_model.output, _model.loss],
+                                      feed_dict=feed_dict)
         # attention_map = np.squeeze(_sess.run([_model.A], feed_dict=feed_dict)[0])  # (b,n)
         # print(np.max(attention_map))
 
@@ -191,21 +196,21 @@ def _eval_one_rating(idx):
         ndcgs.append(ndcg)
         losses.append(loss)
 
-    positive_tests_scores_dict['og'].append(predictions[-1])
-
-    feed_dict[_model.random_attention] = True
-    random_prediction = np.array([[0, 0]]*100)
-    num_samples = 100
-    for i in range(num_samples):
-        random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
-        positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
-        random_prediction = np.add(random_prediction_i, random_prediction)
-    random_prediction = np.divide(random_prediction, num_samples)
-    for i in range(len(predictions) - 1):
-        negative_tests_scores_dict['og'].append(predictions[i])
-        negative_tests_scores_dict['perm'].append(random_prediction[i])
-    positive_tests_permutation_scores.append(positive_tests_scores_dict)
-    negative_tests_permutation_scores.append(negative_tests_scores_dict)
+    # positive_tests_scores_dict['og'].append(predictions[-1])
+    #
+    # feed_dict[_model.random_attention] = True
+    # random_prediction = np.array([[0, 0]]*100)
+    # num_samples = 100
+    # for i in range(num_samples):
+    #     random_prediction_i, loss = _sess.run([_model.output, _model.loss], feed_dict=feed_dict)
+    #     positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
+    #     random_prediction = np.add(random_prediction_i, random_prediction)
+    # random_prediction = np.divide(random_prediction, num_samples)
+    # for i in range(len(predictions) - 1):
+    #     negative_tests_scores_dict['og'].append(predictions[i])
+    #     negative_tests_scores_dict['perm'].append(random_prediction[i])
+    # positive_tests_permutation_scores.append(positive_tests_scores_dict)
+    # negative_tests_permutation_scores.append(negative_tests_scores_dict)
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0
@@ -225,7 +230,6 @@ def _eval_one_rating(idx):
     #     elif expected_argmax[i] == 1:
     #         accuracy_stats['normal']['neutral'][normal_test_result] += 1
     #         accuracy_stats['random']['neutral'][random_test_result] += 1
-
 
     # expected_argmax = [1] * len(items)
     # expected_argmax[-1] = 0
@@ -253,10 +257,10 @@ def _eval_one_rating(idx):
     #         else:
     #             conf_vs_acc_maps[3][conf_round_down][0] += 1
     #
-    #
     #     bucket_sizes[conf_round_down] += 1
 
     return (np.mean(hrs), np.mean(ndcgs), np.mean(losses))
+
 
 def get_item_embeddings():
     user = _trainList[0]
@@ -278,15 +282,17 @@ def get_item_embeddings():
 
     return item_embeddings
 
+
 def _getHitRatio(ranklist, gtItem):
     for item in ranklist:
         if item == gtItem:
             return 1
     return 0
 
+
 def _getNDCG(ranklist, gtItem):
     for i in range(len(ranklist)):
         item = ranklist[i]
         if item == gtItem:
-            return math.log(2) / math.log(i+2)
+            return math.log(2) / math.log(i + 2)
     return 0

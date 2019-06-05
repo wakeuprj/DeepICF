@@ -180,12 +180,12 @@ class DeepICF_a:
 
             A = tf.expand_dims(tf.div(exp_A_, exp_sum), 2)  # (b, n, 1)
 
-            self.random_perm = tf.range(tf.shape(A)[1])
-            self.random_perm = tf.random_shuffle(self.random_perm)
-            self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
-            cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
-            return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
-            # return A, tf.reduce_sum(A * self.embedding_q_, 1)
+            # self.random_perm = tf.range(tf.shape(A)[1])
+            # self.random_perm = tf.random_shuffle(self.random_perm)
+            # self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
+            # cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
+            # return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
+            return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):
         with tf.name_scope("inference"):

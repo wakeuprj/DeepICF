@@ -155,9 +155,10 @@ def load_test_as_list():
         item_input = np.array(items)[:, None]
         feed_dict = {_model.user_input: user_input, _model.num_idx: num_idx,
                      _model.item_input: item_input,
-                     _model.is_train_phase: False}
+                     _model.is_train_phase: False, _model.random_attention: False}
         DictList.append(feed_dict)
     print("already load the evaluate model...")
+
     return DictList
 
 
@@ -276,7 +277,7 @@ def get_item_embeddings():
     item_input = np.array(items)[:, None]
 
     feed_dict = {_model.user_input: user_input, _model.num_idx: num_idx,
-                 _model.item_input: item_input, _model.is_train_phase: False}
+                 _model.item_input: item_input, _model.is_train_phase: False, _model.random_attention: False}
 
     item_embeddings = _sess.run([_model.embedding_q], feed_dict=feed_dict)
 

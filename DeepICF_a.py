@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 import numpy as np
 import logging
-from time import time
+from time import time as time_now
 from Dataset import Dataset
 import Batch_gen as data
 import Evaluate as evaluate
@@ -257,14 +257,12 @@ class DeepICF_a:
 
 
 def training(flag, model, dataset, epochs, num_negatives):
-
     weight_path = 'Pretraining/%s/%s/alpha0.0.ckpt' % (model.dataset_name, model.embedding_size)
     # saver = tf.train.Saver([model.c1, model.embedding_Q, model.bias])
     model_saver = tf.train.Saver()
     model_file_name = './Stability-Models-DeepICF-a/DeepICF_a' + str(
-        int(time())) + '.ckpt'
+        int(time_now())) + '.ckpt'
     load_weights = False
-
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
@@ -312,9 +310,9 @@ def training(flag, model, dataset, epochs, num_negatives):
             print("initialized")
 
         # initialize for training batches
-        batch_begin = time()
+        batch_begin = time_now()
         batches = data.shuffle(dataset, model.batch_choice, num_negatives)
-        batch_time = time() - batch_begin
+        batch_time = time_now() - batch_begin
 
         num_batch = len(batches[1])
         batch_index = list(range(num_batch))
@@ -327,23 +325,23 @@ def training(flag, model, dataset, epochs, num_negatives):
         # train by epoch
         for epoch_count in range(epochs):
 
-            train_begin = time()
+            train_begin = time_now()
             training_batch(batch_index, model, sess, batches)
-            train_time = time() - train_begin
+            train_time = time_now() - train_begin
 
             if epoch_count % model.verbose == 0:
 
                 if model.train_loss:
-                    loss_begin = time()
+                    loss_begin = time_now()
                     train_loss = training_loss(model, sess, batches)
-                    loss_time = time() - loss_begin
+                    loss_time = time_now() - loss_begin
                 else:
                     loss_time, train_loss = 0, 0
 
-                eval_begin = time()
+                eval_begin = time_now()
                 (hits, ndcgs, losses) = evaluate.eval(model, sess, dataset.testRatings, dataset.testNegatives, testDict)
                 hr, ndcg, test_loss = np.array(hits).mean(), np.array(ndcgs).mean(), np.array(losses).mean()
-                eval_time = time() - eval_begin
+                eval_time = time_now() - eval_begin
 
                 patience = 8
                 if epoch_count > 0 and hr > best_hr:
@@ -371,10 +369,10 @@ def training(flag, model, dataset, epochs, num_negatives):
                     break
 
 
-            batch_begin = time()
+            batch_begin = time_now()
             batches = data.shuffle(dataset, model.batch_choice, num_negatives)
             np.random.shuffle(batch_index)
-            batch_time = time() - batch_begin
+            batch_time = time_now() - batch_begin
         print('Model saved as:', model_file_name)
         return best_hr, best_ndcg
 
@@ -385,7 +383,7 @@ def training_batch(batch_index, model, sess, batches):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True, model.random_attention: False}
         sess.run([model.loss, model.optimizer], feed_dict)
 
 
@@ -396,7 +394,7 @@ def training_loss(model, sess, batches):
         user_input, num_idx, item_input, labels = data.batch_gen(batches, index)
         labels_sq = np.squeeze(labels[:, None])
         feed_dict = {model.user_input: user_input, model.num_idx: num_idx[:, None], model.item_input: item_input[:, None],
-                     model.labels: labels_sq, model.is_train_phase: True}
+                     model.labels: labels_sq, model.is_train_phase: True, model.random_attention: False}
         train_loss += sess.run(model.loss, feed_dict)
     return train_loss / num_batch
 

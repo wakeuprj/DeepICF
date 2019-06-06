@@ -291,13 +291,11 @@ def perf_random_permutation(feed_dict, predictions):
     num_tests = 100
 
     random_prediction = np.array([[0, 0]] * num_tests)
-    rand_negative_test = np.random.randint(0, num_rand_samples, 1)
+    rand_negative_test = np.random.randint(0, num_rand_samples, 1)[0]
     for i in range(num_rand_samples):
         random_prediction_i, loss = _sess.run([_model.output, _model.loss],
                                               feed_dict=feed_dict)
         positive_tests_scores_dict['perm'].append(random_prediction_i[-1])
-        if rand_negative_test[i]:
-            negative_tests_scores_dict['perm'].append(random_prediction_i[-1])
         # random_prediction = np.add(random_prediction_i, random_prediction)
         if i == rand_negative_test:
             random_prediction = np.add(random_prediction_i, random_prediction)

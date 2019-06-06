@@ -117,7 +117,7 @@ def pickle_random_permutation_results(positive_res, negative_res):
     maps = (
         positive_res, negative_res)
     import pickle
-    file_name = "pos-neg-permutation-results-2opt.pkl"
+    file_name = "pos-neg-permutation-results-2opt-balanced-loss.pkl"
     pkl_file = open(file_name, 'wb')
     pickle.dump(maps, pkl_file)
     pkl_file.close()

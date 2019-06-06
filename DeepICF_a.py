@@ -180,12 +180,12 @@ class DeepICF_a:
 
             A = tf.expand_dims(tf.div(exp_A_, exp_sum), 2)  # (b, n, 1)
 
-            # self.random_perm = tf.range(tf.shape(A)[1])
-            # self.random_perm = tf.random_shuffle(self.random_perm)
-            # self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
-            # cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
-            # return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
-            return A, tf.reduce_sum(A * self.embedding_q_, 1)
+            self.random_perm = tf.range(tf.shape(A)[1])
+            self.random_perm = tf.random_shuffle(self.random_perm)
+            self.shuffled_A = tf.map_fn(lambda row: tf.gather(row, self.random_perm), A)
+            cond_A = tf.cond(self.random_attention, lambda: self.shuffled_A, lambda: A)
+            return A, tf.reduce_sum(cond_A * self.embedding_q_, 1)
+            # return A, tf.reduce_sum(A * self.embedding_q_, 1)
 
     def _create_inference(self):
         with tf.name_scope("inference"):
@@ -262,12 +262,12 @@ def training(flag, model, dataset, epochs, num_negatives):
     model_saver = tf.train.Saver()
     model_file_name = './Stability-Models-DeepICF-a/DeepICF_a' + str(
         int(time_now())) + '.ckpt'
-    load_weights = False
+    load_weights = True
     with tf.Session() as sess:
         if load_weights:
             # weight_path = './1epoch.ckpt'
             if model.weights_balancing == 0:
-                weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557925260.ckpt'  # 2-opt cross-loss 40 epchs
+                weight_path = './final-models/DeepICF_a1559731170.ckpt'  # 2-opt cross-loss 40 epchs
             else:
                 weight_path = './Stability-Models-DeepICF-a/DeepICF_a1557829760.ckpt' # 2-opt-class-balanced
             saver = tf.train.Saver()
